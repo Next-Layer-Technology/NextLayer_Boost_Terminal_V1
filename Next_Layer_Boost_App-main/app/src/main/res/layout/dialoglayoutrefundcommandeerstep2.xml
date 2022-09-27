@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    >
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorWhite"
+        card_view:cardElevation="0dp"
+        app:cardCornerRadius="@dimen/_25sdp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <RelativeLayout
+
+                android:id="@+id/rl_titleLay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                >
+                <ImageView
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:id="@+id/iv_back"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:src="@drawable/arrowpopup"
+                    android:layout_alignParentLeft="true">
+
+                </ImageView>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/_5sdp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="BOOST"
+                        android:gravity="center"
+                        android:textSize="@dimen/_15sdp"
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold"
+                        android:layout_alignParentRight="true">
+
+                    </TextView>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+               android:paddingHorizontal="@dimen/_20sdp"
+                android:id="@+id/rl_BodyLay"
+                android:layout_below="@+id/rl_titleLay"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <RelativeLayout
+                    android:id="@+id/bolt11lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/bolt11txt"
+                        android:text="Bolt11"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                    </TextView>
+                    <TextView
+                        android:text="Bolt 11"
+                        android:id="@+id/bolt11valtxt"
+                        android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@+id/bolt11txt"
+                        android:layout_width="match_parent"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_marginLeft="@dimen/_30sdp"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/labella"
+                    android:layout_below="@+id/bolt11lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                     android:gravity="center">
+                    <TextView
+                        android:id="@+id/labeltxt"
+                        android:text="Label"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                    </TextView>
+                    <TextView
+
+                        android:id="@+id/labelvaltxt"
+                        android:text="OutgoingMaxBoost+UTC"
+                        android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@+id/labeltxt"
+                        android:layout_width="match_parent"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_marginLeft="@dimen/_34sdp"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/amountlay"
+                    android:layout_below="@+id/labella"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                     android:gravity="center">
+                    <TextView
+                        android:id="@+id/amounttxt"
+                        android:text="Amount"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                    </TextView>
+                    <EditText
+                        android:textSize="@dimen/_12sdp"
+                        android:id="@+id/amountval"
+                        android:inputType="numberDecimal"
+                        android:hint="Enter Amount USD"
+                        android:textColorHint="@color/grey_custom_color"
+                        android:background="@color/zxing_transparent"
+                        android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@+id/amounttxt"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="@dimen/_22sdp"
+                        android:layout_height="wrap_content">
+                    </EditText>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/footerlay"
+                    android:layout_below="@+id/amountlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/btn_next"
+                        android:layout_width="@dimen/_120sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:text="Execute"
+                        android:textSize="@dimen/_15sdp"
+                        android:textColor="@color/white_color"
+                        android:background="@drawable/connect_btn">
+
+                    </Button>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

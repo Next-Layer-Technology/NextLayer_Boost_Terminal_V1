@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fullapp_bg">
+    <!--    headerlay-->
+    <RelativeLayout
+        android:id="@+id/headerlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+        <include layout="@layout/header_layout_terminalpage" />
+    </RelativeLayout>
+    <!--    bodyLay-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/headerlay"
+        android:layout_above="@+id/footerlay">
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+            <RelativeLayout
+                android:id="@+id/mainLay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/footerlay"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    >
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_above="@+id/centerdivide"
+
+                            >
+                            <RelativeLayout
+                                android:layout_centerInParent="true"
+
+                                android:id="@+id/merchantidCardLay"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_200sdp"
+                                android:layout_marginLeft="@dimen/_25sdp"
+                                android:layout_marginRight="@dimen/_25sdp"
+                                >
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/merchantidCardView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:backgroundTint="#20000000"
+                                    android:orientation="vertical"
+                                    app:cardCornerRadius="@dimen/_15sdp"
+                                    app:cardElevation="0dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    card_view:cardElevation="0dp">
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:padding="@dimen/_10sdp">
+                                        <TextView
+                                            android:id="@+id/txt_merchantId"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentTop="true"
+                                            android:layout_centerHorizontal="true"
+                                            android:text="@string/merchantid"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_15sdp"
+                                            android:textStyle="bold" />
+                                        <RelativeLayout
+                                            android:id="@+id/et_merchantIDCardBtnLay"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_below="@+id/txt_merchantId">
+                                            <androidx.cardview.widget.CardView
+                                                android:id="@+id/et_merchantIDCardLay"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="@dimen/_30sdp"
+                                                android:layout_marginTop="@dimen/_10sdp"
+                                                android:backgroundTint="#20000000"
+                                                app:cardCornerRadius="@dimen/_15sdp"
+                                                card_view:cardElevation="0dp"
+                                                android:background="@drawable/box"
+                                                android:orientation="vertical"
+                                                app:cardElevation="0dp"
+                                                app:layout_constraintStart_toStartOf="parent"
+                                                >
+                                                <RelativeLayout
+                                                    android:id="@+id/et_merchantIDLay"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent">
+                                                    <EditText
+                                                        android:id="@+id/tv_merchant_link"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:background="@android:color/transparent"
+                                                        android:gravity="center"
+                                                        android:hint="@string/txt_enterMerchantID"
+                                                        android:ellipsize="end"
+                                                        android:lines="1"
+                                                        android:padding="@dimen/_5sdp"
+                                                        android:singleLine="true"
+                                                        android:textSize="@dimen/_10sdp"
+                                                        android:textStyle="bold" />
+                                                </RelativeLayout>
+                                            </androidx.cardview.widget.CardView>
+                                            <androidx.cardview.widget.CardView
+                                                android:id="@+id/et_merchantPassCardLay"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="@dimen/_30sdp"
+                                                android:layout_marginTop="@dimen/_10sdp"
+                                                android:backgroundTint="#20000000"
+                                                android:layout_below="@id/et_merchantIDCardLay"
+                                                app:cardCornerRadius="@dimen/_15sdp"
+                                                card_view:cardElevation="0dp"
+                                                android:background="@drawable/box"
+                                                android:orientation="vertical"
+                                                app:cardElevation="0dp"
+                                                app:layout_constraintStart_toStartOf="parent"
+                                                >
+                                                <RelativeLayout
+                                                    android:id="@+id/et_merchantPassLay"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent">
+
+                                                    <EditText
+                                                        android:id="@+id/tv_merchant_pass_link"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:background="@android:color/transparent"
+                                                        android:ellipsize="end"
+                                                        android:inputType="textPassword"
+                                                        android:gravity="center"
+                                                        android:hint="@string/enterboostpassword"
+                                                        android:lines="1"
+                                                        android:padding="@dimen/_5sdp"
+                                                        android:singleLine="true"
+                                                        android:textSize="@dimen/_10sdp"
+                                                        android:textStyle="bold" />
+                                                </RelativeLayout>
+                                            </androidx.cardview.widget.CardView>
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_below="@+id/et_merchantPassCardLay"
+                                                android:layout_marginTop="@dimen/_10sdp"
+                                                android:orientation="horizontal"
+                                                android:weightSum="2">
+                                                <Button
+                                                    android:id="@+id/btn_qr_scan"
+                                                    android:layout_width="@dimen/_100sdp"
+                                                    android:layout_height="@dimen/_30sdp"
+                                                    android:layout_marginRight="@dimen/_5sdp"
+                                                    android:layout_weight="1"
+                                                    android:background="@drawable/scanqr_btn"
+                                                    android:gravity="center"
+                                                    android:text="SCAN QR"
+                                                    android:textStyle="bold"
+                                                    android:textSize="@dimen/_12sdp"
+                                                    android:textColor="@color/white_color" />
+                                                <Button
+                                                    android:id="@+id/btn_connect"
+                                                    android:layout_width="@dimen/_100sdp"
+                                                    android:layout_height="@dimen/_30sdp"
+                                                    android:layout_marginLeft="@dimen/_5sdp"
+                                                    android:layout_weight="1"
+                                                    android:background="@drawable/connect_btn"
+                                                    android:gravity="center"
+                                                    android:text="CONNECT"
+                                                    android:textStyle="bold"
+                                                    android:textSize="@dimen/_12sdp"
+                                                    android:textColor="@color/white_color" />
+                                            </LinearLayout>
+                                        </RelativeLayout>
+
+                                    </RelativeLayout>
+                                </androidx.cardview.widget.CardView>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                        <View
+                            android:id="@+id/centerdivide"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_centerInParent="true">
+
+                        </View>
+                        <RelativeLayout
+                            android:id="@+id/bottomBGLay"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@+id/centerdivide">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_125sdp"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/btc_banner">
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+
+    <!--      footerLay-->
+    <RelativeLayout
+        android:id="@+id/footerlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <include layout="@layout/footer_layout2" />
+    </RelativeLayout>
+</RelativeLayout>

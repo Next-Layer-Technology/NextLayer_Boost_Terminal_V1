@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fullapp_bg">
+    <!--    headerlay-->
+    <RelativeLayout
+        android:id="@+id/rl_headerlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <include layout="@layout/header_layout_terminalpage" />
+    </RelativeLayout>
+
+
+    <!--bodyLay Open-->
+<!-- <androidx.core.widget.NestedScrollView-->
+<!--   android:layout_width="match_parent"-->
+<!--   android:layout_height="match_parent"-->
+<!--   android:layout_below="@+id/rl_headerlay"-->
+<!--   android:layout_above="@+id/rl_footerlay"-->
+<!--   android:layout_marginBottom="@dimen/_10sdp"-->
+<!--   android:fillViewport="true"-->
+<!--   android:scrollbars="none">-->
+
+        <LinearLayout
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_below="@+id/rl_headerlay"
+            android:layout_above="@+id/rl_footerlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_mainBodyLay1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rl_headerlay"
+                android:layout_marginBottom="@dimen/_10sdp">
+                <!--         Step 1 of 5 Open-->
+                <RelativeLayout
+                    android:id="@+id/rl_mainBodyLay2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/_30sdp"
+                    android:paddingRight="@dimen/_30sdp"
+                    android:visibility="visible">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_step1lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/rl_step1lay_cv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#20000000"
+                            android:orientation="vertical"
+                            app:cardCornerRadius="@dimen/_25sdp"
+                            app:cardElevation="0dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            card_view:cardElevation="0dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_2sdp">
+                                <!--                       RegistrationTitle Lay-->
+                                <RelativeLayout
+                                    android:id="@+id/rl_registrationTitle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentTop="true"
+                                    android:padding="@dimen/_1sdp">
+
+                                    <RelativeLayout
+                                        android:id="@+id/registrationTitleLay"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:id="@+id/registrationTitle"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_18sdp"
+                                            android:gravity="center_horizontal"
+                                            android:text="@string/registration"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_13sdp"
+                                            android:textStyle="bold" />
+                                    </RelativeLayout>
+
+                                    <RelativeLayout
+                                        android:layout_width="@dimen/_100sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_below="@+id/registrationTitleLay"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:background="@drawable/stepsbg">
+
+                                        <TextView
+                                            android:id="@+id/tv_step_text"
+                                            android:padding="@dimen/_1sdp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:text="Step 1 of 5"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/colorWhite"
+                                            android:textSize="@dimen/_12sdp"
+                                            android:textStyle="bold" />
+                                    </RelativeLayout>
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/scrolview3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_above="@+id/bottomnextbacklay"
+                                    android:layout_below="@+id/rl_registrationTitle"
+                                    android:background="@android:color/transparent">
+
+                                    <LinearLayout
+                                        android:id="@+id/registerstep1layy2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:paddingLeft="@dimen/_15sdp"
+                                        android:paddingRight="@dimen/_15sdp">
+
+                                        <LinearLayout
+                                            android:id="@+id/registration_layout_step_1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:orientation="vertical"
+                                            android:visibility="visible">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent">
+
+
+                                                <LinearLayout
+                                                    android:layout_centerInParent="true"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="vertical"
+                                                    android:padding="@dimen/_2sdp">
+
+                                                    <androidx.cardview.widget.CardView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        card_view:cardElevation="0dp"
+                                                        app:cardCornerRadius="@dimen/_15sdp"
+                                                        android:layout_marginTop="@dimen/_5sdp"
+                                                        android:backgroundTint="#20000000"
+                                                        android:orientation="vertical"
+                                                        app:cardElevation="0dp"
+                                                        app:layout_constraintStart_toStartOf="parent"
+                                                        >
+                                                        <RelativeLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:padding="@dimen/_5sdp"
+                                                            >
+                                                            <EditText
+                                                                android:layout_marginLeft="@dimen/_5sdp"
+                                                                android:id="@+id/et_client_name"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:singleLine="true"
+                                                                android:textSize="@dimen/_10sdp"
+                                                                android:background="@android:color/transparent"
+                                                                android:inputType="textPersonName"
+                                                                android:hint="Name" />
+                                                        </RelativeLayout>
+                                                    </androidx.cardview.widget.CardView>
+
+                                                    <androidx.cardview.widget.CardView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="@dimen/_5sdp"
+                                                        android:backgroundTint="#20000000"
+                                                        android:orientation="vertical"
+                                                        app:cardCornerRadius="@dimen/_15sdp"
+                                                        app:cardElevation="0dp"
+                                                        app:layout_constraintStart_toStartOf="parent"
+                                                        card_view:cardElevation="0dp">
+
+                                                        <RelativeLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:padding="@dimen/_5sdp">
+
+                                                            <EditText
+                                                                android:id="@+id/et_client_national_id"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_marginLeft="@dimen/_5sdp"
+                                                                android:background="@android:color/transparent"
+                                                                android:ellipsize="end"
+                                                                android:hint="ID Number"
+                                                                android:textSize="@dimen/_10sdp"
+                                                                android:inputType="text"
+                                                                android:maxLines="1"
+                                                                android:singleLine="true" />
+
+                                                        </RelativeLayout>
+                                                    </androidx.cardview.widget.CardView>
+
+
+                                                    <androidx.cardview.widget.CardView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="@dimen/_5sdp"
+                                                        android:backgroundTint="#20000000"
+                                                        android:orientation="vertical"
+                                                        app:cardCornerRadius="@dimen/_15sdp"
+                                                        app:cardElevation="0dp"
+                                                        app:layout_constraintStart_toStartOf="parent"
+                                                        card_view:cardElevation="0dp">
+
+                                                        <RelativeLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:padding="@dimen/_5sdp">
+
+                                                            <EditText
+                                                                android:id="@+id/et_client_email"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_marginLeft="@dimen/_5sdp"
+                                                                android:background="@android:color/transparent"
+                                                                android:ellipsize="end"
+                                                                android:hint="Email"
+                                                                android:textSize="@dimen/_10sdp"
+                                                                android:inputType="textEmailAddress"
+                                                                android:singleLine="true"
+                                                                android:visibility="visible" />
+
+                                                        </RelativeLayout>
+                                                    </androidx.cardview.widget.CardView>
+
+                                                    <androidx.cardview.widget.CardView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="@dimen/_5sdp"
+                                                        android:backgroundTint="#20000000"
+                                                        android:orientation="vertical"
+                                                        app:cardCornerRadius="@dimen/_15sdp"
+                                                        app:cardElevation="0dp"
+                                                        app:layout_constraintStart_toStartOf="parent"
+                                                        card_view:cardElevation="0dp">
+
+                                                        <RelativeLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:padding="@dimen/_5sdp">
+
+                                                            <EditText
+                                                                android:id="@+id/et_client_address"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_marginLeft="@dimen/_5sdp"
+                                                                android:background="@android:color/transparent"
+                                                                android:ellipsize="end"
+                                                                android:hint="Address"
+                                                                android:textSize="@dimen/_10sdp"
+                                                                android:singleLine="true" />
+
+                                                        </RelativeLayout>
+                                                    </androidx.cardview.widget.CardView>
+
+                                                    <androidx.cardview.widget.CardView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        card_view:cardElevation="0dp"
+                                                        app:cardCornerRadius="@dimen/_15sdp"
+                                                        android:layout_marginTop="@dimen/_5sdp"
+                                                        android:backgroundTint="#20000000"
+                                                        android:orientation="vertical"
+                                                        app:cardElevation="0dp"
+                                                        app:layout_constraintStart_toStartOf="parent"
+                                                        >
+
+                                                        <RelativeLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:padding="@dimen/_5sdp">
+                                                            <EditText
+                                                                android:layout_marginLeft="@dimen/_5sdp"
+                                                                android:id="@+id/et_client_date"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:textSize="@dimen/_10sdp"
+                                                                android:background="@android:color/transparent"
+                                                                android:hint="DOB" />
+
+                                                        </RelativeLayout>
+
+                                                    </androidx.cardview.widget.CardView>
+
+                                                    <RelativeLayout
+                                                        android:id="@+id/is_gamma_user_check"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="@dimen/_8sdp"
+                                                        android:layout_marginBottom="@dimen/_8sdp">
+
+                                                        <ImageView
+                                                            android:id="@+id/iv_not_gamma_user"
+                                                            android:layout_width="@dimen/_20sdp"
+                                                            android:layout_height="@dimen/_20sdp"
+                                                            android:layout_alignParentStart="true"
+                                                            android:layout_centerVertical="true"
+                                                            android:background="@drawable/ic_check_box_outline" />
+
+                                                        <ImageView
+                                                            android:id="@+id/iv_gamma_user"
+                                                            android:layout_width="@dimen/_20sdp"
+                                                            android:layout_height="@dimen/_20sdp"
+                                                            android:layout_alignParentStart="true"
+                                                            android:layout_centerVertical="true"
+                                                            android:background="@drawable/checkblack"
+                                                            android:visibility="visible" />
+
+                                                        <TextView
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_centerVertical="true"
+                                                            android:layout_marginStart="@dimen/_2sdp"
+                                                            android:layout_toEndOf="@id/iv_not_gamma_user"
+                                                            android:text="Is the user signing up as a Next Layer Wallet Client??"
+                                                            android:textColor="@android:color/black"
+                                                            android:textSize="@dimen/_10sdp" />
+                                                    </RelativeLayout>
+                                                    <androidx.cardview.widget.CardView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="@dimen/_5sdp"
+                                                        android:backgroundTint="#20000000"
+                                                        android:orientation="vertical"
+                                                        app:cardCornerRadius="@dimen/_15sdp"
+                                                        app:cardElevation="0dp"
+                                                        app:layout_constraintStart_toStartOf="parent"
+                                                        card_view:cardElevation="0dp">
+
+                                                        <RelativeLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:padding="@dimen/_5sdp">
+
+                                                            <EditText
+                                                                android:id="@+id/et_client_user_id"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_marginLeft="@dimen/_5sdp"
+                                                                android:background="@android:color/transparent"
+                                                                android:ellipsize="end"
+                                                                android:visibility="gone"
+                                                                android:hint="Base ID"
+                                                                android:inputType="text"
+                                                                android:maxLines="1"
+                                                                android:singleLine="true" />
+
+                                                        </RelativeLayout>
+                                                    </androidx.cardview.widget.CardView>
+
+                                                </LinearLayout>
+                                            </RelativeLayout>
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/registration_layout_step_2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:visibility="gone">
+
+                                            <LinearLayout
+                                                android:id="@+id/select_picture_of_id"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginStart="@dimen/_20sdp"
+                                                android:layout_marginTop="@dimen/_20sdp"
+                                                android:layout_marginEnd="@dimen/_20sdp"
+                                                android:layout_marginBottom="@dimen/_20sdp"
+                                                android:background="@drawable/phtoidentification_bg"
+                                                android:orientation="vertical">
+
+                                                <TextView
+                                                    android:id="@+id/show_id_picture_text"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:gravity="center"
+                                                    android:padding="@dimen/_5sdp"
+                                                    android:text="@string/photoidentification"
+                                                    android:textColor="@color/colorWhite"
+                                                    android:textSize="@dimen/_20sdp" />
+
+                                                <ImageView
+                                                    android:id="@+id/show_id_picture"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="@dimen/_200sdp"
+                                                    android:scaleType="fitXY"
+                                                    android:visibility="gone" />
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/registration_layout_step_3"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:visibility="gone">
+
+                                            <LinearLayout
+                                                android:id="@+id/select_client_picture"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginStart="@dimen/_20sdp"
+                                                android:layout_marginTop="@dimen/_20sdp"
+                                                android:layout_marginEnd="@dimen/_20sdp"
+                                                android:layout_marginBottom="@dimen/_20sdp"
+                                                android:background="@drawable/phtoidentification_bg"
+                                                android:orientation="vertical">
+
+                                                <TextView
+                                                    android:id="@+id/show_client_picture_text"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:gravity="center"
+                                                    android:padding="@dimen/_5sdp"
+                                                    android:text="Photo Of Client"
+                                                    android:textColor="@color/colorWhite"
+                                                    android:textSize="@dimen/_20sdp" />
+
+                                                <ImageView
+                                                    android:id="@+id/show_client_picture"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="@dimen/_200sdp"
+                                                    android:scaleType="fitXY"
+                                                    android:visibility="gone" />
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/registration_layout_step_4"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:visibility="gone">
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:orientation="vertical">
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="@dimen/_20sdp">
+
+                                                    <RelativeLayout
+                                                        android:id="@+id/select_normal_option"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                       >
+
+                                                        <de.hdodenhof.circleimageview.CircleImageView
+                                                            android:id="@+id/iv_normal_un_selected"
+                                                            android:layout_width="@dimen/_20sdp"
+                                                            android:layout_height="@dimen/_20sdp"
+                                                            android:layout_alignParentStart="true"
+                                                            android:layout_centerVertical="true"
+                                                            android:background="@drawable/ic_radio_button_unchecked" />
+
+                                                        <de.hdodenhof.circleimageview.CircleImageView
+                                                            android:id="@+id/iv_normal_selected"
+                                                            android:layout_width="@dimen/_20sdp"
+                                                            android:layout_height="@dimen/_20sdp"
+                                                            android:layout_alignParentStart="true"
+                                                            android:layout_centerVertical="true"
+                                                            android:background="@drawable/ic_radio_button_checked"
+                                                            android:visibility="gone" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_normal"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_alignParentEnd="true"
+                                                            android:layout_centerVertical="true"
+                                                            android:layout_marginStart="@dimen/_10sdp"
+                                                            android:layout_toEndOf="@id/iv_normal_un_selected"
+                                                            android:text="Normal (Takes a few business days)"
+                                                            android:textColor="@color/colorBlack"
+                                                            android:textSize="@dimen/_10sdp" />
+
+                                                    </RelativeLayout>
+
+                                                    <RelativeLayout
+                                                        android:id="@+id/select_instant_option"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_below="@+id/select_normal_option"
+                                                        android:layout_marginTop="@dimen/_10sdp">
+
+                                                        <de.hdodenhof.circleimageview.CircleImageView
+                                                            android:id="@+id/iv_instant_un_selected"
+                                                            android:layout_width="@dimen/_20sdp"
+                                                            android:layout_height="@dimen/_20sdp"
+                                                            android:layout_alignParentStart="true"
+                                                            android:layout_centerVertical="true"
+                                                            android:background="@drawable/ic_radio_button_unchecked" />
+
+                                                        <de.hdodenhof.circleimageview.CircleImageView
+                                                            android:id="@+id/iv_instant_selected"
+                                                            android:layout_width="@dimen/_20sdp"
+                                                            android:layout_height="@dimen/_20sdp"
+                                                            android:layout_alignParentStart="true"
+                                                            android:layout_centerVertical="true"
+                                                            android:background="@drawable/ic_radio_button_checked"
+                                                            android:visibility="gone" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_instant"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_alignParentEnd="true"
+                                                            android:layout_centerVertical="true"
+                                                            android:layout_marginStart="@dimen/_10sdp"
+                                                            android:layout_toEndOf="@id/iv_instant_un_selected"
+                                                            android:text="Instant (For a fee)"
+                                                            android:textColor="@color/colorBlack"
+                                                            android:textSize="@dimen/_10sdp" />
+
+                                                    </RelativeLayout>
+
+                                                </RelativeLayout>
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/registration_layout_step_5"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:padding="@dimen/_20sdp"
+                                            android:visibility="gone">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:gravity="center"
+                                                android:text="Thank you we will process your verification ASAP!\nWelcome Aboard\nThe Lightning Network"
+                                                android:textColor="@color/blackish_custom_color"
+                                                android:textSize="@dimen/_14sdp" />
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/bottomnextbacklay"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    android:gravity="center_vertical"
+                                    android:layout_marginLeft="@dimen/_15sdp"
+                                    android:layout_marginRight="@dimen/_15sdp"
+
+                                    android:padding="@dimen/_5sdp">
+
+                                    <Button
+                                        android:id="@+id/btn_back"
+                                        android:layout_width="@dimen/_80sdp"
+                                        android:layout_height="@dimen/_25sdp"
+                                        android:layout_alignParentLeft="true"
+                                        android:background="@drawable/scanqr_btn"
+                                        android:gravity="center"
+                                        android:text="BACK"
+                                        android:textSize="@dimen/_10sdp"
+                                        android:textColor="@color/white_color" />
+
+                                    <Button
+                                        android:id="@+id/btn_next"
+                                        android:layout_width="@dimen/_80sdp"
+                                        android:layout_height="@dimen/_25sdp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginRight="10dp"
+                                        android:background="@drawable/connect_btn"
+                                        android:gravity="center"
+                                        android:text="NEXT"
+                                        android:textColor="@color/white_color"
+                                        android:textSize="@dimen/_10sdp" />
+                                </RelativeLayout>
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+<!--    </androidx.core.widget.NestedScrollView>-->
+    <!--      footerLay-->
+    <RelativeLayout
+        android:id="@+id/rl_footerlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <include layout="@layout/footer_layout2" />
+    </RelativeLayout>
+
+</RelativeLayout>

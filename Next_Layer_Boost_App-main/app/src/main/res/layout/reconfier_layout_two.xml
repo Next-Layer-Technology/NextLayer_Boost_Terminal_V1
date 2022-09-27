@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="@dimen/_25sdp"
+        card_view:cardElevation="0dp">
+
+        <RelativeLayout
+            android:padding="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_marginTop="@dimen/_10sdp"
+                android:id="@+id/headerlay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentTop="true">
+
+                <ImageView
+                    android:id="@+id/backimage"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:src="@drawable/arrowpopup" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Registration   Verification"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="none"
+                android:layout_above="@+id/footerla"
+                android:layout_below="@+id/headerlay">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/_10sdp">
+                           
+                                <RelativeLayout
+                                    android:layout_alignParentTop="true"
+                                    android:id="@+id/innerLay1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_80sdp">
+                                    <RelativeLayout
+                                        android:id="@+id/innerLay11"
+                                        android:layout_width="@dimen/_100sdp"
+                                        android:layout_height="match_parent">
+                                        <TextView
+                                            android:text="Profile Photo"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="bold"
+                                            android:gravity="center_vertical"
+                                            android:textColor="@color/colorBlack"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent">
+                                            
+                                        </TextView>
+                                        
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                       android:layout_toRightOf="@+id/innerLay11"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <ImageView
+                                            android:id="@+id/profileimage"
+                                            android:layout_width="@dimen/_70sdp"
+                                            android:layout_height="@dimen/_70sdp"
+                                            android:layout_centerInParent="true"
+                                            android:src="@color/cardview_light_background" />
+                                        
+                                    </RelativeLayout>
+                                    
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_below="@+id/innerLay1"
+                                    android:id="@+id/innerLay2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_80sdp">
+                                    <RelativeLayout
+                                        android:id="@+id/innerLay21"
+                                        android:layout_width="@dimen/_100sdp"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center_vertical"
+                                            android:text="NIC Photo"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="bold">
+
+                                        </TextView>
+
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_toRightOf="@+id/innerLay21"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <ImageView
+                                            android:layout_centerInParent="true"
+                                            android:id="@+id/nicimage"
+                                            android:layout_width="@dimen/_70sdp"
+                                            android:layout_height="@dimen/_70sdp"
+                                            android:src="@color/cardview_light_background" />
+
+                                    </RelativeLayout>
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_below="@+id/innerLay2"
+                                    android:id="@+id/innerLay3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_50sdp">
+                                    <RelativeLayout
+                                        android:id="@+id/innerLay31"
+                                        android:layout_width="@dimen/_100sdp"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center_vertical"
+                                            android:text="Name"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="bold">
+
+                                        </TextView>
+
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_toRightOf="@+id/innerLay31"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <TextView
+                                            android:id="@+id/name"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:ellipsize="end"
+                                            android:maxLines="1"
+                                            android:gravity="center_vertical"
+                                            android:singleLine="true"
+                                            android:text="Name"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="normal" />
+
+
+                                    </RelativeLayout>
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_below="@+id/innerLay3"
+                                    android:id="@+id/innerLay4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_50sdp">
+                                    <RelativeLayout
+                                        android:id="@+id/innerLay41"
+                                        android:layout_width="@dimen/_100sdp"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center_vertical"
+                                            android:text="NIC"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="bold">
+
+                                        </TextView>
+
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_toRightOf="@+id/innerLay41"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <TextView
+                                            android:id="@+id/nic"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:ellipsize="end"
+                                            android:maxLines="1"
+                                            android:gravity="center_vertical"
+                                            android:singleLine="true"
+                                            android:text="NIC1234567890"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="normal" />
+                                    </RelativeLayout>
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_below="@+id/innerLay4"
+                                    android:id="@+id/innerLay5"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_50sdp">
+                                    <RelativeLayout
+                                        android:id="@+id/innerLay51"
+                                        android:layout_width="@dimen/_100sdp"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center_vertical"
+                                            android:text="Email"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="bold">
+
+                                        </TextView>
+
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_toRightOf="@+id/innerLay51"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <TextView
+                                            android:id="@+id/email"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:ellipsize="end"
+                                            android:maxLines="1"
+                                            android:gravity="center_vertical"
+                                            android:singleLine="true"
+                                            android:text="example@email.com"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="normal" />
+                                    </RelativeLayout>
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_below="@+id/innerLay5"
+                                    android:id="@+id/innerLay6"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_50sdp">
+                                    <RelativeLayout
+                                        android:id="@+id/innerLay61"
+                                        android:layout_width="@dimen/_100sdp"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center_vertical"
+                                            android:text="Address"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="bold">
+
+                                        </TextView>
+
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_toRightOf="@+id/innerLay61"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <TextView
+                                            android:id="@+id/address"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:ellipsize="end"
+                                            android:maxLines="1"
+                                            android:gravity="center_vertical"
+                                            android:singleLine="true"
+                                            android:text="Street 35 ,B Block Karachi Pakistan"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="normal" />
+
+                                    </RelativeLayout>
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_below="@+id/innerLay6"
+                                    android:id="@+id/innerLay7"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_50sdp">
+                                    <RelativeLayout
+                                        android:id="@+id/innerLay71"
+                                        android:layout_width="@dimen/_100sdp"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center_vertical"
+                                            android:text="DOB"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="bold">
+
+                                        </TextView>
+
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_toRightOf="@+id/innerLay71"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <TextView
+                                            android:id="@+id/dob"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:ellipsize="end"
+                                            android:maxLines="1"
+                                            android:gravity="center_vertical"
+                                            android:singleLine="true"
+                                            android:text="Jan 11,2020"                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="normal" />
+
+                                    </RelativeLayout>
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_below="@+id/innerLay7"
+                                    android:id="@+id/innerLay8"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_50sdp">
+                                    <RelativeLayout
+                                        android:id="@+id/innerLay81"
+                                        android:layout_width="@dimen/_100sdp"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center_vertical"
+                                            android:text="Gamma User"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="bold">
+
+                                        </TextView>
+
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_toRightOf="@+id/innerLay81"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <TextView
+                                            android:id="@+id/gammauser"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:ellipsize="end"
+                                            android:maxLines="1"
+                                            android:gravity="center_vertical"
+                                            android:singleLine="true"
+                                            android:text="Yes/No"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="normal" />
+                                    </RelativeLayout>
+                                </RelativeLayout>
+                                
+                          
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+            <RelativeLayout
+                android:id="@+id/footerla"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_alignParentBottom="true"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/confirm"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/conimnewbtn"
+                    android:gravity="center"
+                    android:text="Confirm"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/white_color">
+
+                </Button>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

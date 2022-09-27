@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">CLightBoost</string>
+
+
+    <string name="client_id"><u>Client ID</u></string>
+    <string name="merchant_link"><u>Merchant Link</u></string>
+    <string name="registration"><u>Registration</u></string>
+    <string name="notasovereignpartneryet">Not a sovereign partner yet?</string>
+     <string name="EnterNodeID">Enter Node ID</string>
+    <string name="proceed">Proceed</string>
+    <string name="empty">Field cannot be left blank.</string>
+
+    <string name="enterboostpassword">Enter Boost Password</string>
+    <string name="entertwofapassword">Enter 2FA Password</string>
+    <string name="merchantid">Merchant ID</string>
+    <string name="clientid">Client ID</string>
+    <string name="nodeid">Node ID</string>
+    <string name="recnodeid">Receiving Wallet ID</string>
+
+    <string name="register">REGISTER</string>
+
+    <string name="photoidentification">Photo of ID Card</string>
+    <string name="txt_enterMerchantID">Enter Merchant ID</string>
+    <string name="txt_enterClientID">Enter Client ID</string>
+    <string name="txt_enterBoostAmount">Enter Boost Amount</string>
+    <string name="txt_enterNodetID">Enter Node ID</string>
+    <string name="invoice_made_for_incorrect_value">"The invoice is not for the proper amount. Please enter invoice with correct amount "</string>
+    <string name="channel">{
+\"event\": \"bts:subscribe\",
+\"data\": {
+\"channel\": \"live_trades_btcusd\"
+}
+}</string>
+</resources>

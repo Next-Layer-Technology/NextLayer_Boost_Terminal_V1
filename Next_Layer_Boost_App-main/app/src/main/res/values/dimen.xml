@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <dimen name="decent_icon_at_bottom_height">@dimen/_20sdp</dimen>
+    <dimen name="decent_icon_at_bottom_width">@dimen/_130sdp</dimen>
+    <dimen name="register_btn_width">@dimen/_140sdp</dimen>
+    <dimen name="register_btn_height">@dimen/_40sdp</dimen>
+
+    
+</resources>
