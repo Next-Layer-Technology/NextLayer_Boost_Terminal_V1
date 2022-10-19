@@ -130,6 +130,11 @@ import tech.gusavila92.websocketclient.WebSocketClient;
         }
 
         createWebSocketClient();
+
+
+
+
+
     }
     private void createWebSocketClient() {
         URI uri;
@@ -225,7 +230,7 @@ import tech.gusavila92.websocketclient.WebSocketClient;
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-    private void findMerchant(final String id,final String password) throws JSONException {
+    private void  findMerchant(final String id,final String password) throws JSONException {
         progressDialog.show();
         JsonObject paramObject = new JsonObject();
         paramObject.addProperty("user_id", id);

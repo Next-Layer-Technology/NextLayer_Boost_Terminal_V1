@@ -10,6 +10,7 @@ import com.sis.clighteningboost.Models.REST.ClientUpdateResp;
 import com.sis.clighteningboost.Models.REST.FundingNodeListResp;
 import com.sis.clighteningboost.Models.REST.MerchantListResp;
 import com.sis.clighteningboost.Models.REST.MerchantLoginResp;
+import com.sis.clighteningboost.Models.REST.MerchantNearbyClientResp;
 import com.sis.clighteningboost.Models.REST.MerchantUpdateResp;
 import com.sis.clighteningboost.Models.REST.RegistrationClientResp;
 import com.sis.clighteningboost.Models.REST.RoutingNodeListResp;
@@ -153,4 +154,11 @@ public interface ApiInterface {
             @Field("transaction_timestamp") String transaction_timestamp,
             @Field("conversion_rate") String conversion_rate
     );
+
+
+    //TODO: Merchant Near by Clients API
+    @Headers("Accept: application/json")
+    @GET("merchant_nearby_clients")
+    Call<MerchantNearbyClientResp> merchant_nearby_clients(
+            @Header("Authorization")String token);
 }

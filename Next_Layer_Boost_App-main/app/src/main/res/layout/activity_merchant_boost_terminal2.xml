@@ -469,6 +469,7 @@
                                                 android:lines="1"
                                                 android:padding="@dimen/_5sdp"
                                                 android:singleLine="true"
+                                                android:editable="false"
 
                                                 android:textSize="@dimen/_10sdp"
                                                 android:textStyle="bold"></EditText>
