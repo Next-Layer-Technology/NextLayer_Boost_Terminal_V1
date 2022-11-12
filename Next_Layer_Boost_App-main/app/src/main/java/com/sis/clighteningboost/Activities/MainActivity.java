@@ -13,15 +13,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.sis.clighteningboost.Api.ApiClient;
 import com.sis.clighteningboost.Api.ApiInterface;
 import com.sis.clighteningboost.BitCoinPojo.CurrentAllRate;
+import com.sis.clighteningboost.Dialog.BoostNodeDialog;
 import com.sis.clighteningboost.Models.REST.ClientData;
 import com.sis.clighteningboost.Models.REST.ClientLoginResp;
 import com.sis.clighteningboost.Models.REST.MerchantData;
+import com.sis.clighteningboost.Models.REST.MerchantNearbyClientResp;
 import com.sis.clighteningboost.Models.TradeSocketResponse;
 import com.sis.clighteningboost.R;
 import com.sis.clighteningboost.Utills.GlobalState;
@@ -33,8 +38,16 @@ import org.json.JSONObject;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,6 +66,9 @@ public class MainActivity extends BaseActivity {
     TextView btcprice,tv_not_a_sovereign_partner_yet;
     int mode=0;
     String clientID="";
+    Socket mSocket;
+    boolean mOnMsgReceived=false;
+    String mReceivingNodeId="";
 
     private WebSocketClient webSocketClient;
     @Override
@@ -76,40 +92,74 @@ public class MainActivity extends BaseActivity {
         merchantData=GlobalState.getInstance().getMainMerchantData();
 //        tv_client_id.setText(merchantData.getMerchant_maxboost());
         st = new StaticClass(this);
-        progressDialog = new ProgressDialog(this);
+        findViewById(R.id.flashpay_btn).setOnClickListener(view -> {
+                findNearbyClientforMerchant();
+        });
 
+        progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Connecting....");
         progressDialog.setCancelable(false);
         sp = new SharedPreference(this,"local_data");
-        findViewById(R.id.btn_connect).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hoverEffect(view);
-                String id = tv_client_id.getText().toString();
-                if(id.length()==0){
-                    st.toast("Please enter client id");
-                    return;}
-                findClient(id);
-            }
+        createSocketIOInstance();
+
+        findViewById(R.id.btn_connect).setOnClickListener(view -> {
+            hoverEffect(view);
+            String id = tv_client_id.getText().toString();
+            if(id.length()==0){
+                st.toast("Please enter client id");
+                return;}
+            findClient(id);
         });
 
-        findViewById(R.id.btn_register).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hoverEffect(view);
-                openActivity(Registration.class);
-            }
+        findViewById(R.id.btn_register).setOnClickListener(view -> {
+            hoverEffect(view);
+            openActivity(Registration.class);
         });
-        findViewById(R.id.btn_qr_scan_on_client_screen).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hoverEffect(view);
-               // String id = tv_client_id.getText().toString();
-                scannerIntentClientID();
- }
-        });
+        findViewById(R.id.btn_qr_scan_on_client_screen).setOnClickListener(view -> {
+            hoverEffect(view);
+           // String id = tv_client_id.getText().toString();
+            scannerIntentClientID();
+});
 
         createWebSocketClient();
+    }
+
+    public void findNearbyClientforMerchant() {
+        progressDialog.show();
+        String accessToken=sp.getStringValue("accessToken");
+        String token="Bearer"+" "+accessToken;
+
+        Log.d("Socket",mSocket.connected()+" "+mSocket.id());
+
+        Call<MerchantNearbyClientResp> call = ApiClient.getRetrofit().create(ApiInterface.class).merchant_nearby_clients(token);
+        call.enqueue(new Callback<MerchantNearbyClientResp>() {
+            @Override
+            public void onResponse(@NonNull Call<MerchantNearbyClientResp> call, @NonNull Response<MerchantNearbyClientResp> response) {
+
+                if(response.isSuccessful()){
+                    MerchantNearbyClientResp merchantNearbyClientResp = response.body();
+                    if(merchantNearbyClientResp!=null && !merchantNearbyClientResp.getMerchantDataList().isEmpty()){
+                        showPopup(new BoostNodeDialog(MainActivity.this,true,merchantNearbyClientResp.getMerchantDataList(),mSocket));
+                    }else {
+                        Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(MainActivity.this,"Token Expired", Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MerchantNearbyClientResp> call, @NonNull Throwable t) {
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    private void showPopup(BoostNodeDialog nodeDialog) {
+        nodeDialog.isCancelable();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        nodeDialog.show(fragmentManager, TAG);
     }
 
     private void createWebSocketClient() {
@@ -370,5 +420,35 @@ public class MainActivity extends BaseActivity {
         goAlertDialogwithOneBTnDialog.show();
 
     }
+    private Emitter.Listener onServerConnect = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.e("Response", "onServerConnected");
+        }
+    };
+
+    private void createSocketIOInstance() {
+        String accessToken=sp.getStringValue("accessToken");
+
+        IO.Options options = new IO.Options();
+        Map<String, List<String>> headers = new HashMap<>();
+        String bearer = "Bearer "+accessToken;
+        headers.put("Authorization", Arrays.asList(bearer));
+        options.extraHeaders = headers;
+
+        try {
+            mSocket = IO.socket("https://realtime.nextlayer.live",options);
+            mSocket.connect();
+       } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
 
 }

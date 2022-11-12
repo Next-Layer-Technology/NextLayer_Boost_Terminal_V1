@@ -20,5 +20,5 @@
     <color name="colorOrange">#292727</color>
     <color name="colorYellow">#292727</color>
     <color name="colorBlue">#6200EE</color>
-
+    <color name="black">#FF000000</color>
 </resources>

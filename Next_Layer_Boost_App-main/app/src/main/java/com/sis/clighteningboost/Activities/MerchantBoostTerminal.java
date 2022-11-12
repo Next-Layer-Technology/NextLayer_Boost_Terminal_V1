@@ -182,6 +182,10 @@ public class MerchantBoostTerminal extends BaseActivity {
     private String invoiceId;
     private String lockTimeStamp;
 
+
+
+    private String receivingNodeId = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -251,6 +255,16 @@ public class MerchantBoostTerminal extends BaseActivity {
         }else {
 
         }
+        if(getIntent().getStringExtra("node_id")!=null && !getIntent().getStringExtra("node_id").isEmpty())
+            receivingNodeId = getIntent().getStringExtra("node_id");
+
+        EditText et_clientnodeid=findViewById(R.id.et_clientnodeid);
+        et_clientnodeid.setText(receivingNodeId);
+
+        Button proceed = findViewById(R.id.btn_proceed_for_node);
+        proceed.performClick();
+
+
         findViewById(R.id.btn_logout).setVisibility(View.VISIBLE);
         findViewById(R.id.btn_logout).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,7 +330,7 @@ public class MerchantBoostTerminal extends BaseActivity {
                 //decodeBolt1122(bolt11);
             }
         });
-        findViewById(R.id.btn_proceed_for_node).setOnClickListener(new View.OnClickListener() {
+       proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText et_clientnodeid=findViewById(R.id.et_clientnodeid);

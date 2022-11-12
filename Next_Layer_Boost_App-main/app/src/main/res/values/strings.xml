@@ -6,7 +6,7 @@
     <string name="merchant_link"><u>Merchant Link</u></string>
     <string name="registration"><u>Registration</u></string>
     <string name="notasovereignpartneryet">Not a sovereign partner yet?</string>
-     <string name="EnterNodeID">Enter Node ID</string>
+    <string name="EnterNodeID">Enter Node ID</string>
     <string name="proceed">Proceed</string>
     <string name="empty">Field cannot be left blank.</string>
 
