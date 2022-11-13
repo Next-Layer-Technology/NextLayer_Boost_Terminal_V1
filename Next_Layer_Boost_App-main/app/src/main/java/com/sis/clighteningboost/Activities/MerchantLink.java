@@ -108,6 +108,8 @@ import tech.gusavila92.websocketclient.WebSocketClient;
                 }
                 try {
                     findMerchant(id,pass);
+                    tv_merchant_link.setText("");
+                    tv_merchant_link_pass.setText("");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -120,20 +122,17 @@ import tech.gusavila92.websocketclient.WebSocketClient;
             }
         });
 
-        if(sp.getStringValue("merchant_id") != null && !sp.getStringValue("merchant_id").equalsIgnoreCase("") && sp.getStringValue("merchant_password") != null && !sp.getStringValue("merchant_password").equalsIgnoreCase("")){
-            try {
-                findMerchant(sp.getStringValue("merchant_id"),sp.getStringValue("merchant_password"));
-            } catch (JSONException e) {
-                progressDialog.dismiss();
-                e.printStackTrace();
-            }
-        }
+//        if(sp.getStringValue("merchant_id") != null && !sp.getStringValue("merchant_id").equalsIgnoreCase("") && sp.getStringValue("merchant_password") != null && !sp.getStringValue("merchant_password").equalsIgnoreCase("")){
+//            try {
+//                findMerchant(sp.getStringValue("merchant_id"),sp.getStringValue("merchant_password"));
+//            } catch (JSONException e) {
+//                progressDialog.dismiss();
+//                e.printStackTrace();
+//            }
+//        }
+
 
         createWebSocketClient();
-
-
-
-
 
     }
     private void createWebSocketClient() {
