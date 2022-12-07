@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentResolver;
@@ -18,6 +19,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -166,6 +168,10 @@ public class Registration extends BaseActivity {
     private String authLevel1;
     private String authLevel2;
 
+    Handler handler;
+    Runnable r;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,6 +202,17 @@ public class Registration extends BaseActivity {
         progressDialog.setMessage("Registering...");
         progressDialog.setCancelable(false);
         //input fields
+        handler = new Handler();
+        r = new Runnable() {
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                Registration.this.finish();            }
+        };
+        startHandler();
+        new ScreenReceiver();
+
         et_client_name = findViewById(R.id.et_client_name);
         et_client_national_id = findViewById(R.id.et_client_national_id);
         et_client_user_id=findViewById(R.id.et_client_user_id);
@@ -2295,6 +2312,40 @@ public class Registration extends BaseActivity {
         });
         goAlertDialogwithOneBTnDialog.show();
 
+    }
+    @Override
+    public void onUserInteraction() {
+        // TODO Auto-generated method stub
+        super.onUserInteraction();
+        stopHandler();//stop first and then start
+        startHandler();
+    }
+    public void stopHandler() {
+        handler.removeCallbacks(r);
+    }
+    public void startHandler() {
+        handler.postDelayed(r, 5*60*1000); //for 5 minutes
+    }
+
+    private class ScreenReceiver extends BroadcastReceiver {
+
+        protected ScreenReceiver() {
+            // register receiver that handles screen on and screen off logic
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(Intent.ACTION_SCREEN_ON);
+            filter.addAction(Intent.ACTION_SCREEN_OFF);
+            registerReceiver(this, filter);
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+               Registration.this.finish();
+
+            } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                //isScreenOff = false;
+            }
+        }
     }
 
 }
