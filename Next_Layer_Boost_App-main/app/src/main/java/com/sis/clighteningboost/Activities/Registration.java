@@ -208,7 +208,10 @@ public class Registration extends BaseActivity {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                Registration.this.finish();            }
+                sp.clearAll();
+                openActivity(MerchantLink.class);
+                finishAffinity();
+            }
         };
         startHandler();
         new ScreenReceiver();
@@ -1150,6 +1153,7 @@ public class Registration extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
+                                sp.clearAll();
                                 openActivity(MerchantLink.class);
                             }
                         }).
@@ -2340,7 +2344,9 @@ public class Registration extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-               Registration.this.finish();
+                sp.clearAll();
+                openActivity(MerchantLink.class);
+                finishAffinity();
 
             } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
                 //isScreenOff = false;
