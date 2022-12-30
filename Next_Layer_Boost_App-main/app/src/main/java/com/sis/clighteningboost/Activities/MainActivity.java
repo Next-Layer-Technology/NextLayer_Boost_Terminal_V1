@@ -450,5 +450,4 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
     }
 
-
 }

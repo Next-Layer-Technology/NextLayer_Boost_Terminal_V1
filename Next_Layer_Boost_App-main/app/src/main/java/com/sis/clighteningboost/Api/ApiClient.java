@@ -2,6 +2,8 @@ package com.sis.clighteningboost.Api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -21,6 +23,9 @@ public class ApiClient {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient httpClient = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(50,TimeUnit.SECONDS)
+                .writeTimeout(60,TimeUnit.SECONDS)
                 .addNetworkInterceptor(httpLoggingInterceptor)
                 .build();
         출처: https://3edc.tistory.com/52 [Three SAL is sol sol]

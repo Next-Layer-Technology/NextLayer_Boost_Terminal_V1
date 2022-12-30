@@ -21,6 +21,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:grantUriPermissions="true"
         android:icon="@drawable/appicon"
@@ -41,6 +42,7 @@
         <activity
             android:name=".Activities.MerchantLink"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
@@ -52,26 +54,31 @@
         <activity
             android:name=".Activities.MerchantBoostTerminal"
             android:screenOrientation="portrait"
+            android:exported="false"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity"></activity>
         <activity
             android:name=".Activities.Registration"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
+            android:exported="false"
             tools:ignore="LockedOrientationActivity"></activity>
         <activity
             android:name=".Activities.MainActivity"
             android:screenOrientation="portrait"
+            android:exported="false"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity"></activity>
         <activity
             android:name=".Activities.NodeIDResponse"
             android:screenOrientation="portrait"
+            android:exported="false"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity"></activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
+            android:exported="false"
             tools:replace="screenOrientation" />
 
         <service

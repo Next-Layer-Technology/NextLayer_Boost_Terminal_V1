@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -22,11 +23,14 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.sis.clighteningboost.Interface.TimeOutListener;
+import com.sis.clighteningboost.MyApp;
 import com.sis.clighteningboost.RPC.CreateInvoice;
 import com.sis.clighteningboost.Utills.GlobalState;
 import com.sis.clighteningboost.RPC.Invoice;
 import com.sis.clighteningboost.RPC.Tax;
 import com.sis.clighteningboost.Utills.AppConstants;
+import com.sis.clighteningboost.Utills.SharedPreference;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -34,13 +38,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements TimeOutListener {
     String TAG="CLightBetaLog";
+    SharedPreference sp;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
      //   startService(new Intent(this, MyService.class));
+
+
+        ((MyApp) getApplication()).registerSessionListener(this);
+        ((MyApp) getApplication()).startUserTimeOut();
     }
     public Bitmap getBitMapFromHex(String hex) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
@@ -251,4 +260,21 @@ public class BaseActivity extends AppCompatActivity {
         }
         return date;
     }
+
+
+    @Override
+    public void onSessionTimeOut() {
+        sp.clearAll();
+        sp.saveStringValue("merchant_id", null);
+        Handler handler = new Handler();
+        final Runnable r = new Runnable() {
+            public void run() {
+                handler.postDelayed(this, 3000);
+                openActivity(MerchantLink.class);
+                finish();
+            }
+        };
+
+    }
+
 }
