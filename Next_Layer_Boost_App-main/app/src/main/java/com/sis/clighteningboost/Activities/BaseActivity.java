@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -40,19 +39,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-public class BaseActivity extends AppCompatActivity implements TimeOutListener {
+public class BaseActivity extends AppCompatActivity  {
     String TAG="CLightBetaLog";
-    SharedPreference sp;
+    public SharedPreference sp;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         sp = new SharedPreference(this,"local_data");
      //   startService(new Intent(this, MyService.class));
-
-
-        ((MyApp) getApplication()).registerSessionListener(this);
-        ((MyApp) getApplication()).startUserTimeOut();
     }
     public Bitmap getBitMapFromHex(String hex) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
@@ -264,15 +259,6 @@ public class BaseActivity extends AppCompatActivity implements TimeOutListener {
         return date;
     }
 
-
-    @Override
-    public void onSessionTimeOut() {
-        Log.d(this.getClass().getSimpleName(),"on session timed out");
-        sp.clearAll();
-        sp.saveStringValue("merchant_id", null);
-        openActivity(MerchantLink.class);
-        finish();
-    }
 
     public void hideSoftKeyBoard(){
         ViewCompat.getWindowInsetsController(getWindow().getDecorView()).hide(WindowInsetsCompat.Type.ime());

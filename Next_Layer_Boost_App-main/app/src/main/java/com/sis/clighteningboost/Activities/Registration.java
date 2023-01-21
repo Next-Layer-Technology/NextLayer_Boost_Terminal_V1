@@ -379,7 +379,6 @@ public class Registration extends BaseActivity {
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                ((MyApp) getApplication()).stopObserver();
                 if (items[i].equals("Camera")) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, index == 0 ? ID_CAMERA_REQ : CLIENT_CAMERA_REQ);
@@ -398,7 +397,6 @@ public class Registration extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ((MyApp) getApplication()).stopObserver();
         if (resultCode == Activity.RESULT_OK) {
 
             if (requestCode == ID_CAMERA_REQ) {
