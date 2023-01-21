@@ -73,6 +73,7 @@ public class MyApp extends Application implements Application.ActivityLifecycleC
         @Override
         public void onStart(@NonNull LifecycleOwner owner) { // app moved to foreground
             timer.cancel();
+            timer = new Timer();
         }
 
         @Override

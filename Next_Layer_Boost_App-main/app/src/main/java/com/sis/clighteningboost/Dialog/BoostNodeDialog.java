@@ -53,7 +53,7 @@ public class BoostNodeDialog extends DialogFragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(),3);
         recyclerView.setLayoutManager(gridLayoutManager);
         BoostNodeAdapter boostNodeAdapter;
-        boostNodeAdapter = new BoostNodeAdapter(mActivity,mMerchantNearbyClientsDataArrayList,mSocket);
+        boostNodeAdapter = new BoostNodeAdapter(mActivity,mMerchantNearbyClientsDataArrayList,mSocket, this::dismiss);
        /* if (mMerchantNearbyClientsDataArrayList!=null && !mMerchantNearbyClientsDataArrayList.isEmpty()){
         }else {
             boostNodeAdapter = new BoostNodeAdapter(mActivity,mSocket);
