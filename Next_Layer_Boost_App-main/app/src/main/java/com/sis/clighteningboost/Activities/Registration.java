@@ -16,8 +16,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -69,6 +72,7 @@ import com.sis.clighteningboost.Models.REST.MerchantData;
 import com.sis.clighteningboost.Models.REST.RegistrationClientResp;
 import com.sis.clighteningboost.Models.REST.TransactionInfo;
 import com.sis.clighteningboost.Models.REST.TransactionResp;
+import com.sis.clighteningboost.MyApp;
 import com.sis.clighteningboost.R;
 import com.sis.clighteningboost.RPC.CreateInvoice;
 import com.sis.clighteningboost.RPC.Invoice;
@@ -89,6 +93,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -374,6 +379,7 @@ public class Registration extends BaseActivity {
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                ((MyApp) getApplication()).stopObserver();
                 if (items[i].equals("Camera")) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, index == 0 ? ID_CAMERA_REQ : CLIENT_CAMERA_REQ);
@@ -392,7 +398,7 @@ public class Registration extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        ((MyApp) getApplication()).stopObserver();
         if (resultCode == Activity.RESULT_OK) {
 
             if (requestCode == ID_CAMERA_REQ) {

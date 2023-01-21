@@ -15,6 +15,7 @@ import java.util.TimerTask;
 
 public class MyApp extends Application {
     private TimeOutListener listener;
+
     public void startUserTimeOut() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -23,21 +24,31 @@ public class MyApp extends Application {
                 listener.onSessionTimeOut();
             }
             // 10 min set for timeout.
-        },600000);
+        }, 600000);
+        stopObserver();
+        startObserver();
+    }
+
+    public void stopObserver() {
         ProcessLifecycleOwner.get().getLifecycle().removeObserver(observer);
+    }
+
+    public void startObserver() {
         ProcessLifecycleOwner.get().getLifecycle().addObserver(observer);
     }
 
     public void registerSessionListener(TimeOutListener timeOutListener) {
-            this.listener = timeOutListener;
+        this.listener = timeOutListener;
     }
 
     private AppLifecycleObserver observer;
+
     @Override
     public void onCreate() {
         super.onCreate();
         observer = new AppLifecycleObserver();
     }
+
 
     class AppLifecycleObserver implements DefaultLifecycleObserver {
 
@@ -47,7 +58,7 @@ public class MyApp extends Application {
 
         @Override
         public void onStop(@NonNull LifecycleOwner owner) { // app moved to background
-            Log.d(this.getClass().getSimpleName(),"app moved to background");
+            Log.d(this.getClass().getSimpleName(), "app moved to background");
             listener.onSessionTimeOut();
         }
     }
