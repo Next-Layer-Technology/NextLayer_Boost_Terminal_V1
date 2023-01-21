@@ -45,6 +45,7 @@ public class BaseActivity extends AppCompatActivity implements TimeOutListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
+        sp = new SharedPreference(this,"local_data");
      //   startService(new Intent(this, MyService.class));
 
 
@@ -264,17 +265,12 @@ public class BaseActivity extends AppCompatActivity implements TimeOutListener {
 
     @Override
     public void onSessionTimeOut() {
+        Log.d(this.getClass().getSimpleName(),"on session timed out");
         sp.clearAll();
         sp.saveStringValue("merchant_id", null);
-        Handler handler = new Handler();
-        final Runnable r = new Runnable() {
-            public void run() {
-                handler.postDelayed(this, 3000);
-                openActivity(MerchantLink.class);
-                finish();
-            }
-        };
-
+        openActivity(MerchantLink.class);
+        finish();
     }
+
 
 }
