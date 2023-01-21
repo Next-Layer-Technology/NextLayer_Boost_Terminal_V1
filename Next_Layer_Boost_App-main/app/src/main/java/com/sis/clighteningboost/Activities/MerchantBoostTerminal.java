@@ -1803,7 +1803,7 @@ public class MerchantBoostTerminal extends BaseActivity {
       double  updatedMaxBoostMerchant=0;
         updatedMaxBoostMerchant =merchantAviableBoost-amount_usd;
         //TODO:ABi merchcant id ko update krna he
-        Call<MerchantUpdateResp> call = ApiClient.getRetrofit().create(ApiInterface.class).merchant_Update(merchantData.getId(),String.valueOf(updatedMaxBoostMerchant));
+        Call<MerchantUpdateResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).merchant_Update(merchantData.getId(),String.valueOf(updatedMaxBoostMerchant));
        call.enqueue(new Callback<MerchantUpdateResp>() {
            @Override
            public void onResponse(Call<MerchantUpdateResp> call, Response<MerchantUpdateResp> response) {
@@ -1829,7 +1829,7 @@ public class MerchantBoostTerminal extends BaseActivity {
     private void updateClientMaxBoost(double amount_usd, double clientAviableBoost) {
         double  updatedMaxBoostClient=0;
         updatedMaxBoostClient=clientAviableBoost-amount_usd;
-        Call<ClientUpdateResp> call = ApiClient.getRetrofit().create(ApiInterface.class).client_Update(clientData.getId(),String.valueOf(updatedMaxBoostClient));
+        Call<ClientUpdateResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).client_Update(clientData.getId(),String.valueOf(updatedMaxBoostClient));
         call.enqueue(new Callback<ClientUpdateResp>() {
             @Override
             public void onResponse(Call<ClientUpdateResp> call, Response<ClientUpdateResp> response) {
@@ -1866,7 +1866,7 @@ public class MerchantBoostTerminal extends BaseActivity {
         String transactionTimeStamp= DateUtils.getCurrentDate();
         //quoc testing
 
-        Call<TransactionResp> call = ApiClient.getRetrofit().create(ApiInterface.class).transction_add(label,transactionID,amountBtc,amountUsd,clientId,merchantID,transactionTimeStamp,String.valueOf(USD_TO_BTC_RATE));
+        Call<TransactionResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).transction_add(label,transactionID,amountBtc,amountUsd,clientId,merchantID,transactionTimeStamp,String.valueOf(USD_TO_BTC_RATE));
         call.enqueue(new Callback<TransactionResp>() {
             @Override
             public void onResponse(Call<TransactionResp> call, Response<TransactionResp> response) {
@@ -2454,7 +2454,7 @@ public class MerchantBoostTerminal extends BaseActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);
 
-        Call<RoutingNodeListResp> call = ApiClient.getRetrofit().create(ApiInterface.class).get_Routing_Node_List();
+        Call<RoutingNodeListResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).get_Routing_Node_List();
 
         call.enqueue(new Callback<RoutingNodeListResp>() {
             @Override
@@ -2711,7 +2711,7 @@ public class MerchantBoostTerminal extends BaseActivity {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("merchant_id", merchantId);
         requestBody.put("merchant_backend_password", merchantBackendPassword);
-        Call<ARoutingAPIAuthResponse> call = ApiClient.getRetrofit().create(ApiInterface.class).getRoutingAPIAuth1(requestBody);
+        Call<ARoutingAPIAuthResponse> call = ApiClient.getRetrofit(this).create(ApiInterface.class).getRoutingAPIAuth1(requestBody);
         call.enqueue(new Callback<ARoutingAPIAuthResponse>() {
             @Override
             public void onResponse(Call<ARoutingAPIAuthResponse> call, Response<ARoutingAPIAuthResponse> response) {
@@ -2738,7 +2738,7 @@ public class MerchantBoostTerminal extends BaseActivity {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("merchant_id", merchantId);
         requestBody.put("boost_2fa_password", boost2FAPassword);
-        Call<ARoutingAPIAuthResponse> call = ApiClient.getRetrofit().create(ApiInterface.class).getRoutingAPIAuth2(requestBody);
+        Call<ARoutingAPIAuthResponse> call = ApiClient.getRetrofit(this).create(ApiInterface.class).getRoutingAPIAuth2(requestBody);
         call.enqueue(new Callback<ARoutingAPIAuthResponse>() {
             @Override
             public void onResponse(Call<ARoutingAPIAuthResponse> call, Response<ARoutingAPIAuthResponse> response) {
@@ -2762,7 +2762,7 @@ public class MerchantBoostTerminal extends BaseActivity {
         progressDialog.show();
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);
-        Call<MerchantListResp> call = ApiClient.getRetrofit().create(ApiInterface.class).get_Merchant_List();
+        Call<MerchantListResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).get_Merchant_List();
         call.enqueue(new Callback<MerchantListResp>() {
             @Override
             public void onResponse(Call<MerchantListResp> call, Response<MerchantListResp> response) {
@@ -2819,7 +2819,7 @@ public class MerchantBoostTerminal extends BaseActivity {
         });
     }
     private void getFundingNodeInfor() {
-        Call<FundingNodeListResp> call = ApiClient.getRetrofit().create(ApiInterface.class).get_Funding_Node_List();
+        Call<FundingNodeListResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).get_Funding_Node_List();
 
         call.enqueue(new Callback<FundingNodeListResp>() {
             @Override

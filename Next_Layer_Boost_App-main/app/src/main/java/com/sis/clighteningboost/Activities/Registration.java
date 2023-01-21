@@ -601,7 +601,7 @@ public class Registration extends BaseActivity {
         String token="Bearer"+" "+accessToken;
         JsonObject paramObject = new JsonObject();
         paramObject.addProperty("base_id", baseId);
-        Call<BaseIDRes> call = ApiClient.getRetrofit().create(ApiInterface.class).merchant_check_baseID(token,paramObject);
+        Call<BaseIDRes> call = ApiClient.getRetrofit(this).create(ApiInterface.class).merchant_check_baseID(token,paramObject);
         //Call<MerchantLoginResp> call = ApiClient.getRetrofit().create(ApiInterface.class).merchant_Loging(id,password);
         call.enqueue(new Callback<BaseIDRes>() {
             @Override
@@ -1051,7 +1051,7 @@ public class Registration extends BaseActivity {
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addNetworkInterceptor(httpLoggingInterceptor)
                 .build();
-        Call<RegistrationClientResp> call = ApiClient.getRetrofit().create(ApiInterface.class).client_Registration(client_type,client_name2,client_id2,merchant_id,national_id2,address2,dob2,is_gamma_user2,registered_at2,is_active2,client_image_id,card_image_id,email2,maxboost_limit2,base_id,per_boost_limit,max_daily_boost);
+        Call<RegistrationClientResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).client_Registration(client_type,client_name2,client_id2,merchant_id,national_id2,address2,dob2,is_gamma_user2,registered_at2,is_active2,client_image_id,card_image_id,email2,maxboost_limit2,base_id,per_boost_limit,max_daily_boost);
          call.enqueue(new Callback<RegistrationClientResp>() {
             @Override
             public void onResponse(Call<RegistrationClientResp> call, Response<RegistrationClientResp> response) {
@@ -1216,7 +1216,7 @@ public class Registration extends BaseActivity {
         RequestBody max_daily_boost = RequestBody.create(MediaType.parse("text/plain"),"25");
         //quoc testing
 
-        Call<RegistrationClientResp> call = ApiClient.getRetrofit().create(ApiInterface.class).client_Registration(client_type,client_name2,client_id2,merchant_id,national_id2,address2,dob2,is_gamma_user2,registered_at2,is_active2,client_image_id,card_image_id,email2,maxboost_limit2,base_id,per_boost_limit,max_daily_boost);
+        Call<RegistrationClientResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).client_Registration(client_type,client_name2,client_id2,merchant_id,national_id2,address2,dob2,is_gamma_user2,registered_at2,is_active2,client_image_id,card_image_id,email2,maxboost_limit2,base_id,per_boost_limit,max_daily_boost);
         call.enqueue(new Callback<RegistrationClientResp>() {
             @Override
             public void onResponse(Call<RegistrationClientResp> call, Response<RegistrationClientResp> response) {
@@ -1323,7 +1323,7 @@ public class Registration extends BaseActivity {
 
     }
     private void getFundingNodeInfor() {
-        Call<FundingNodeListResp> call = ApiClient.getRetrofit().create(ApiInterface.class).get_Funding_Node_List();
+        Call<FundingNodeListResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).get_Funding_Node_List();
 
         call.enqueue(new Callback<FundingNodeListResp>() {
             @Override
@@ -1919,7 +1919,7 @@ public class Registration extends BaseActivity {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("merchant_id", merchantId);
         requestBody.put("merchant_backend_password", merchantBackendPassword);
-        Call<ARoutingAPIAuthResponse> call = ApiClient.getRetrofit().create(ApiInterface.class).getRoutingAPIAuth1(requestBody);
+        Call<ARoutingAPIAuthResponse> call = ApiClient.getRetrofit(this).create(ApiInterface.class).getRoutingAPIAuth1(requestBody);
         call.enqueue(new Callback<ARoutingAPIAuthResponse>() {
             @Override
             public void onResponse(Call<ARoutingAPIAuthResponse> call, Response<ARoutingAPIAuthResponse> response) {
@@ -1944,7 +1944,7 @@ public class Registration extends BaseActivity {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("merchant_id", merchantId);
         requestBody.put("boost_2fa_password", boost2FAPassword);
-        Call<ARoutingAPIAuthResponse> call = ApiClient.getRetrofit().create(ApiInterface.class).getRoutingAPIAuth2(requestBody);
+        Call<ARoutingAPIAuthResponse> call = ApiClient.getRetrofit(this).create(ApiInterface.class).getRoutingAPIAuth2(requestBody);
         call.enqueue(new Callback<ARoutingAPIAuthResponse>() {
             @Override
             public void onResponse(Call<ARoutingAPIAuthResponse> call, Response<ARoutingAPIAuthResponse> response) {
@@ -2253,7 +2253,7 @@ public class Registration extends BaseActivity {
         String merchantID=merchantData.getMerchant_name();
         String transactionID=label;
 
-        Call<TransactionResp> call = ApiClient.getRetrofit().create(ApiInterface.class).instance_transction_add(label,transactionID,amountBtc,amountUsd,clientId,merchantID,transactionTimeStamp,String.valueOf(USD_TO_BTC_RATE));
+        Call<TransactionResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).instance_transction_add(label,transactionID,amountBtc,amountUsd,clientId,merchantID,transactionTimeStamp,String.valueOf(USD_TO_BTC_RATE));
         call.enqueue(new Callback<TransactionResp>() {
             @Override
             public void onResponse(Call<TransactionResp> call, Response<TransactionResp> response) {
