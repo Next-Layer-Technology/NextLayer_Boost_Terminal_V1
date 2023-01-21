@@ -1,11 +1,5 @@
 package com.sis.clighteningboost.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -45,10 +39,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -67,18 +66,16 @@ import com.sis.clighteningboost.Models.REST.ClientData;
 import com.sis.clighteningboost.Models.REST.FundingNode;
 import com.sis.clighteningboost.Models.REST.FundingNodeListResp;
 import com.sis.clighteningboost.Models.REST.MerchantData;
-import com.sis.clighteningboost.Models.REST.MerchantLoginResp;
 import com.sis.clighteningboost.Models.REST.RegistrationClientResp;
 import com.sis.clighteningboost.Models.REST.TransactionInfo;
 import com.sis.clighteningboost.Models.REST.TransactionResp;
-import com.sis.clighteningboost.Models.RPC.NodeLineInfo;
 import com.sis.clighteningboost.R;
 import com.sis.clighteningboost.RPC.CreateInvoice;
-import com.sis.clighteningboost.Utills.GlobalState;
 import com.sis.clighteningboost.RPC.Invoice;
 import com.sis.clighteningboost.RPC.NetworkManager;
 import com.sis.clighteningboost.RPC.Tax;
 import com.sis.clighteningboost.Utills.AppConstants;
+import com.sis.clighteningboost.Utills.GlobalState;
 import com.sis.clighteningboost.Utills.JavaMailAPI;
 import com.sis.clighteningboost.Utills.SharedPreference;
 import com.sis.clighteningboost.Utills.StaticClass;
@@ -104,17 +101,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
-
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
-import de.hdodenhof.circleimageview.CircleImageView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -227,6 +222,7 @@ public class Registration extends BaseActivity {
         et_client_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                hideSoftKeyBoard();
                 hoverEffect(et_client_date);
                 final Calendar cldr = Calendar.getInstance();
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
@@ -334,7 +330,9 @@ public class Registration extends BaseActivity {
                 }else {
                     et_client_user_id.setVisibility(View.GONE);
                 }
+                hideSoftKeyBoard();
             }
+
         });
         select_picture_of_id.setOnClickListener(new View.OnClickListener() {
             @Override

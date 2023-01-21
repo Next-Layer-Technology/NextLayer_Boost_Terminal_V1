@@ -15,6 +15,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -270,6 +272,10 @@ public class BaseActivity extends AppCompatActivity implements TimeOutListener {
         sp.saveStringValue("merchant_id", null);
         openActivity(MerchantLink.class);
         finish();
+    }
+
+    public void hideSoftKeyBoard(){
+        ViewCompat.getWindowInsetsController(getWindow().getDecorView()).hide(WindowInsetsCompat.Type.ime());
     }
 
 
