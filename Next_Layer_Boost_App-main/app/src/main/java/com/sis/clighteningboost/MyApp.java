@@ -29,10 +29,12 @@ public class MyApp extends Application implements Application.ActivityLifecycleC
     @Override
     public void onActivityStarted(@NonNull Activity activity) {
         currentActivity = (BaseActivity) activity;
+        Log.d(this.getClass().getSimpleName(), "activity started");
     }
 
     @Override
     public void onActivityResumed(@NonNull Activity activity) {
+        Log.d(this.getClass().getSimpleName(), "activity resumed");
         currentActivity = (BaseActivity) activity;
 
     }
@@ -54,6 +56,7 @@ public class MyApp extends Application implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityDestroyed(@NonNull Activity activity) {
+        Log.d(this.getClass().getSimpleName(), "activity destroyed");
         currentActivity = null;
 
     }
@@ -64,6 +67,7 @@ public class MyApp extends Application implements Application.ActivityLifecycleC
         super.onCreate();
         AppLifecycleObserver observer = new AppLifecycleObserver();
         ProcessLifecycleOwner.get().getLifecycle().addObserver(observer);
+        registerActivityLifecycleCallbacks(this);
     }
 
 
@@ -74,25 +78,23 @@ public class MyApp extends Application implements Application.ActivityLifecycleC
         public void onStart(@NonNull LifecycleOwner owner) { // app moved to foreground
             timer.cancel();
             timer = new Timer();
+            Log.d(MyApp.this.getClass().getSimpleName(), "timer cancelled");
         }
 
         @Override
         public void onStop(@NonNull LifecycleOwner owner) { // app moved to background
-            Log.d(this.getClass().getSimpleName(), "app moved to background");
-
+            Log.d(MyApp.this.getClass().getSimpleName(), "app moved to background");
+            Log.d(MyApp.this.getClass().getSimpleName(), "timer started");
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    Log.d(this.getClass().getSimpleName(), "on session timed out");
+                    Log.d(MyApp.this.getClass().getSimpleName(), "on session timed out");
                     currentActivity.sp.clearAll();
                     currentActivity.sp.saveStringValue("merchant_id", null);
                     currentActivity.openActivity(MerchantLink.class);
                     currentActivity.finish();
                 }
-                // 1 min set for timeout.
-            }, 60000);
-
-
+            }, 20000);
 
         }
     }
