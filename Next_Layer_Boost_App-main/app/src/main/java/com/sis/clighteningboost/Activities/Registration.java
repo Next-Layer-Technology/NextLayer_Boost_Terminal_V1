@@ -36,6 +36,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -132,6 +133,7 @@ public class Registration extends BaseActivity {
     static boolean isGamma = false;
     boolean isUserValid=false;
     ImageView iv_gamma_user, show_id_picture, show_client_picture;
+    ImageButton ib_rotate;
     LinearLayout select_picture_of_id, select_client_picture;
     TextView show_id_picture_text, show_client_picture_text;
     SharedPreference sp;
@@ -354,6 +356,11 @@ public class Registration extends BaseActivity {
                 hoverEffect(is_gamma_user_check);
                 imageOptions(1);
             }
+        });
+
+        ib_rotate = findViewById(R.id.ib_rotate);
+        ib_rotate.setOnClickListener(v -> {
+            show_id_picture.setRotation(show_id_picture.getRotation() + 90);
         });
 
         checkPermissions();

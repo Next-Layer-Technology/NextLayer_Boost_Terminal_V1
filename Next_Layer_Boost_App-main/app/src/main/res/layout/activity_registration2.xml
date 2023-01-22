@@ -384,12 +384,21 @@
                                             android:orientation="vertical"
                                             android:visibility="gone">
 
+                                            <ImageButton
+                                                android:layout_marginStart="@dimen/_20sdp"
+                                                android:layout_marginEnd="@dimen/_20sdp"
+                                                android:layout_marginTop="@dimen/_20sdp"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:id="@+id/ib_rotate"
+                                                android:src="@drawable/ic_baseline_rotate_right_24" />
+
                                             <LinearLayout
                                                 android:id="@+id/select_picture_of_id"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:layout_marginStart="@dimen/_20sdp"
-                                                android:layout_marginTop="@dimen/_20sdp"
                                                 android:layout_marginEnd="@dimen/_20sdp"
                                                 android:layout_marginBottom="@dimen/_20sdp"
                                                 android:background="@drawable/phtoidentification_bg"
