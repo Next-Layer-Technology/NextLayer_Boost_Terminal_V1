@@ -133,7 +133,7 @@ public class Registration extends BaseActivity {
     static boolean isGamma = false;
     boolean isUserValid=false;
     ImageView iv_gamma_user, show_id_picture, show_client_picture;
-    ImageButton ib_rotate;
+    ImageButton ib_rotate_id_picture,ib_rotate_client_picture;
     LinearLayout select_picture_of_id, select_client_picture;
     TextView show_id_picture_text, show_client_picture_text;
     SharedPreference sp;
@@ -341,26 +341,24 @@ public class Registration extends BaseActivity {
             }
 
         });
-        select_picture_of_id.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hoverEffect(is_gamma_user_check);
-                imageOptions(0);
-            }
+        select_picture_of_id.setOnClickListener(view -> {
+            hoverEffect(is_gamma_user_check);
+            imageOptions(0);
         });
 
 
-        select_client_picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hoverEffect(is_gamma_user_check);
-                imageOptions(1);
-            }
+        select_client_picture.setOnClickListener(view -> {
+            hoverEffect(is_gamma_user_check);
+            imageOptions(1);
         });
 
-        ib_rotate = findViewById(R.id.ib_rotate);
-        ib_rotate.setOnClickListener(v -> {
+        ib_rotate_id_picture = findViewById(R.id.ib_rotate_id_picture);
+        ib_rotate_id_picture.setOnClickListener(v -> {
             show_id_picture.setRotation(show_id_picture.getRotation() + 90);
+        });
+        ib_rotate_client_picture = findViewById(R.id.ib_rotate_client_picture);
+        ib_rotate_client_picture.setOnClickListener(v -> {
+            show_client_picture.setRotation(show_client_picture.getRotation() + 90);
         });
 
         checkPermissions();
