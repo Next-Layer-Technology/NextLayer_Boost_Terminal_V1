@@ -234,7 +234,7 @@ import tech.gusavila92.websocketclient.WebSocketClient;
         JsonObject paramObject = new JsonObject();
         paramObject.addProperty("user_id", id);
         paramObject.addProperty("password", password);
-        Call<MerchantLoginResp> call = ApiClient.getRetrofit().create(ApiInterface.class).merchant_Loging(paramObject);
+        Call<MerchantLoginResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).merchant_Loging(paramObject);
         //Call<MerchantLoginResp> call = ApiClient.getRetrofit().create(ApiInterface.class).merchant_Loging(id,password);
         call.enqueue(new Callback<MerchantLoginResp>() {
             @Override

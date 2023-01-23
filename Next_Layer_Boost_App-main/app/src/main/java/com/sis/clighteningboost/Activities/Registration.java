@@ -1,11 +1,5 @@
 package com.sis.clighteningboost.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -22,8 +16,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -39,16 +36,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -67,18 +70,17 @@ import com.sis.clighteningboost.Models.REST.ClientData;
 import com.sis.clighteningboost.Models.REST.FundingNode;
 import com.sis.clighteningboost.Models.REST.FundingNodeListResp;
 import com.sis.clighteningboost.Models.REST.MerchantData;
-import com.sis.clighteningboost.Models.REST.MerchantLoginResp;
 import com.sis.clighteningboost.Models.REST.RegistrationClientResp;
 import com.sis.clighteningboost.Models.REST.TransactionInfo;
 import com.sis.clighteningboost.Models.REST.TransactionResp;
-import com.sis.clighteningboost.Models.RPC.NodeLineInfo;
+import com.sis.clighteningboost.MyApp;
 import com.sis.clighteningboost.R;
 import com.sis.clighteningboost.RPC.CreateInvoice;
-import com.sis.clighteningboost.Utills.GlobalState;
 import com.sis.clighteningboost.RPC.Invoice;
 import com.sis.clighteningboost.RPC.NetworkManager;
 import com.sis.clighteningboost.RPC.Tax;
 import com.sis.clighteningboost.Utills.AppConstants;
+import com.sis.clighteningboost.Utills.GlobalState;
 import com.sis.clighteningboost.Utills.JavaMailAPI;
 import com.sis.clighteningboost.Utills.SharedPreference;
 import com.sis.clighteningboost.Utills.StaticClass;
@@ -92,6 +94,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -104,17 +107,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
-
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
-import de.hdodenhof.circleimageview.CircleImageView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -132,6 +133,7 @@ public class Registration extends BaseActivity {
     static boolean isGamma = false;
     boolean isUserValid=false;
     ImageView iv_gamma_user, show_id_picture, show_client_picture;
+    ImageButton ib_rotate_id_picture,ib_rotate_client_picture;
     LinearLayout select_picture_of_id, select_client_picture;
     TextView show_id_picture_text, show_client_picture_text;
     SharedPreference sp;
@@ -227,6 +229,7 @@ public class Registration extends BaseActivity {
         et_client_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                hideSoftKeyBoard();
                 hoverEffect(et_client_date);
                 final Calendar cldr = Calendar.getInstance();
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
@@ -334,23 +337,28 @@ public class Registration extends BaseActivity {
                 }else {
                     et_client_user_id.setVisibility(View.GONE);
                 }
+                hideSoftKeyBoard();
             }
+
         });
-        select_picture_of_id.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hoverEffect(is_gamma_user_check);
-                imageOptions(0);
-            }
+        select_picture_of_id.setOnClickListener(view -> {
+            hoverEffect(is_gamma_user_check);
+            imageOptions(0);
         });
 
 
-        select_client_picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hoverEffect(is_gamma_user_check);
-                imageOptions(1);
-            }
+        select_client_picture.setOnClickListener(view -> {
+            hoverEffect(is_gamma_user_check);
+            imageOptions(1);
+        });
+
+        ib_rotate_id_picture = findViewById(R.id.ib_rotate_id_picture);
+        ib_rotate_id_picture.setOnClickListener(v -> {
+            show_id_picture.setRotation(show_id_picture.getRotation() + 90);
+        });
+        ib_rotate_client_picture = findViewById(R.id.ib_rotate_client_picture);
+        ib_rotate_client_picture.setOnClickListener(v -> {
+            show_client_picture.setRotation(show_client_picture.getRotation() + 90);
         });
 
         checkPermissions();
@@ -394,7 +402,6 @@ public class Registration extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == Activity.RESULT_OK) {
 
             if (requestCode == ID_CAMERA_REQ) {
@@ -601,7 +608,7 @@ public class Registration extends BaseActivity {
         String token="Bearer"+" "+accessToken;
         JsonObject paramObject = new JsonObject();
         paramObject.addProperty("base_id", baseId);
-        Call<BaseIDRes> call = ApiClient.getRetrofit().create(ApiInterface.class).merchant_check_baseID(token,paramObject);
+        Call<BaseIDRes> call = ApiClient.getRetrofit(this).create(ApiInterface.class).merchant_check_baseID(token,paramObject);
         //Call<MerchantLoginResp> call = ApiClient.getRetrofit().create(ApiInterface.class).merchant_Loging(id,password);
         call.enqueue(new Callback<BaseIDRes>() {
             @Override
@@ -1051,7 +1058,7 @@ public class Registration extends BaseActivity {
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addNetworkInterceptor(httpLoggingInterceptor)
                 .build();
-        Call<RegistrationClientResp> call = ApiClient.getRetrofit().create(ApiInterface.class).client_Registration(client_type,client_name2,client_id2,merchant_id,national_id2,address2,dob2,is_gamma_user2,registered_at2,is_active2,client_image_id,card_image_id,email2,maxboost_limit2,base_id,per_boost_limit,max_daily_boost);
+        Call<RegistrationClientResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).client_Registration(client_type,client_name2,client_id2,merchant_id,national_id2,address2,dob2,is_gamma_user2,registered_at2,is_active2,client_image_id,card_image_id,email2,maxboost_limit2,base_id,per_boost_limit,max_daily_boost);
          call.enqueue(new Callback<RegistrationClientResp>() {
             @Override
             public void onResponse(Call<RegistrationClientResp> call, Response<RegistrationClientResp> response) {
@@ -1216,7 +1223,7 @@ public class Registration extends BaseActivity {
         RequestBody max_daily_boost = RequestBody.create(MediaType.parse("text/plain"),"25");
         //quoc testing
 
-        Call<RegistrationClientResp> call = ApiClient.getRetrofit().create(ApiInterface.class).client_Registration(client_type,client_name2,client_id2,merchant_id,national_id2,address2,dob2,is_gamma_user2,registered_at2,is_active2,client_image_id,card_image_id,email2,maxboost_limit2,base_id,per_boost_limit,max_daily_boost);
+        Call<RegistrationClientResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).client_Registration(client_type,client_name2,client_id2,merchant_id,national_id2,address2,dob2,is_gamma_user2,registered_at2,is_active2,client_image_id,card_image_id,email2,maxboost_limit2,base_id,per_boost_limit,max_daily_boost);
         call.enqueue(new Callback<RegistrationClientResp>() {
             @Override
             public void onResponse(Call<RegistrationClientResp> call, Response<RegistrationClientResp> response) {
@@ -1323,7 +1330,7 @@ public class Registration extends BaseActivity {
 
     }
     private void getFundingNodeInfor() {
-        Call<FundingNodeListResp> call = ApiClient.getRetrofit().create(ApiInterface.class).get_Funding_Node_List();
+        Call<FundingNodeListResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).get_Funding_Node_List();
 
         call.enqueue(new Callback<FundingNodeListResp>() {
             @Override
@@ -1919,7 +1926,7 @@ public class Registration extends BaseActivity {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("merchant_id", merchantId);
         requestBody.put("merchant_backend_password", merchantBackendPassword);
-        Call<ARoutingAPIAuthResponse> call = ApiClient.getRetrofit().create(ApiInterface.class).getRoutingAPIAuth1(requestBody);
+        Call<ARoutingAPIAuthResponse> call = ApiClient.getRetrofit(this).create(ApiInterface.class).getRoutingAPIAuth1(requestBody);
         call.enqueue(new Callback<ARoutingAPIAuthResponse>() {
             @Override
             public void onResponse(Call<ARoutingAPIAuthResponse> call, Response<ARoutingAPIAuthResponse> response) {
@@ -1944,7 +1951,7 @@ public class Registration extends BaseActivity {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("merchant_id", merchantId);
         requestBody.put("boost_2fa_password", boost2FAPassword);
-        Call<ARoutingAPIAuthResponse> call = ApiClient.getRetrofit().create(ApiInterface.class).getRoutingAPIAuth2(requestBody);
+        Call<ARoutingAPIAuthResponse> call = ApiClient.getRetrofit(this).create(ApiInterface.class).getRoutingAPIAuth2(requestBody);
         call.enqueue(new Callback<ARoutingAPIAuthResponse>() {
             @Override
             public void onResponse(Call<ARoutingAPIAuthResponse> call, Response<ARoutingAPIAuthResponse> response) {
@@ -2253,7 +2260,7 @@ public class Registration extends BaseActivity {
         String merchantID=merchantData.getMerchant_name();
         String transactionID=label;
 
-        Call<TransactionResp> call = ApiClient.getRetrofit().create(ApiInterface.class).instance_transction_add(label,transactionID,amountBtc,amountUsd,clientId,merchantID,transactionTimeStamp,String.valueOf(USD_TO_BTC_RATE));
+        Call<TransactionResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).instance_transction_add(label,transactionID,amountBtc,amountUsd,clientId,merchantID,transactionTimeStamp,String.valueOf(USD_TO_BTC_RATE));
         call.enqueue(new Callback<TransactionResp>() {
             @Override
             public void onResponse(Call<TransactionResp> call, Response<TransactionResp> response) {

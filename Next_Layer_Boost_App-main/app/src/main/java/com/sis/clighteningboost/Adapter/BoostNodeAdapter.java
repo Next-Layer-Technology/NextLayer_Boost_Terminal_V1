@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.sis.clighteningboost.Activities.MerchantBoostTerminal;
+import com.sis.clighteningboost.Interface.OnCancelListener;
 import com.sis.clighteningboost.Models.REST.MerchantNearbyClientsData;
 import com.sis.clighteningboost.R;
 import com.sis.clighteningboost.Utills.Acknowledgement;
@@ -41,11 +42,13 @@ public class BoostNodeAdapter extends RecyclerView.Adapter<BoostNodeAdapter.View
     Socket mSocket;
     boolean mOnMsgReceived = false;
     Dialog mAlertDialog;
+    OnCancelListener cancelListener;
 
-    public BoostNodeAdapter(Activity activity, ArrayList<MerchantNearbyClientsData> mMerchantNearbyClientsDataArrayList,Socket socket) {
+    public BoostNodeAdapter(Activity activity, ArrayList<MerchantNearbyClientsData> mMerchantNearbyClientsDataArrayList, Socket socket, OnCancelListener cancelListener) {
         this.mMerchantNearbyClientsDataArrayList = mMerchantNearbyClientsDataArrayList;
         this.mActivity = activity;
         this.mSocket = socket;
+        this.cancelListener = cancelListener;
         createAlertInstance();
 
 
@@ -128,16 +131,14 @@ public class BoostNodeAdapter extends RecyclerView.Adapter<BoostNodeAdapter.View
         final Button yesbtn= mAlertDialog.findViewById(R.id.yesbtn);
         final Button nobtn= mAlertDialog.findViewById(R.id.nobtn);
         nobtn.setVisibility(View.GONE);
-        yesbtn.setText("OK");
-        alertTitle_tv.setText("Message sent!");
-        alertMessage_tv.setText("Waiting to get a node id");
+        yesbtn.setText("Cancel Request");
+        alertTitle_tv.setText("Flashpay Request Initiated");
+        alertMessage_tv.setText("Please wait for Client info request auto-response");
 
 
-        yesbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAlertDialog.dismiss();
-            }
+        yesbtn.setOnClickListener(v -> {
+            mAlertDialog.dismiss();
+            cancelListener.onCancel();
         });
 
     }

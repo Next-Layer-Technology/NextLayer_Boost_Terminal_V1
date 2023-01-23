@@ -1,87 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
-   >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/colorWhite"
-        card_view:cardElevation="0dp"
-        app:cardCornerRadius="@dimen/_10sdp">
+        app:cardCornerRadius="@dimen/_10sdp"
+        card_view:cardElevation="0dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp">
+
             <RelativeLayout
                 android:id="@+id/alertTitleLay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true">
+
                 <TextView
                     android:id="@+id/alertTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Alert Titile  "
-                    android:textSize="@dimen/_13sdp"
+                    android:textAlignment="center"
                     android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold">
 
                 </TextView>
             </RelativeLayout>
+
             <RelativeLayout
-                android:layout_marginTop="@dimen/_5sdp"
                 android:id="@+id/alertMessageLay"
-                android:layout_below="@+id/alertTitleLay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="@dimen/_12sdp"
-                    android:textColor="@color/colorBlack"
-                    android:text="alertMessage"
-                    android:id="@+id/alertMessage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_below="@id/alertMessageLay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-                <Button
-                    android:layout_alignParentRight="true"
-                    android:id="@+id/yesbtn"
-                    android:text="YES"
-                    android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
-                    android:background="@drawable/connect_btn"
-                    android:textSize="@dimen/_12sdp"
-                    android:layout_width="@dimen/_90sdp"
-                    android:layout_height="@dimen/_30sdp">
+                android:layout_below="@+id/alertTitleLay"
+                android:layout_marginTop="@dimen/_5sdp">
 
-                </Button>
+                <TextView
+                    android:id="@+id/alertMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="alert Message"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_12sdp">
+
+                </TextView>
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/alertMessageLay"
+                android:layout_marginTop="@dimen/_8sdp">
+
                 <Button
-                    android:layout_alignParentLeft="true"
                     android:id="@+id/nobtn"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginHorizontal="30dp"
+                    android:background="@drawable/connect_btn"
                     android:text="No"
                     android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
-                    android:background="@drawable/connect_btn"
                     android:textSize="@dimen/_12sdp"
-                    android:layout_width="@dimen/_90sdp"
-                    android:layout_height="@dimen/_30sdp">
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/yesbtn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                 </Button>
-            </RelativeLayout>
+
+                <Button
+                    android:id="@+id/yesbtn"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginHorizontal="30dp"
+                    android:background="@drawable/connect_btn"
+                    android:text="YES"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/nobtn"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </Button>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
-
 
 
 </RelativeLayout>

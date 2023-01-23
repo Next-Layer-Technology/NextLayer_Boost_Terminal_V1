@@ -1,4 +1,7 @@
 package com.sis.clighteningboost.Api;
+import android.content.Context;
+
+import com.chuckerteam.chucker.api.ChuckerInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -18,7 +21,7 @@ public class ApiClient {
 
     public static final String LOCAL_BASE_URL = "";
     public static Retrofit retrofit = null;
-    public static Retrofit getRetrofit() {
+    public static Retrofit getRetrofit(Context context) {
         Gson gson = new GsonBuilder().setLenient().create();
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
@@ -27,6 +30,14 @@ public class ApiClient {
                 .readTimeout(50,TimeUnit.SECONDS)
                 .writeTimeout(60,TimeUnit.SECONDS)
                 .addNetworkInterceptor(httpLoggingInterceptor)
+                .addInterceptor(
+                        new ChuckerInterceptor.Builder(context)
+                               // .collector(ChuckerCollector(context))
+                                .maxContentLength(250000L)
+                                //.redactHeaders(emptySet())
+                                .alwaysReadResponseBody(false)
+                                .build()
+                )
                 .build();
         출처: https://3edc.tistory.com/52 [Three SAL is sol sol]
         if (retrofit == null) {

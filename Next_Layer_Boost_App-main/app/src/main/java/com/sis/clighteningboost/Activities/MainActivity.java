@@ -131,7 +131,7 @@ public class MainActivity extends BaseActivity {
 
         Log.d("Socket",mSocket.connected()+" "+mSocket.id());
 
-        Call<MerchantNearbyClientResp> call = ApiClient.getRetrofit().create(ApiInterface.class).merchant_nearby_clients(token);
+        Call<MerchantNearbyClientResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).merchant_nearby_clients(token);
         call.enqueue(new Callback<MerchantNearbyClientResp>() {
             @Override
             public void onResponse(@NonNull Call<MerchantNearbyClientResp> call, @NonNull Response<MerchantNearbyClientResp> response) {
@@ -274,7 +274,7 @@ public class MainActivity extends BaseActivity {
         String accessToken=sp.getStringValue("accessToken");
         String token="Bearer"+" "+accessToken;
 
-        Call<ClientLoginResp> call = ApiClient.getRetrofit().create(ApiInterface.class).client_Loging(token,id);
+        Call<ClientLoginResp> call = ApiClient.getRetrofit(this).create(ApiInterface.class).client_Loging(token,id);
 
         call.enqueue(new Callback<ClientLoginResp>() {
             @Override

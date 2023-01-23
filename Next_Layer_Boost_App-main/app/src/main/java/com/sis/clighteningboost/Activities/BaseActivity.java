@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -15,6 +14,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -38,18 +39,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-public class BaseActivity extends AppCompatActivity implements TimeOutListener {
+public class BaseActivity extends AppCompatActivity  {
     String TAG="CLightBetaLog";
-    SharedPreference sp;
+    public SharedPreference sp;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
+        sp = new SharedPreference(this,"local_data");
      //   startService(new Intent(this, MyService.class));
-
-
-        ((MyApp) getApplication()).registerSessionListener(this);
-        ((MyApp) getApplication()).startUserTimeOut();
     }
     public Bitmap getBitMapFromHex(String hex) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
@@ -262,19 +260,9 @@ public class BaseActivity extends AppCompatActivity implements TimeOutListener {
     }
 
 
-    @Override
-    public void onSessionTimeOut() {
-        sp.clearAll();
-        sp.saveStringValue("merchant_id", null);
-        Handler handler = new Handler();
-        final Runnable r = new Runnable() {
-            public void run() {
-                handler.postDelayed(this, 3000);
-                openActivity(MerchantLink.class);
-                finish();
-            }
-        };
-
+    public void hideSoftKeyBoard(){
+        ViewCompat.getWindowInsetsController(getWindow().getDecorView()).hide(WindowInsetsCompat.Type.ime());
     }
+
 
 }

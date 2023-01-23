@@ -16,29 +16,25 @@
     </RelativeLayout>
 
 
-    <!--bodyLay Open-->
-<!-- <androidx.core.widget.NestedScrollView-->
-<!--   android:layout_width="match_parent"-->
-<!--   android:layout_height="match_parent"-->
-<!--   android:layout_below="@+id/rl_headerlay"-->
-<!--   android:layout_above="@+id/rl_footerlay"-->
-<!--   android:layout_marginBottom="@dimen/_10sdp"-->
-<!--   android:fillViewport="true"-->
-<!--   android:scrollbars="none">-->
+    <!--    bodyLay Open-->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl_footerlay"
+        android:layout_below="@+id/rl_headerlay"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
-            android:layout_margin="@dimen/_10sdp"
-            android:layout_below="@+id/rl_headerlay"
-            android:layout_above="@+id/rl_footerlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10sdp"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/rl_mainBodyLay1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/rl_headerlay"
                 android:layout_marginBottom="@dimen/_10sdp">
                 <!--         Step 1 of 5 Open-->
                 <RelativeLayout
@@ -104,10 +100,10 @@
 
                                         <TextView
                                             android:id="@+id/tv_step_text"
-                                            android:padding="@dimen/_1sdp"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:gravity="center"
+                                            android:padding="@dimen/_1sdp"
                                             android:text="Step 1 of 5"
                                             android:textAllCaps="true"
                                             android:textColor="@color/colorWhite"
@@ -147,38 +143,38 @@
 
 
                                                 <LinearLayout
-                                                    android:layout_centerInParent="true"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
+                                                    android:layout_centerInParent="true"
                                                     android:orientation="vertical"
                                                     android:padding="@dimen/_2sdp">
 
                                                     <androidx.cardview.widget.CardView
                                                         android:layout_width="wrap_content"
                                                         android:layout_height="wrap_content"
-                                                        card_view:cardElevation="0dp"
-                                                        app:cardCornerRadius="@dimen/_15sdp"
                                                         android:layout_marginTop="@dimen/_5sdp"
                                                         android:backgroundTint="#20000000"
                                                         android:orientation="vertical"
+                                                        app:cardCornerRadius="@dimen/_15sdp"
                                                         app:cardElevation="0dp"
                                                         app:layout_constraintStart_toStartOf="parent"
-                                                        >
+                                                        card_view:cardElevation="0dp">
+
                                                         <RelativeLayout
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
-                                                            android:padding="@dimen/_5sdp"
-                                                            >
+                                                            android:padding="@dimen/_5sdp">
+
                                                             <EditText
-                                                                android:layout_marginLeft="@dimen/_5sdp"
                                                                 android:id="@+id/et_client_name"
                                                                 android:layout_width="match_parent"
                                                                 android:layout_height="wrap_content"
-                                                                android:singleLine="true"
-                                                                android:textSize="@dimen/_10sdp"
+                                                                android:layout_marginLeft="@dimen/_5sdp"
                                                                 android:background="@android:color/transparent"
+                                                                android:hint="Name"
                                                                 android:inputType="textPersonName"
-                                                                android:hint="Name" />
+                                                                android:singleLine="true"
+                                                                android:textSize="@dimen/_10sdp" />
                                                         </RelativeLayout>
                                                     </androidx.cardview.widget.CardView>
 
@@ -206,10 +202,10 @@
                                                                 android:background="@android:color/transparent"
                                                                 android:ellipsize="end"
                                                                 android:hint="ID Number"
-                                                                android:textSize="@dimen/_10sdp"
                                                                 android:inputType="text"
                                                                 android:maxLines="1"
-                                                                android:singleLine="true" />
+                                                                android:singleLine="true"
+                                                                android:textSize="@dimen/_10sdp" />
 
                                                         </RelativeLayout>
                                                     </androidx.cardview.widget.CardView>
@@ -239,9 +235,9 @@
                                                                 android:background="@android:color/transparent"
                                                                 android:ellipsize="end"
                                                                 android:hint="Email"
-                                                                android:textSize="@dimen/_10sdp"
                                                                 android:inputType="textEmailAddress"
                                                                 android:singleLine="true"
+                                                                android:textSize="@dimen/_10sdp"
                                                                 android:visibility="visible" />
 
                                                         </RelativeLayout>
@@ -271,8 +267,8 @@
                                                                 android:background="@android:color/transparent"
                                                                 android:ellipsize="end"
                                                                 android:hint="Address"
-                                                                android:textSize="@dimen/_10sdp"
-                                                                android:singleLine="true" />
+                                                                android:singleLine="true"
+                                                                android:textSize="@dimen/_10sdp" />
 
                                                         </RelativeLayout>
                                                     </androidx.cardview.widget.CardView>
@@ -280,27 +276,27 @@
                                                     <androidx.cardview.widget.CardView
                                                         android:layout_width="wrap_content"
                                                         android:layout_height="wrap_content"
-                                                        card_view:cardElevation="0dp"
-                                                        app:cardCornerRadius="@dimen/_15sdp"
                                                         android:layout_marginTop="@dimen/_5sdp"
                                                         android:backgroundTint="#20000000"
                                                         android:orientation="vertical"
+                                                        app:cardCornerRadius="@dimen/_15sdp"
                                                         app:cardElevation="0dp"
                                                         app:layout_constraintStart_toStartOf="parent"
-                                                        >
+                                                        card_view:cardElevation="0dp">
 
                                                         <RelativeLayout
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:padding="@dimen/_5sdp">
+
                                                             <EditText
-                                                                android:layout_marginLeft="@dimen/_5sdp"
                                                                 android:id="@+id/et_client_date"
                                                                 android:layout_width="match_parent"
                                                                 android:layout_height="wrap_content"
-                                                                android:textSize="@dimen/_10sdp"
+                                                                android:layout_marginLeft="@dimen/_5sdp"
                                                                 android:background="@android:color/transparent"
-                                                                android:hint="DOB" />
+                                                                android:hint="DOB"
+                                                                android:textSize="@dimen/_10sdp" />
 
                                                         </RelativeLayout>
 
@@ -340,6 +336,7 @@
                                                             android:textColor="@android:color/black"
                                                             android:textSize="@dimen/_10sdp" />
                                                     </RelativeLayout>
+
                                                     <androidx.cardview.widget.CardView
                                                         android:layout_width="wrap_content"
                                                         android:layout_height="wrap_content"
@@ -363,11 +360,11 @@
                                                                 android:layout_marginLeft="@dimen/_5sdp"
                                                                 android:background="@android:color/transparent"
                                                                 android:ellipsize="end"
-                                                                android:visibility="gone"
                                                                 android:hint="Base ID"
                                                                 android:inputType="text"
                                                                 android:maxLines="1"
-                                                                android:singleLine="true" />
+                                                                android:singleLine="true"
+                                                                android:visibility="gone" />
 
                                                         </RelativeLayout>
                                                     </androidx.cardview.widget.CardView>
@@ -376,20 +373,30 @@
                                             </RelativeLayout>
                                         </LinearLayout>
 
+
                                         <LinearLayout
                                             android:id="@+id/registration_layout_step_2"
                                             android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
+                                            android:layout_height="wrap_content"
                                             android:gravity="center"
                                             android:orientation="vertical"
                                             android:visibility="gone">
+
+                                            <ImageButton
+                                                android:id="@+id/ib_rotate_id_picture"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="@dimen/_20sdp"
+                                                android:layout_marginTop="@dimen/_20sdp"
+                                                android:layout_marginEnd="@dimen/_20sdp"
+                                                android:gravity="center"
+                                                android:src="@drawable/ic_baseline_rotate_right_24" />
 
                                             <LinearLayout
                                                 android:id="@+id/select_picture_of_id"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:layout_marginStart="@dimen/_20sdp"
-                                                android:layout_marginTop="@dimen/_20sdp"
                                                 android:layout_marginEnd="@dimen/_20sdp"
                                                 android:layout_marginBottom="@dimen/_20sdp"
                                                 android:background="@drawable/phtoidentification_bg"
@@ -416,6 +423,7 @@
 
                                         </LinearLayout>
 
+
                                         <LinearLayout
                                             android:id="@+id/registration_layout_step_3"
                                             android:layout_width="match_parent"
@@ -424,12 +432,21 @@
                                             android:orientation="vertical"
                                             android:visibility="gone">
 
+                                            <ImageButton
+                                                android:id="@+id/ib_rotate_client_picture"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="@dimen/_20sdp"
+                                                android:layout_marginTop="@dimen/_20sdp"
+                                                android:layout_marginEnd="@dimen/_20sdp"
+                                                android:gravity="center"
+                                                android:src="@drawable/ic_baseline_rotate_right_24" />
+
                                             <LinearLayout
                                                 android:id="@+id/select_client_picture"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:layout_marginStart="@dimen/_20sdp"
-                                                android:layout_marginTop="@dimen/_20sdp"
                                                 android:layout_marginEnd="@dimen/_20sdp"
                                                 android:layout_marginBottom="@dimen/_20sdp"
                                                 android:background="@drawable/phtoidentification_bg"
@@ -468,6 +485,7 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:orientation="vertical">
+
                                                 <RelativeLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
@@ -476,8 +494,7 @@
                                                     <RelativeLayout
                                                         android:id="@+id/select_normal_option"
                                                         android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                       >
+                                                        android:layout_height="wrap_content">
 
                                                         <de.hdodenhof.circleimageview.CircleImageView
                                                             android:id="@+id/iv_normal_un_selected"
@@ -581,9 +598,9 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
-                                    android:gravity="center_vertical"
                                     android:layout_marginLeft="@dimen/_15sdp"
                                     android:layout_marginRight="@dimen/_15sdp"
+                                    android:gravity="center_vertical"
 
                                     android:padding="@dimen/_5sdp">
 
@@ -595,8 +612,8 @@
                                         android:background="@drawable/scanqr_btn"
                                         android:gravity="center"
                                         android:text="BACK"
-                                        android:textSize="@dimen/_10sdp"
-                                        android:textColor="@color/white_color" />
+                                        android:textColor="@color/white_color"
+                                        android:textSize="@dimen/_10sdp" />
 
                                     <Button
                                         android:id="@+id/btn_next"
@@ -617,13 +634,14 @@
             </RelativeLayout>
 
         </LinearLayout>
-<!--    </androidx.core.widget.NestedScrollView>-->
+    </androidx.core.widget.NestedScrollView>
     <!--      footerLay-->
     <RelativeLayout
         android:id="@+id/rl_footerlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
+
         <include layout="@layout/footer_layout2" />
     </RelativeLayout>
 
