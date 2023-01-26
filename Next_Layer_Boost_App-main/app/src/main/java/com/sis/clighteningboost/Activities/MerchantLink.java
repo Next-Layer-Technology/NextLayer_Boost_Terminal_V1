@@ -256,13 +256,13 @@ import tech.gusavila92.websocketclient.WebSocketClient;
                         openActivity(MainActivity.class);
                     }else {
                         progressDialog.dismiss();
-                        goAlertDialogwithOneBTn(1,"","Invalid Merchant ID","Retry","");
+                        goAlertDialogwithOneBTn(1,"","Merchant information does not match our records.","Retry","");
                     }
                 }
                 else {
                     progressDialog.dismiss();
                     Log.e("Error:",response.toString());
-                    goAlertDialogwithOneBTn(1,"","Client id or marchant id is wrong", "Retry","");
+                    goAlertDialogwithOneBTn(1,"","Merchant information does not match our records.", "Retry","");
                 }
             }
 

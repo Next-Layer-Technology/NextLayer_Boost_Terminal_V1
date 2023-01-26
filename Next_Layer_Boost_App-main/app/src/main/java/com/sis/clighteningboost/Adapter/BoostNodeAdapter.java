@@ -94,7 +94,7 @@ public class BoostNodeAdapter extends RecyclerView.Adapter<BoostNodeAdapter.View
                    mActivity.runOnUiThread(new Runnable() {
                        @Override
                        public void run() {
-                           if(args.length!=0){
+//                           if(args.length!=0){
                                Log.d("Socket","Acknowledgement of zero element");
                                if(onStartReceive()){
                                    mActivity.startActivity(new Intent(mActivity,MerchantBoostTerminal.class).putExtra("node_id",mReceivingNodeId));
@@ -102,9 +102,9 @@ public class BoostNodeAdapter extends RecyclerView.Adapter<BoostNodeAdapter.View
                                else {
                                    showAlert();
                                }
-                           }else {
-                               Toast.makeText(mActivity, "Message is not sent", Toast.LENGTH_SHORT).show();
-                           }
+//                           }else {
+//                               Toast.makeText(mActivity, "Message is not sent", Toast.LENGTH_SHORT).show();
+//                           }
                        }
                    });
 

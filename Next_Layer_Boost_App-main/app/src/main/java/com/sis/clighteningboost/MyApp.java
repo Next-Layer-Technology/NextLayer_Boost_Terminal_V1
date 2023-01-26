@@ -28,14 +28,16 @@ public class MyApp extends Application implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityStarted(@NonNull Activity activity) {
-        currentActivity = (BaseActivity) activity;
+        if (activity instanceof BaseActivity) currentActivity = (BaseActivity) activity;
+        else currentActivity = null;
         Log.d(this.getClass().getSimpleName(), "activity started");
     }
 
     @Override
     public void onActivityResumed(@NonNull Activity activity) {
         Log.d(this.getClass().getSimpleName(), "activity resumed");
-        currentActivity = (BaseActivity) activity;
+        if (activity instanceof BaseActivity) currentActivity = (BaseActivity) activity;
+        else currentActivity = null;
 
     }
 
@@ -89,10 +91,12 @@ public class MyApp extends Application implements Application.ActivityLifecycleC
                 @Override
                 public void run() {
                     Log.d(MyApp.this.getClass().getSimpleName(), "on session timed out");
-                    currentActivity.sp.clearAll();
-                    currentActivity.sp.saveStringValue("merchant_id", null);
-                    currentActivity.openActivity(MerchantLink.class);
-                    currentActivity.finish();
+                    if (currentActivity != null) {
+                        currentActivity.sp.clearAll();
+                        currentActivity.sp.saveStringValue("merchant_id", null);
+                        currentActivity.openActivity(MerchantLink.class);
+                        currentActivity.finish();
+                    }
                 }
             }, 20000);
 

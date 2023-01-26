@@ -463,15 +463,13 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:background="@android:color/transparent"
-                                                android:editable="false"
                                                 android:gravity="center"
                                                 android:hint="@string/txt_enterNodetID"
                                                 android:lines="1"
                                                 android:padding="@dimen/_5sdp"
                                                 android:singleLine="true"
-
                                                 android:textSize="@dimen/_10sdp"
-                                                android:textStyle="bold"></EditText>
+                                                android:textStyle="bold" />
                                         </RelativeLayout>
                                     </androidx.cardview.widget.CardView>
 
