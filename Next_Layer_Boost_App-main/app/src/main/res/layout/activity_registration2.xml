@@ -28,7 +28,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/_10sdp"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -124,7 +123,6 @@
                                         android:id="@+id/registerstep1layy2"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:layout_marginTop="@dimen/_5sdp"
                                         android:gravity="center"
                                         android:orientation="vertical"
                                         android:paddingLeft="@dimen/_15sdp"

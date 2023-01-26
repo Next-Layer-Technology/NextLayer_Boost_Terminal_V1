@@ -343,15 +343,11 @@ public class MerchantBoostTerminal extends BaseActivity {
             public void onClick(View view) {
                 EditText et_clientnodeid = findViewById(R.id.et_clientnodeid);
                 String et_clientnodeid_val = et_clientnodeid.getText().toString();
-                if (et_clientnodeid_val != null) {
-                    if (!et_clientnodeid_val.isEmpty()) {
-                        clientNodeID222 = et_clientnodeid_val;
-                        routingNodeExecute(et_clientnodeid_val);
-                    } else {
-                        Toast.makeText(getApplication(), "Result Found", Toast.LENGTH_SHORT).show();
-                    }
+                if (!et_clientnodeid_val.isEmpty()) {
+                    clientNodeID222 = et_clientnodeid_val;
+                    routingNodeExecute(et_clientnodeid_val);
                 } else {
-                    Toast.makeText(getApplication(), "Result Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "Please enter Node ID", Toast.LENGTH_SHORT).show();
                 }
             }
         });
