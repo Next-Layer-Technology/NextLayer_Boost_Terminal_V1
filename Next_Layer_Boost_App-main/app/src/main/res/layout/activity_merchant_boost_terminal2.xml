@@ -23,7 +23,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/headerlay"
         android:layout_above="@+id/logoutbtnLay"
-        android:padding="@dimen/_5sdp"
         >
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

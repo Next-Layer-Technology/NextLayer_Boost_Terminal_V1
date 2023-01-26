@@ -238,14 +238,14 @@ class Registration : BaseActivity() {
             previousLay()
         })
         nextLay()
-        select_instant_option?.setOnClickListener({
+        select_instant_option?.setOnClickListener {
             hoverEffect(select_instant_option)
             if (fundingNodeTemp != null) {
                 connectWithThorAndLoginAPi(
-                    fundingNodeTemp!!.ip!!,
-                    fundingNodeTemp!!.port!!,
-                    fundingNodeTemp!!.username!!,
-                    fundingNodeTemp!!.password!!
+                    fundingNodeTemp!!.ip.orEmpty(),
+                    fundingNodeTemp!!.port.orEmpty(),
+                    fundingNodeTemp!!.username.orEmpty(),
+                    fundingNodeTemp!!.password.orEmpty()
                 )
                 //connectWithThorAndLogin(fundingNodeTemp.getIp(),fundingNodeTemp.getPort(),fundingNodeTemp.getUsername(),fundingNodeTemp.getPassword());
                 // registration(true);
@@ -254,7 +254,7 @@ class Registration : BaseActivity() {
                 fundingNodeInfor
                 st!!.toast("Try again")
             }
-        })
+        }
         select_normal_option?.setOnClickListener(View.OnClickListener {
             hoverEffect(select_normal_option)
             INSTANT_NORMAL = 1
@@ -641,8 +641,7 @@ class Registration : BaseActivity() {
 
     // Extra Dialog
     private fun showInstantDialog(ip: String, port: String, username: String, password: String) {
-        val showInstantPayDialog: Dialog
-        showInstantPayDialog = Dialog(this@Registration)
+        val showInstantPayDialog: Dialog = Dialog(this@Registration)
         showInstantPayDialog.setContentView(R.layout.instant_pay_layout_1)
         Objects.requireNonNull(showInstantPayDialog.window)?.setBackgroundDrawable(
             ColorDrawable(
@@ -654,13 +653,12 @@ class Registration : BaseActivity() {
             showInstantPayDialog.findViewById<Button>(R.id.btn_pay_with_lightning)
         instant_pay_back_icon = showInstantPayDialog.findViewById(R.id.instant_pay_back_icon)
         val fee_from_db = showInstantPayDialog.findViewById<TextView>(R.id.fee_from_db)
-        var perUsdBtc = Companion.bitCoinValue
-        perUsdBtc = 1 / Companion.bitCoinValue
-        var totalfee = perUsdBtc * fundingNodeTemp!!.registration_fees!!.toDouble()
+        val perUsdBtc: Double = 1 / Companion.bitCoinValue
+        var totalfee = perUsdBtc * (fundingNodeTemp!!.registration_fees.orEmpty().toDoubleOrNull()?: 0.0)
         totalfee = round(totalfee, 9)
         fee_from_db.text = excatFigure(totalfee) + " BTC / $" + String.format(
             "%.2f", round(
-                fundingNodeTemp!!.registration_fees!!.toDouble(), 2
+                fundingNodeTemp!!.registration_fees?.toDoubleOrNull()?:0.0, 2
             )
         ) + "USD"
         val layout1 = showInstantPayDialog.findViewById<LinearLayout>(R.id.layout1)
@@ -676,12 +674,11 @@ class Registration : BaseActivity() {
         static_description.inputType = InputType.TYPE_NULL
         static_label.inputType = InputType.TYPE_NULL
         static_amount_in_satoshi.inputType = InputType.TYPE_NULL
-        val invoiceRate = fundingNodeTemp!!.registration_fees!!.toDouble() * perUsdBtc
+        val invoiceRate = (fundingNodeTemp!!.registration_fees?.toDoubleOrNull()?:0.0) * perUsdBtc
         val satoshiValue = invoiceRate * 100000000
         val satoshiValuemSat = satoshiValue * 1000
-        var dmSatoshi = 0.0
-        var dSatoshi = 0.0
-        dSatoshi = invoiceRate * AppConstants.btcToSathosi
+        val dmSatoshi: Double
+        var dSatoshi: Double = invoiceRate * AppConstants.btcToSathosi
         dmSatoshi = dSatoshi * AppConstants.satoshiToMSathosi
         val formatter: NumberFormat = DecimalFormat("#0")
         val rMSatoshi = formatter.format(dmSatoshi)
@@ -691,7 +688,7 @@ class Registration : BaseActivity() {
         layouts.add(layout3)
         layouts.add(layout4)
         controlDialogLayouts(1, layouts, instant_pay_back_icon)
-        instant_pay_back_icon?.setOnClickListener(View.OnClickListener {
+        instant_pay_back_icon?.setOnClickListener({
             if (dialogLayout == 1) {
                 showInstantPayDialog.dismiss()
             } else {

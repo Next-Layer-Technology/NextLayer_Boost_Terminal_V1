@@ -363,7 +363,7 @@ class MerchantBoostTerminal : BaseActivity() {
                 val pass = routingNodeArrayList!![0].password
                 //executeRoutingNodeCals(soverignLink,user,pass,clientNodeId);
                 // getRoutingNodesData("onoff","abc123","123","listpeers "+clientNodeId+" ");
-                getNodeData2(merchantId, soverignLink, pass!!, "listpeers $clientNodeId ")
+                getNodeData2(merchantId, soverignLink, pass.orEmpty(), "listpeers $clientNodeId ")
                 Log.e("Testphase", ":End")
             }
         }
@@ -379,33 +379,34 @@ class MerchantBoostTerminal : BaseActivity() {
         progressDialog!!.show()
         progressDialog!!.setCanceledOnTouchOutside(false)
         progressDialog!!.setCancelable(false)
-        val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://$url/")
-            .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-        val apiInterface = retrofit.create(
-            ApiInterfaceForNodes::class.java
-        )
+//        val gson = GsonBuilder().setLenient().create()
+//        val httpLoggingInterceptor = HttpLoggingInterceptor()
+//        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+//        val httpClient: OkHttpClient = OkHttpClient.Builder()
+//            .addInterceptor(
+//                ChuckerInterceptor.Builder(this)
+//                    .build()
+//            )
+//            .addNetworkInterceptor(httpLoggingInterceptor)
+//            .build()
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("http://$url/")
+//            .client(httpClient)
+//            .addConverterFactory(GsonConverterFactory.create(gson))
+//            .build()
+//        val apiInterface = retrofit.create(
+//            ApiInterfaceForNodes::class.java
+//        )
         try {
-            val requestBody: MutableMap<String, String?> = HashMap()
-            requestBody["merchantId"] = merchantId
-            requestBody["merchantBackendPassword"] = "abc123"
-            requestBody["boost2faPassword"] = "123456"
-            requestBody["command"] = clientNodeId2
+//            val requestBody: MutableMap<String, String?> = HashMap()
+//            requestBody["merchantId"] = merchantId
+//            requestBody["merchantBackendPassword"] = "abc123"
+//            requestBody["boost2faPassword"] = "123456"
+//            requestBody["command"] = clientNodeId2
 
             //quoc testing
-            getARoutingAPIAuth1(merchantId, "abc123", url, clientNodeId2)
+            val merchantPwd = sp!!.getStringValue("merchant_password")
+            getARoutingAPIAuth1(merchantId, merchantPwd!!, url, clientNodeId2)
             if (authLevel2 == null) {
                 getARoutingAPIAuth2(merchantId, "123456", url, clientNodeId2)
             }
@@ -995,7 +996,8 @@ class MerchantBoostTerminal : BaseActivity() {
         try {
             val requestBody: MutableMap<String, String> = HashMap()
             requestBody["cmd"] = clientNodeId2.trim { it <= ' ' }
-            val call = apiInterface.getDecodeBolt112WithExecute("Bearer $authLevel1", requestBody.toMap())
+            val call =
+                apiInterface.getDecodeBolt112WithExecute("Bearer $authLevel1", requestBody.toMap())
             call!!.enqueue(object : Callback<DecodeBolt112WithExecuteResponse?> {
                 override fun onResponse(
                     call: Call<DecodeBolt112WithExecuteResponse?>,
@@ -1464,7 +1466,8 @@ class MerchantBoostTerminal : BaseActivity() {
             requestBody["lock_timestamp"] = lockTimeStamp
             requestBody["lock_msatoshi"] = (AMOUNT_BTC * 100000 * 1000000).toLong().toString() + ""
             requestBody["lock_usd"] = AMOUNT_USD.toString() + ""
-            val call = apiInterface.callPayApiRequestWithExecute("Bearer $authLevel2", requestBody.toMap())
+            val call =
+                apiInterface.callPayApiRequestWithExecute("Bearer $authLevel2", requestBody.toMap())
             call!!.enqueue(object : Callback<DecodeBolt112WithExecuteResponse?> {
                 override fun onResponse(
                     call: Call<DecodeBolt112WithExecuteResponse?>,
@@ -1475,7 +1478,10 @@ class MerchantBoostTerminal : BaseActivity() {
                             val object2 =
                                 JSONObject(response.body()!!.decodeBolt112WithExecuteData!!.stdout)
                             if (object2.length() > 0) {
-                                if (response.body()!!.decodeBolt112WithExecuteData!!.stdout!!.contains("payment_hash")) {
+                                if (response.body()!!.decodeBolt112WithExecuteData!!.stdout!!.contains(
+                                        "payment_hash"
+                                    )
+                                ) {
                                     var pay: Pay? = null
                                     var jsonObj: JSONObject? = null
                                     jsonObj = object2
@@ -2499,7 +2505,7 @@ class MerchantBoostTerminal : BaseActivity() {
     }
 
     private val allRountingNodeList: Unit
-        private get() {
+        get() {
             progressDialog!!.show()
             progressDialog!!.setCanceledOnTouchOutside(false)
             progressDialog!!.setCancelable(false)
@@ -2569,7 +2575,8 @@ class MerchantBoostTerminal : BaseActivity() {
         try {
             val requestBody1: MutableMap<String, String> = HashMap()
             requestBody1["cmd"] = clientNodeId2.trim { it <= ' ' }
-            val call1 = apiInterface.getNodesDataWithExecute("Bearer $accessToken", requestBody1.toMap())
+            val call1 =
+                apiInterface.getNodesDataWithExecute("Bearer $accessToken", requestBody1.toMap())
             call1!!.enqueue(object : Callback<NodesDataWithExecuteResponse?> {
                 override fun onResponse(
                     call: Call<NodesDataWithExecuteResponse?>,
@@ -2602,6 +2609,7 @@ class MerchantBoostTerminal : BaseActivity() {
                             progressDialog!!.dismiss()
                             //e.printStackTrace();
                             Log.e("Error", e.message!!)
+                            st!!.toast("Error: " + e.message)
                         }
                         if (ja_data!!.length() > 0) {
                             var finalJSONobject: JSONObject? = null
@@ -2614,6 +2622,7 @@ class MerchantBoostTerminal : BaseActivity() {
                                 sta = false
                                 //e.printStackTrace();
                                 Log.e("error4", e.message!!)
+                                st!!.toast("Error: " + e.message)
                             }
                             if (sta) {
                                 val temp1 = finalJSONobject.toString()
@@ -2628,9 +2637,11 @@ class MerchantBoostTerminal : BaseActivity() {
                                     )
                                     //...
                                 } catch (exception: IllegalStateException) {
+                                    st!!.toast("Error: " + exception.message)
                                     failed = true
                                     //...
                                 } catch (exception: JsonSyntaxException) {
+                                    st!!.toast("Error: " + exception.message)
                                     failed = true
                                 }
                                 if (failed) {
@@ -2646,7 +2657,7 @@ class MerchantBoostTerminal : BaseActivity() {
                                     val tempList = GlobalState.instance!!.nodeLineInfoArrayList
                                     Log.e("Test1", "test")
                                 }
-                                count = count + 1
+                                count += 1
                                 if (routingNodeArrayList != null) {
                                     if (routingNodeArrayList!!.size >= count + 1) {
                                         val soverignLink =
@@ -2758,6 +2769,7 @@ class MerchantBoostTerminal : BaseActivity() {
                 override fun onFailure(call: Call<NodesDataWithExecuteResponse?>, t: Throwable) {
                     Log.e("TAG", "onResponse: " + t.message.toString())
                     progressDialog!!.dismiss()
+                    st!!.toast("Error: " + t.message)
                 }
             })
         } catch (e: Exception) {
@@ -2793,6 +2805,8 @@ class MerchantBoostTerminal : BaseActivity() {
                         clientNodeId2,
                         response.body()!!.aRoutingAPIAuthData!!.accessToken!!
                     )
+                }else{
+                    st!!.toast("Error")
                 }
                 progressDialog!!.dismiss()
             }
@@ -2930,8 +2944,7 @@ class MerchantBoostTerminal : BaseActivity() {
 
     private fun scannerIntent() {
         mode = 1
-        val qrScan: IntentIntegrator
-        qrScan = IntentIntegrator(this)
+        val qrScan = IntentIntegrator(this)
         qrScan.setOrientationLocked(false)
         val prompt = "Scan Client Node ID"
         qrScan.setPrompt(prompt)
@@ -2966,7 +2979,11 @@ class MerchantBoostTerminal : BaseActivity() {
                 } else if (mode == 1) {
                     //Toast.makeText(this, "Result Found", Toast.LENGTH_LONG).show();
                     clientNodeId = result.contents
-                    if (!clientNodeId.isEmpty()) {
+
+                    val et_clientnodeid = findViewById<EditText>(R.id.et_clientnodeid)
+                    et_clientnodeid.setText(clientNodeId)
+
+                    if (clientNodeId.isNotEmpty()) {
                         clientNodeID222 = clientNodeId
                         routingNodeExecute(clientNodeId)
                     }
