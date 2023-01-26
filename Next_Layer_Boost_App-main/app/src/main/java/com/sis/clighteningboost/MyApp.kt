@@ -1,105 +1,67 @@
-package com.sis.clighteningboost;
+package com.sis.clighteningboost
 
-import android.app.Activity;
-import android.app.Application;
-import android.os.Bundle;
-import android.util.Log;
+import android.app.Activity
+import android.app.Application
+import android.app.Application.ActivityLifecycleCallbacks
+import android.os.Bundle
+import android.util.Log
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
+import com.sis.clighteningboost.Activities.BaseActivity
+import com.sis.clighteningboost.Activities.MerchantLink
+import java.util.*
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.DefaultLifecycleObserver;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ProcessLifecycleOwner;
-
-import com.sis.clighteningboost.Activities.BaseActivity;
-import com.sis.clighteningboost.Activities.MerchantLink;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
-public class MyApp extends Application implements Application.ActivityLifecycleCallbacks {
-
-    private BaseActivity currentActivity;
-
-    @Override
-    public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
-
+class MyApp : Application(), ActivityLifecycleCallbacks {
+    private var currentActivity: BaseActivity? = null
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+    override fun onActivityStarted(activity: Activity) {
+        currentActivity = if (activity is BaseActivity) activity else null
+        Log.d(this.javaClass.simpleName, "activity started")
     }
 
-    @Override
-    public void onActivityStarted(@NonNull Activity activity) {
-        if (activity instanceof BaseActivity) currentActivity = (BaseActivity) activity;
-        else currentActivity = null;
-        Log.d(this.getClass().getSimpleName(), "activity started");
+    override fun onActivityResumed(activity: Activity) {
+        Log.d(this.javaClass.simpleName, "activity resumed")
+        currentActivity = if (activity is BaseActivity) activity else null
     }
 
-    @Override
-    public void onActivityResumed(@NonNull Activity activity) {
-        Log.d(this.getClass().getSimpleName(), "activity resumed");
-        if (activity instanceof BaseActivity) currentActivity = (BaseActivity) activity;
-        else currentActivity = null;
-
+    override fun onActivityPaused(activity: Activity) {}
+    override fun onActivityStopped(activity: Activity) {}
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+    override fun onActivityDestroyed(activity: Activity) {
+        Log.d(this.javaClass.simpleName, "activity destroyed")
+        currentActivity = null
     }
 
-    @Override
-    public void onActivityPaused(@NonNull Activity activity) {
-
+    override fun onCreate() {
+        super.onCreate()
+        val observer = AppLifecycleObserver()
+        ProcessLifecycleOwner.get().lifecycle.addObserver(observer)
+        registerActivityLifecycleCallbacks(this)
     }
 
-    @Override
-    public void onActivityStopped(@NonNull Activity activity) {
-
-    }
-
-    @Override
-    public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
-
-    }
-
-    @Override
-    public void onActivityDestroyed(@NonNull Activity activity) {
-        Log.d(this.getClass().getSimpleName(), "activity destroyed");
-        currentActivity = null;
-
-    }
-
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        AppLifecycleObserver observer = new AppLifecycleObserver();
-        ProcessLifecycleOwner.get().getLifecycle().addObserver(observer);
-        registerActivityLifecycleCallbacks(this);
-    }
-
-
-    class AppLifecycleObserver implements DefaultLifecycleObserver {
-        Timer timer = new Timer();
-
-        @Override
-        public void onStart(@NonNull LifecycleOwner owner) { // app moved to foreground
-            timer.cancel();
-            timer = new Timer();
-            Log.d(MyApp.this.getClass().getSimpleName(), "timer cancelled");
+    internal inner class AppLifecycleObserver : DefaultLifecycleObserver {
+        var timer = Timer()
+        override fun onStart(owner: LifecycleOwner) { // app moved to foreground
+            timer.cancel()
+            timer = Timer()
+            Log.d(this@MyApp.javaClass.simpleName, "timer cancelled")
         }
 
-        @Override
-        public void onStop(@NonNull LifecycleOwner owner) { // app moved to background
-            Log.d(MyApp.this.getClass().getSimpleName(), "app moved to background");
-            Log.d(MyApp.this.getClass().getSimpleName(), "timer started");
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    Log.d(MyApp.this.getClass().getSimpleName(), "on session timed out");
+        override fun onStop(owner: LifecycleOwner) { // app moved to background
+            Log.d(this@MyApp.javaClass.simpleName, "app moved to background")
+            Log.d(this@MyApp.javaClass.simpleName, "timer started")
+            timer.schedule(object : TimerTask() {
+                override fun run() {
+                    Log.d(this@MyApp.javaClass.simpleName, "on session timed out")
                     if (currentActivity != null) {
-                        currentActivity.sp.clearAll();
-                        currentActivity.sp.saveStringValue("merchant_id", null);
-                        currentActivity.openActivity(MerchantLink.class);
-                        currentActivity.finish();
+                        currentActivity!!.sp!!.clearAll()
+                        currentActivity!!.sp!!.saveStringValue("merchant_id", null)
+                        currentActivity!!.openActivity(MerchantLink::class.java)
+                        currentActivity!!.finish()
                     }
                 }
-            }, 20000);
-
+            }, 20000)
         }
     }
 }
