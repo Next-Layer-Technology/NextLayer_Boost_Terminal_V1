@@ -2335,7 +2335,7 @@ class MerchantBoostTerminal : BaseActivity() {
                 }
             }
             Log.e(TAG, "LineNodeResultatPOST:$result")
-            count = count + 1
+            count += 1
             if (routingNodeArrayList != null) {
                 if (routingNodeArrayList!!.size >= count + 1) {
                     val soverignLink =
@@ -2735,12 +2735,13 @@ class MerchantBoostTerminal : BaseActivity() {
                                 progressDialog!!.dismiss()
                             }
                         }
-                    } catch (e: Exception) {
+                    }
+                    catch (e: Exception) {
                         e.printStackTrace()
 
                         // progressDialog.dismiss();
                         //parseJSONForNodeLineInfor("[ {   \"peers\": []} ]");
-                        count = count + 1
+                        count += 1
                         //quoc testing add fake noteLineInfo
                         val nodeLineInfo = NodeLineInfo()
                         GlobalState.instance!!.addInNodeLineInfoArrayList(nodeLineInfo)

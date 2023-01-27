@@ -674,7 +674,7 @@ class Registration : BaseActivity() {
         static_description.inputType = InputType.TYPE_NULL
         static_label.inputType = InputType.TYPE_NULL
         static_amount_in_satoshi.inputType = InputType.TYPE_NULL
-        val invoiceRate = (fundingNodeTemp!!.registration_fees?.toDoubleOrNull()?:0.0) * perUsdBtc
+        val invoiceRate = (fundingNodeTemp!!.registration_fees?.toDoubleOrNull() ?:0.0) * perUsdBtc
         val satoshiValue = invoiceRate * 100000000
         val satoshiValuemSat = satoshiValue * 1000
         val dmSatoshi: Double
