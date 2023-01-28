@@ -688,14 +688,14 @@ class Registration : BaseActivity() {
         layouts.add(layout3)
         layouts.add(layout4)
         controlDialogLayouts(1, layouts, instant_pay_back_icon)
-        instant_pay_back_icon?.setOnClickListener({
+        instant_pay_back_icon?.setOnClickListener {
             if (dialogLayout == 1) {
                 showInstantPayDialog.dismiss()
             } else {
                 dialogLayout--
                 controlDialogLayouts(dialogLayout, layouts, instant_pay_back_icon)
             }
-        })
+        }
         val description = sp!!.getStringValue("merchant_id")
         val label = "instant_register" + System.currentTimeMillis()
         static_description.setText(description)
@@ -854,22 +854,20 @@ class Registration : BaseActivity() {
                 var fInvoiceResponse = invoiceReponse.replace("[", "")
                 fInvoiceResponse = fInvoiceResponse.replace("]", "")
                 val temInvoice = parseJSONForCreatInvocie(fInvoiceResponse)
-                if (temInvoice != null) {
-                    if (temInvoice.bolt11 != null) {
+                if (temInvoice.bolt11 != null) {
 //                        transactionID++;
-                        val temHax = temInvoice.bolt11
-                        val multiFormatWriter = MultiFormatWriter()
-                        try {
-                            val bitMatrix =
-                                multiFormatWriter.encode(temHax, BarcodeFormat.QR_CODE, 600, 600)
-                            val barcodeEncoder = BarcodeEncoder()
-                            val bitmap = barcodeEncoder.createBitmap(bitMatrix)
-                            progressDialog!!.dismiss()
-                            qr_scan_code_image!!.setImageBitmap(bitmap)
-                            controlDialogLayouts(3, layouts, instant_pay_back_icon)
-                        } catch (e: WriterException) {
-                            e.printStackTrace()
-                        }
+                    val temHax = temInvoice.bolt11
+                    val multiFormatWriter = MultiFormatWriter()
+                    try {
+                        val bitMatrix =
+                            multiFormatWriter.encode(temHax, BarcodeFormat.QR_CODE, 600, 600)
+                        val barcodeEncoder = BarcodeEncoder()
+                        val bitmap = barcodeEncoder.createBitmap(bitMatrix)
+                        progressDialog!!.dismiss()
+                        qr_scan_code_image!!.setImageBitmap(bitmap)
+                        controlDialogLayouts(3, layouts, instant_pay_back_icon)
+                    } catch (e: WriterException) {
+                        e.printStackTrace()
                     }
                 }
             } else {
@@ -1131,6 +1129,7 @@ class Registration : BaseActivity() {
     }
 
     private fun instant_registration(isActive: Boolean) {
+        progressDialog!!.show()
         val clientImage = client_image_bitmap
         val nicImage = card_image_bitmap
         val clName = name
@@ -1463,8 +1462,7 @@ class Registration : BaseActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             try {
                 var fos: FileOutputStream? = null
-                val valuesvideos: ContentValues
-                valuesvideos = ContentValues()
+                val valuesvideos: ContentValues = ContentValues()
                 valuesvideos.put(MediaStore.MediaColumns.DISPLAY_NAME, "/myscreen_$fileName.jpg")
                 valuesvideos.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
                 valuesvideos.put(
@@ -1772,8 +1770,7 @@ class Registration : BaseActivity() {
         pass: String,
         commad: String
     ) {
-        val dialog2: ProgressDialog
-        dialog2 = ProgressDialog(this)
+        val dialog2: ProgressDialog = ProgressDialog(this)
         dialog2.setMessage("Confirming...")
         dialog2.show()
         dialog2.setCancelable(false)

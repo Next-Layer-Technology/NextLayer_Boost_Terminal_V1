@@ -110,7 +110,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:gravity="center_vertical"
-                                            android:text="NIC Photo"
+                                            android:text="ID Card"
                                             android:textColor="@color/colorBlack"
                                             android:textSize="@dimen/_10sdp"
                                             android:textStyle="bold">
@@ -188,7 +188,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:gravity="center_vertical"
-                                            android:text="NIC"
+                                            android:text="ID Card Number"
                                             android:textColor="@color/colorBlack"
                                             android:textSize="@dimen/_10sdp"
                                             android:textStyle="bold">
@@ -349,7 +349,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:gravity="center_vertical"
-                                            android:text="Gamma User"
+                                            android:text="Nextlayer Client"
                                             android:textColor="@color/colorBlack"
                                             android:textSize="@dimen/_10sdp"
                                             android:textStyle="bold">

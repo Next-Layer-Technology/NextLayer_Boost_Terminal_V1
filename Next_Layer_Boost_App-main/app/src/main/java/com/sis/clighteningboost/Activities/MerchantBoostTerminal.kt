@@ -646,76 +646,91 @@ class MerchantBoostTerminal : BaseActivity() {
     }
 
     private fun showFirstDialog(position: Int) {
-        when (position) {
-            1 -> if (clientData != null && merchantData != null) {
-                if (clientData!!.client_maxboost != null && merchantData!!.merchant_maxboost != null) {
-                    val clientMax = clientData!!.client_maxboost!!.toDouble()
-                    val merchantMax = merchantData!!.merchant_maxboost!!.toDouble()
-                    if (clientMax > 0 && merchantMax > 0 && LINE1_MAX_BOOST > 0) {
+        if (clientData != null && merchantData != null) {
+            if (clientData!!.client_maxboost != null && merchantData!!.merchant_maxboost != null) {
+                val clientMax = clientData!!.client_maxboost!!.toDouble()
+                val merchantMax = merchantData!!.merchant_maxboost!!.toDouble()
+
+                if (clientMax > 0 ) {
+
+                } else {
+                    val reason =
+                        "Client Recharge Exceeded"
+                    AlertDialog.Builder(this@MerchantBoostTerminal)
+                        .setMessage(reason)
+                        .setPositiveButton("Try Again Tommorrow", null)
+                        .show()
+                    return
+                }
+
+                if (merchantMax > 0 ) {
+
+                } else {
+                    val reason =
+                        "Merchant Recharge Exceeded"
+                    AlertDialog.Builder(this@MerchantBoostTerminal)
+                        .setMessage(reason)
+                        .setPositiveButton("Try Again Tommorrow", null)
+                        .show()
+                    return
+                }
+
+
+                when (position) {
+                    1 -> if ( LINE1_MAX_BOOST > 0) {
                         showFirstPopUp(position)
                     } else {
                         val reason =
-                            "Merchant Max Boost Exceeded\nClient Recharge Exceeded\nLine Recharge Exceeded"
+                            "Line Recharge Exceeded"
                         AlertDialog.Builder(this@MerchantBoostTerminal)
                             .setMessage(reason)
                             .setPositiveButton("Try Again Tommorrow", null)
                             .show()
                         return
                     }
+
+                    2 -> if (LINE2_MAX_BOOST > 0) {
+                            showFirstPopUp(position)
+                        } else {
+                            val reason =
+                                "Line Recharge Exceeded"
+                            AlertDialog.Builder(this@MerchantBoostTerminal)
+                                .setMessage(reason)
+                                .setPositiveButton("Try Again Tommorrow", null)
+                                .show()
+                            return
+                        }
+
+                    3 -> if (LINE3_MAX_BOOST > 0) {
+                            showFirstPopUp(position)
+                        } else {
+                            val reason =
+                                "Line Recharge Exceeded"
+                            AlertDialog.Builder(this@MerchantBoostTerminal)
+                                .setMessage(reason)
+                                .setPositiveButton("Try Again Tommorrow", null)
+                                .show()
+                            return
+                        }
+
+                    4 -> if (LINE4_MAX_BOOST > 0) {
+                            showFirstPopUp(position)
+                        } else {
+                            val reason =
+                                "Line Recharge Exceeded"
+                            AlertDialog.Builder(this@MerchantBoostTerminal)
+                                .setMessage(reason)
+                                .setPositiveButton("Try Again Tommorrow", null)
+                                .show()
+                            return
+                        }
+
                 }
-            }
-            2 -> if (clientData != null && merchantData != null) {
-                if (clientData!!.client_maxboost != null && merchantData!!.merchant_maxboost != null) {
-                    val clientMax = clientData!!.client_maxboost!!.toDouble()
-                    val merchantMax = merchantData!!.merchant_maxboost!!.toDouble()
-                    if (clientMax > 0 && merchantMax > 0 && LINE2_MAX_BOOST > 0) {
-                        showFirstPopUp(position)
-                    } else {
-                        val reason =
-                            "Merchant Max Boost Exceeded\nClient Recharge Exceeded\nLine Recharge Exceeded"
-                        AlertDialog.Builder(this@MerchantBoostTerminal)
-                            .setMessage(reason)
-                            .setPositiveButton("Try Again Tommorrow", null)
-                            .show()
-                        return
-                    }
-                }
-            }
-            3 -> if (clientData != null && merchantData != null) {
-                if (clientData!!.client_maxboost != null && merchantData!!.merchant_maxboost != null) {
-                    val clientMax = clientData!!.client_maxboost!!.toDouble()
-                    val merchantMax = merchantData!!.merchant_maxboost!!.toDouble()
-                    if (clientMax > 0 && merchantMax > 0 && LINE3_MAX_BOOST > 0) {
-                        showFirstPopUp(position)
-                    } else {
-                        val reason =
-                            "Merchant Max Boost Exceeded\nClient Recharge Exceeded\nLine Recharge Exceeded"
-                        AlertDialog.Builder(this@MerchantBoostTerminal)
-                            .setMessage(reason)
-                            .setPositiveButton("Try Again Tommorrow", null)
-                            .show()
-                        return
-                    }
-                }
-            }
-            4 -> if (clientData != null && merchantData != null) {
-                if (clientData!!.client_maxboost != null && merchantData!!.merchant_maxboost != null) {
-                    val clientMax = clientData!!.client_maxboost!!.toDouble()
-                    val merchantMax = merchantData!!.merchant_maxboost!!.toDouble()
-                    if (clientMax > 0 && merchantMax > 0 && LINE4_MAX_BOOST > 0) {
-                        showFirstPopUp(position)
-                    } else {
-                        val reason =
-                            "Merchant Max Boost Exceeded\nClient Recharge Exceeded\nLine Recharge Exceeded"
-                        AlertDialog.Builder(this@MerchantBoostTerminal)
-                            .setMessage(reason)
-                            .setPositiveButton("Try Again Tommorrow", null)
-                            .show()
-                        return
-                    }
-                }
+
             }
         }
+
+
     }
 
     private fun showFirstPopUp(lineNo: Int) {
@@ -2735,8 +2750,7 @@ class MerchantBoostTerminal : BaseActivity() {
                                 progressDialog!!.dismiss()
                             }
                         }
-                    }
-                    catch (e: Exception) {
+                    } catch (e: Exception) {
                         e.printStackTrace()
 
                         // progressDialog.dismiss();
@@ -2806,7 +2820,7 @@ class MerchantBoostTerminal : BaseActivity() {
                         clientNodeId2,
                         response.body()!!.aRoutingAPIAuthData!!.accessToken!!
                     )
-                }else{
+                } else {
                     st!!.toast("Error")
                 }
                 progressDialog!!.dismiss()
