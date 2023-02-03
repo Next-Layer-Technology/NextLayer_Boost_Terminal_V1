@@ -969,15 +969,15 @@ class MerchantBoostTerminal : BaseActivity() {
             val ip = GlobalState.instance!!.fundingNode!!.ip
             val port = GlobalState.instance!!.fundingNode!!.port!!.toInt()
             val userNAme = GlobalState.instance!!.fundingNode!!.username
-            val pass = GlobalState.instance!!.fundingNode!!.password
+            val pass = GlobalState.instance!!.fundingNode!!.password.orEmpty()
             val url = ip + ":" + GlobalState.instance!!.fundingNode!!.port
             //String bolt11="lnbc66660p1psmehhepp5tphydr3ngwpzkhgdjrfw28pduc0exmypw9r3t8am5kh8wpq3wycqdqvdfkkgen0v34sxqyjw5qcqpjsp5m2fvdd0st23sp749nysze2a32mrt5m4wxkwx4zpwtlyqw4crcyeq9qyyssqcp2kvswqn6auxnuqztzg6e866v2pr57y05dqzkhtutfffun8gxg5u7m275ssfaa42ct3q0y67xqfhmtv5wanpdpr5jkzhurx74dcpsgp0566m9";
             invoiceId = bolt11fromqr1
             bolt11fromqr = bolt11fromqr1
-            decodeBolt112(merchantId, url, pass!!, " decodepay $bolt11fromqr1", fa2pass)
+            decodeBolt112(merchantId, url, pass, " decodepay $bolt11fromqr1", fa2pass)
 
             //quoc testing
-            decodeBolt112Execute(merchantId, url, pass!!, " decodepay $bolt11fromqr1", fa2pass)
+            decodeBolt112Execute(merchantId, url, pass, " decodepay $bolt11fromqr1", fa2pass)
             //quoc testing
         } else {
         }
@@ -1307,7 +1307,7 @@ class MerchantBoostTerminal : BaseActivity() {
                 val ip = GlobalState.instance!!.fundingNode!!.ip
                 val port = GlobalState.instance!!.fundingNode!!.port!!.toInt()
                 val userNAme = GlobalState.instance!!.fundingNode!!.username
-                val pass = GlobalState.instance!!.fundingNode!!.password
+                val pass = GlobalState.instance!!.fundingNode!!.password.orEmpty()
                 val status = Boolean.valueOf(NetworkManager.instance.connectClient(ip, port))
                 if (status) {
                     val role = NetworkManager.instance.validateUser(userNAme!!, pass!!)
