@@ -13,16 +13,16 @@ import com.sis.clighteningboost.Activities.MerchantLink
 import java.util.*
 
 class MyApp : Application(), ActivityLifecycleCallbacks {
-    private var currentActivity: BaseActivity? = null
+    private var currentBaseActivity: BaseActivity? = null
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
     override fun onActivityStarted(activity: Activity) {
-        currentActivity = if (activity is BaseActivity) activity else null
+        currentBaseActivity = if (activity is BaseActivity) activity else null
         Log.d(this.javaClass.simpleName, "activity started")
     }
 
     override fun onActivityResumed(activity: Activity) {
         Log.d(this.javaClass.simpleName, "activity resumed")
-        currentActivity = if (activity is BaseActivity) activity else null
+        currentBaseActivity = if (activity is BaseActivity) activity else null
     }
 
     override fun onActivityPaused(activity: Activity) {}
@@ -30,7 +30,7 @@ class MyApp : Application(), ActivityLifecycleCallbacks {
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
     override fun onActivityDestroyed(activity: Activity) {
         Log.d(this.javaClass.simpleName, "activity destroyed")
-        currentActivity = null
+        currentBaseActivity = null
     }
 
     override fun onCreate() {
@@ -54,14 +54,14 @@ class MyApp : Application(), ActivityLifecycleCallbacks {
             timer.schedule(object : TimerTask() {
                 override fun run() {
                     Log.d(this@MyApp.javaClass.simpleName, "on session timed out")
-                    if (currentActivity != null) {
-                        currentActivity!!.sp!!.clearAll()
-                        currentActivity!!.sp!!.saveStringValue("merchant_id", null)
-                        currentActivity!!.openActivity(MerchantLink::class.java)
-                        currentActivity!!.finish()
+                    if (currentBaseActivity != null) {
+                        currentBaseActivity!!.sp!!.clearAll()
+                        currentBaseActivity!!.sp!!.saveStringValue("merchant_id", null)
+                        currentBaseActivity!!.openActivity(MerchantLink::class.java)
+                        currentBaseActivity!!.finish()
                     }
                 }
-            }, 20000)
+            }, 30000)
         }
     }
 }

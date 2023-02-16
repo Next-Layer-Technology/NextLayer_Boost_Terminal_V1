@@ -363,7 +363,7 @@ class MerchantBoostTerminal : BaseActivity() {
                 val pass = routingNodeArrayList!![0].password
                 //executeRoutingNodeCals(soverignLink,user,pass,clientNodeId);
                 // getRoutingNodesData("onoff","abc123","123","listpeers "+clientNodeId+" ");
-                getNodeData2(merchantId, soverignLink, pass!!, "listpeers $clientNodeId ")
+                getNodeData2(merchantId, soverignLink, pass.orEmpty(), "listpeers $clientNodeId ")
                 Log.e("Testphase", ":End")
             }
         }
@@ -379,33 +379,34 @@ class MerchantBoostTerminal : BaseActivity() {
         progressDialog!!.show()
         progressDialog!!.setCanceledOnTouchOutside(false)
         progressDialog!!.setCancelable(false)
-        val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://$url/")
-            .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-        val apiInterface = retrofit.create(
-            ApiInterfaceForNodes::class.java
-        )
+//        val gson = GsonBuilder().setLenient().create()
+//        val httpLoggingInterceptor = HttpLoggingInterceptor()
+//        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+//        val httpClient: OkHttpClient = OkHttpClient.Builder()
+//            .addInterceptor(
+//                ChuckerInterceptor.Builder(this)
+//                    .build()
+//            )
+//            .addNetworkInterceptor(httpLoggingInterceptor)
+//            .build()
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("http://$url/")
+//            .client(httpClient)
+//            .addConverterFactory(GsonConverterFactory.create(gson))
+//            .build()
+//        val apiInterface = retrofit.create(
+//            ApiInterfaceForNodes::class.java
+//        )
         try {
-            val requestBody: MutableMap<String, String?> = HashMap()
-            requestBody["merchantId"] = merchantId
-            requestBody["merchantBackendPassword"] = "abc123"
-            requestBody["boost2faPassword"] = "123456"
-            requestBody["command"] = clientNodeId2
+//            val requestBody: MutableMap<String, String?> = HashMap()
+//            requestBody["merchantId"] = merchantId
+//            requestBody["merchantBackendPassword"] = "abc123"
+//            requestBody["boost2faPassword"] = "123456"
+//            requestBody["command"] = clientNodeId2
 
             //quoc testing
-            getARoutingAPIAuth1(merchantId, "abc123", url, clientNodeId2)
+            val merchantPwd = sp!!.getStringValue("merchant_password")
+            getARoutingAPIAuth1(merchantId, merchantPwd!!, url, clientNodeId2)
             if (authLevel2 == null) {
                 getARoutingAPIAuth2(merchantId, "123456", url, clientNodeId2)
             }
@@ -645,76 +646,91 @@ class MerchantBoostTerminal : BaseActivity() {
     }
 
     private fun showFirstDialog(position: Int) {
-        when (position) {
-            1 -> if (clientData != null && merchantData != null) {
-                if (clientData!!.client_maxboost != null && merchantData!!.merchant_maxboost != null) {
-                    val clientMax = clientData!!.client_maxboost!!.toDouble()
-                    val merchantMax = merchantData!!.merchant_maxboost!!.toDouble()
-                    if (clientMax > 0 && merchantMax > 0 && LINE1_MAX_BOOST > 0) {
+        if (clientData != null && merchantData != null) {
+            if (clientData!!.client_maxboost != null && merchantData!!.merchant_maxboost != null) {
+                val clientMax = clientData!!.client_maxboost!!.toDouble()
+                val merchantMax = merchantData!!.merchant_maxboost!!.toDouble()
+
+                if (clientMax > 0 ) {
+
+                } else {
+                    val reason =
+                        "Client Recharge Exceeded"
+                    AlertDialog.Builder(this@MerchantBoostTerminal)
+                        .setMessage(reason)
+                        .setPositiveButton("Try Again Tommorrow", null)
+                        .show()
+                    return
+                }
+
+                if (merchantMax > 0 ) {
+
+                } else {
+                    val reason =
+                        "Merchant Recharge Exceeded"
+                    AlertDialog.Builder(this@MerchantBoostTerminal)
+                        .setMessage(reason)
+                        .setPositiveButton("Try Again Tommorrow", null)
+                        .show()
+                    return
+                }
+
+
+                when (position) {
+                    1 -> if ( LINE1_MAX_BOOST > 0) {
                         showFirstPopUp(position)
                     } else {
                         val reason =
-                            "Merchant Max Boost Exceeded\nClient Recharge Exceeded\nLine Recharge Exceeded"
+                            "Line Recharge Exceeded"
                         AlertDialog.Builder(this@MerchantBoostTerminal)
                             .setMessage(reason)
                             .setPositiveButton("Try Again Tommorrow", null)
                             .show()
                         return
                     }
+
+                    2 -> if (LINE2_MAX_BOOST > 0) {
+                            showFirstPopUp(position)
+                        } else {
+                            val reason =
+                                "Line Recharge Exceeded"
+                            AlertDialog.Builder(this@MerchantBoostTerminal)
+                                .setMessage(reason)
+                                .setPositiveButton("Try Again Tommorrow", null)
+                                .show()
+                            return
+                        }
+
+                    3 -> if (LINE3_MAX_BOOST > 0) {
+                            showFirstPopUp(position)
+                        } else {
+                            val reason =
+                                "Line Recharge Exceeded"
+                            AlertDialog.Builder(this@MerchantBoostTerminal)
+                                .setMessage(reason)
+                                .setPositiveButton("Try Again Tommorrow", null)
+                                .show()
+                            return
+                        }
+
+                    4 -> if (LINE4_MAX_BOOST > 0) {
+                            showFirstPopUp(position)
+                        } else {
+                            val reason =
+                                "Line Recharge Exceeded"
+                            AlertDialog.Builder(this@MerchantBoostTerminal)
+                                .setMessage(reason)
+                                .setPositiveButton("Try Again Tommorrow", null)
+                                .show()
+                            return
+                        }
+
                 }
-            }
-            2 -> if (clientData != null && merchantData != null) {
-                if (clientData!!.client_maxboost != null && merchantData!!.merchant_maxboost != null) {
-                    val clientMax = clientData!!.client_maxboost!!.toDouble()
-                    val merchantMax = merchantData!!.merchant_maxboost!!.toDouble()
-                    if (clientMax > 0 && merchantMax > 0 && LINE2_MAX_BOOST > 0) {
-                        showFirstPopUp(position)
-                    } else {
-                        val reason =
-                            "Merchant Max Boost Exceeded\nClient Recharge Exceeded\nLine Recharge Exceeded"
-                        AlertDialog.Builder(this@MerchantBoostTerminal)
-                            .setMessage(reason)
-                            .setPositiveButton("Try Again Tommorrow", null)
-                            .show()
-                        return
-                    }
-                }
-            }
-            3 -> if (clientData != null && merchantData != null) {
-                if (clientData!!.client_maxboost != null && merchantData!!.merchant_maxboost != null) {
-                    val clientMax = clientData!!.client_maxboost!!.toDouble()
-                    val merchantMax = merchantData!!.merchant_maxboost!!.toDouble()
-                    if (clientMax > 0 && merchantMax > 0 && LINE3_MAX_BOOST > 0) {
-                        showFirstPopUp(position)
-                    } else {
-                        val reason =
-                            "Merchant Max Boost Exceeded\nClient Recharge Exceeded\nLine Recharge Exceeded"
-                        AlertDialog.Builder(this@MerchantBoostTerminal)
-                            .setMessage(reason)
-                            .setPositiveButton("Try Again Tommorrow", null)
-                            .show()
-                        return
-                    }
-                }
-            }
-            4 -> if (clientData != null && merchantData != null) {
-                if (clientData!!.client_maxboost != null && merchantData!!.merchant_maxboost != null) {
-                    val clientMax = clientData!!.client_maxboost!!.toDouble()
-                    val merchantMax = merchantData!!.merchant_maxboost!!.toDouble()
-                    if (clientMax > 0 && merchantMax > 0 && LINE4_MAX_BOOST > 0) {
-                        showFirstPopUp(position)
-                    } else {
-                        val reason =
-                            "Merchant Max Boost Exceeded\nClient Recharge Exceeded\nLine Recharge Exceeded"
-                        AlertDialog.Builder(this@MerchantBoostTerminal)
-                            .setMessage(reason)
-                            .setPositiveButton("Try Again Tommorrow", null)
-                            .show()
-                        return
-                    }
-                }
+
             }
         }
+
+
     }
 
     private fun showFirstPopUp(lineNo: Int) {
@@ -953,15 +969,15 @@ class MerchantBoostTerminal : BaseActivity() {
             val ip = GlobalState.instance!!.fundingNode!!.ip
             val port = GlobalState.instance!!.fundingNode!!.port!!.toInt()
             val userNAme = GlobalState.instance!!.fundingNode!!.username
-            val pass = GlobalState.instance!!.fundingNode!!.password
+            val pass = GlobalState.instance!!.fundingNode!!.password.orEmpty()
             val url = ip + ":" + GlobalState.instance!!.fundingNode!!.port
             //String bolt11="lnbc66660p1psmehhepp5tphydr3ngwpzkhgdjrfw28pduc0exmypw9r3t8am5kh8wpq3wycqdqvdfkkgen0v34sxqyjw5qcqpjsp5m2fvdd0st23sp749nysze2a32mrt5m4wxkwx4zpwtlyqw4crcyeq9qyyssqcp2kvswqn6auxnuqztzg6e866v2pr57y05dqzkhtutfffun8gxg5u7m275ssfaa42ct3q0y67xqfhmtv5wanpdpr5jkzhurx74dcpsgp0566m9";
             invoiceId = bolt11fromqr1
             bolt11fromqr = bolt11fromqr1
-            decodeBolt112(merchantId, url, pass!!, " decodepay $bolt11fromqr1", fa2pass)
+            decodeBolt112(merchantId, url, pass, " decodepay $bolt11fromqr1", fa2pass)
 
             //quoc testing
-            decodeBolt112Execute(merchantId, url, pass!!, " decodepay $bolt11fromqr1", fa2pass)
+            decodeBolt112Execute(merchantId, url, pass, " decodepay $bolt11fromqr1", fa2pass)
             //quoc testing
         } else {
         }
@@ -995,7 +1011,8 @@ class MerchantBoostTerminal : BaseActivity() {
         try {
             val requestBody: MutableMap<String, String> = HashMap()
             requestBody["cmd"] = clientNodeId2.trim { it <= ' ' }
-            val call = apiInterface.getDecodeBolt112WithExecute("Bearer $authLevel1", requestBody.toMap())
+            val call =
+                apiInterface.getDecodeBolt112WithExecute("Bearer $authLevel1", requestBody.toMap())
             call!!.enqueue(object : Callback<DecodeBolt112WithExecuteResponse?> {
                 override fun onResponse(
                     call: Call<DecodeBolt112WithExecuteResponse?>,
@@ -1290,7 +1307,7 @@ class MerchantBoostTerminal : BaseActivity() {
                 val ip = GlobalState.instance!!.fundingNode!!.ip
                 val port = GlobalState.instance!!.fundingNode!!.port!!.toInt()
                 val userNAme = GlobalState.instance!!.fundingNode!!.username
-                val pass = GlobalState.instance!!.fundingNode!!.password
+                val pass = GlobalState.instance!!.fundingNode!!.password.orEmpty()
                 val status = Boolean.valueOf(NetworkManager.instance.connectClient(ip, port))
                 if (status) {
                     val role = NetworkManager.instance.validateUser(userNAme!!, pass!!)
@@ -1464,7 +1481,8 @@ class MerchantBoostTerminal : BaseActivity() {
             requestBody["lock_timestamp"] = lockTimeStamp
             requestBody["lock_msatoshi"] = (AMOUNT_BTC * 100000 * 1000000).toLong().toString() + ""
             requestBody["lock_usd"] = AMOUNT_USD.toString() + ""
-            val call = apiInterface.callPayApiRequestWithExecute("Bearer $authLevel2", requestBody.toMap())
+            val call =
+                apiInterface.callPayApiRequestWithExecute("Bearer $authLevel2", requestBody.toMap())
             call!!.enqueue(object : Callback<DecodeBolt112WithExecuteResponse?> {
                 override fun onResponse(
                     call: Call<DecodeBolt112WithExecuteResponse?>,
@@ -1475,7 +1493,10 @@ class MerchantBoostTerminal : BaseActivity() {
                             val object2 =
                                 JSONObject(response.body()!!.decodeBolt112WithExecuteData!!.stdout)
                             if (object2.length() > 0) {
-                                if (response.body()!!.decodeBolt112WithExecuteData!!.stdout!!.contains("payment_hash")) {
+                                if (response.body()!!.decodeBolt112WithExecuteData!!.stdout!!.contains(
+                                        "payment_hash"
+                                    )
+                                ) {
                                     var pay: Pay? = null
                                     var jsonObj: JSONObject? = null
                                     jsonObj = object2
@@ -2329,7 +2350,7 @@ class MerchantBoostTerminal : BaseActivity() {
                 }
             }
             Log.e(TAG, "LineNodeResultatPOST:$result")
-            count = count + 1
+            count += 1
             if (routingNodeArrayList != null) {
                 if (routingNodeArrayList!!.size >= count + 1) {
                     val soverignLink =
@@ -2499,7 +2520,7 @@ class MerchantBoostTerminal : BaseActivity() {
     }
 
     private val allRountingNodeList: Unit
-        private get() {
+        get() {
             progressDialog!!.show()
             progressDialog!!.setCanceledOnTouchOutside(false)
             progressDialog!!.setCancelable(false)
@@ -2569,7 +2590,8 @@ class MerchantBoostTerminal : BaseActivity() {
         try {
             val requestBody1: MutableMap<String, String> = HashMap()
             requestBody1["cmd"] = clientNodeId2.trim { it <= ' ' }
-            val call1 = apiInterface.getNodesDataWithExecute("Bearer $accessToken", requestBody1.toMap())
+            val call1 =
+                apiInterface.getNodesDataWithExecute("Bearer $accessToken", requestBody1.toMap())
             call1!!.enqueue(object : Callback<NodesDataWithExecuteResponse?> {
                 override fun onResponse(
                     call: Call<NodesDataWithExecuteResponse?>,
@@ -2602,6 +2624,7 @@ class MerchantBoostTerminal : BaseActivity() {
                             progressDialog!!.dismiss()
                             //e.printStackTrace();
                             Log.e("Error", e.message!!)
+                            st!!.toast("Error: " + e.message)
                         }
                         if (ja_data!!.length() > 0) {
                             var finalJSONobject: JSONObject? = null
@@ -2614,6 +2637,7 @@ class MerchantBoostTerminal : BaseActivity() {
                                 sta = false
                                 //e.printStackTrace();
                                 Log.e("error4", e.message!!)
+                                st!!.toast("Error: " + e.message)
                             }
                             if (sta) {
                                 val temp1 = finalJSONobject.toString()
@@ -2628,9 +2652,11 @@ class MerchantBoostTerminal : BaseActivity() {
                                     )
                                     //...
                                 } catch (exception: IllegalStateException) {
+                                    st!!.toast("Error: " + exception.message)
                                     failed = true
                                     //...
                                 } catch (exception: JsonSyntaxException) {
+                                    st!!.toast("Error: " + exception.message)
                                     failed = true
                                 }
                                 if (failed) {
@@ -2646,7 +2672,7 @@ class MerchantBoostTerminal : BaseActivity() {
                                     val tempList = GlobalState.instance!!.nodeLineInfoArrayList
                                     Log.e("Test1", "test")
                                 }
-                                count = count + 1
+                                count += 1
                                 if (routingNodeArrayList != null) {
                                     if (routingNodeArrayList!!.size >= count + 1) {
                                         val soverignLink =
@@ -2729,7 +2755,7 @@ class MerchantBoostTerminal : BaseActivity() {
 
                         // progressDialog.dismiss();
                         //parseJSONForNodeLineInfor("[ {   \"peers\": []} ]");
-                        count = count + 1
+                        count += 1
                         //quoc testing add fake noteLineInfo
                         val nodeLineInfo = NodeLineInfo()
                         GlobalState.instance!!.addInNodeLineInfoArrayList(nodeLineInfo)
@@ -2758,6 +2784,7 @@ class MerchantBoostTerminal : BaseActivity() {
                 override fun onFailure(call: Call<NodesDataWithExecuteResponse?>, t: Throwable) {
                     Log.e("TAG", "onResponse: " + t.message.toString())
                     progressDialog!!.dismiss()
+                    st!!.toast("Error: " + t.message)
                 }
             })
         } catch (e: Exception) {
@@ -2793,6 +2820,8 @@ class MerchantBoostTerminal : BaseActivity() {
                         clientNodeId2,
                         response.body()!!.aRoutingAPIAuthData!!.accessToken!!
                     )
+                } else {
+                    st!!.toast("Error")
                 }
                 progressDialog!!.dismiss()
             }
@@ -2930,8 +2959,7 @@ class MerchantBoostTerminal : BaseActivity() {
 
     private fun scannerIntent() {
         mode = 1
-        val qrScan: IntentIntegrator
-        qrScan = IntentIntegrator(this)
+        val qrScan = IntentIntegrator(this)
         qrScan.setOrientationLocked(false)
         val prompt = "Scan Client Node ID"
         qrScan.setPrompt(prompt)
@@ -2966,7 +2994,11 @@ class MerchantBoostTerminal : BaseActivity() {
                 } else if (mode == 1) {
                     //Toast.makeText(this, "Result Found", Toast.LENGTH_LONG).show();
                     clientNodeId = result.contents
-                    if (!clientNodeId.isEmpty()) {
+
+                    val et_clientnodeid = findViewById<EditText>(R.id.et_clientnodeid)
+                    et_clientnodeid.setText(clientNodeId)
+
+                    if (clientNodeId.isNotEmpty()) {
                         clientNodeID222 = clientNodeId
                         routingNodeExecute(clientNodeId)
                     }

@@ -238,14 +238,14 @@ class Registration : BaseActivity() {
             previousLay()
         })
         nextLay()
-        select_instant_option?.setOnClickListener({
+        select_instant_option?.setOnClickListener {
             hoverEffect(select_instant_option)
             if (fundingNodeTemp != null) {
                 connectWithThorAndLoginAPi(
-                    fundingNodeTemp!!.ip!!,
-                    fundingNodeTemp!!.port!!,
-                    fundingNodeTemp!!.username!!,
-                    fundingNodeTemp!!.password!!
+                    fundingNodeTemp!!.ip.orEmpty(),
+                    fundingNodeTemp!!.port.orEmpty(),
+                    fundingNodeTemp!!.username.orEmpty(),
+                    fundingNodeTemp!!.password.orEmpty()
                 )
                 //connectWithThorAndLogin(fundingNodeTemp.getIp(),fundingNodeTemp.getPort(),fundingNodeTemp.getUsername(),fundingNodeTemp.getPassword());
                 // registration(true);
@@ -254,7 +254,7 @@ class Registration : BaseActivity() {
                 fundingNodeInfor
                 st!!.toast("Try again")
             }
-        })
+        }
         select_normal_option?.setOnClickListener(View.OnClickListener {
             hoverEffect(select_normal_option)
             INSTANT_NORMAL = 1
@@ -641,8 +641,7 @@ class Registration : BaseActivity() {
 
     // Extra Dialog
     private fun showInstantDialog(ip: String, port: String, username: String, password: String) {
-        val showInstantPayDialog: Dialog
-        showInstantPayDialog = Dialog(this@Registration)
+        val showInstantPayDialog: Dialog = Dialog(this@Registration)
         showInstantPayDialog.setContentView(R.layout.instant_pay_layout_1)
         Objects.requireNonNull(showInstantPayDialog.window)?.setBackgroundDrawable(
             ColorDrawable(
@@ -654,13 +653,12 @@ class Registration : BaseActivity() {
             showInstantPayDialog.findViewById<Button>(R.id.btn_pay_with_lightning)
         instant_pay_back_icon = showInstantPayDialog.findViewById(R.id.instant_pay_back_icon)
         val fee_from_db = showInstantPayDialog.findViewById<TextView>(R.id.fee_from_db)
-        var perUsdBtc = Companion.bitCoinValue
-        perUsdBtc = 1 / Companion.bitCoinValue
-        var totalfee = perUsdBtc * fundingNodeTemp!!.registration_fees!!.toDouble()
+        val perUsdBtc: Double = 1 / Companion.bitCoinValue
+        var totalfee = perUsdBtc * (fundingNodeTemp!!.registration_fees.orEmpty().toDoubleOrNull()?: 0.0)
         totalfee = round(totalfee, 9)
         fee_from_db.text = excatFigure(totalfee) + " BTC / $" + String.format(
             "%.2f", round(
-                fundingNodeTemp!!.registration_fees!!.toDouble(), 2
+                fundingNodeTemp!!.registration_fees?.toDoubleOrNull()?:0.0, 2
             )
         ) + "USD"
         val layout1 = showInstantPayDialog.findViewById<LinearLayout>(R.id.layout1)
@@ -676,12 +674,11 @@ class Registration : BaseActivity() {
         static_description.inputType = InputType.TYPE_NULL
         static_label.inputType = InputType.TYPE_NULL
         static_amount_in_satoshi.inputType = InputType.TYPE_NULL
-        val invoiceRate = fundingNodeTemp!!.registration_fees!!.toDouble() * perUsdBtc
+        val invoiceRate = (fundingNodeTemp!!.registration_fees?.toDoubleOrNull() ?:0.0) * perUsdBtc
         val satoshiValue = invoiceRate * 100000000
         val satoshiValuemSat = satoshiValue * 1000
-        var dmSatoshi = 0.0
-        var dSatoshi = 0.0
-        dSatoshi = invoiceRate * AppConstants.btcToSathosi
+        val dmSatoshi: Double
+        var dSatoshi: Double = invoiceRate * AppConstants.btcToSathosi
         dmSatoshi = dSatoshi * AppConstants.satoshiToMSathosi
         val formatter: NumberFormat = DecimalFormat("#0")
         val rMSatoshi = formatter.format(dmSatoshi)
@@ -691,14 +688,14 @@ class Registration : BaseActivity() {
         layouts.add(layout3)
         layouts.add(layout4)
         controlDialogLayouts(1, layouts, instant_pay_back_icon)
-        instant_pay_back_icon?.setOnClickListener(View.OnClickListener {
+        instant_pay_back_icon?.setOnClickListener {
             if (dialogLayout == 1) {
                 showInstantPayDialog.dismiss()
             } else {
                 dialogLayout--
                 controlDialogLayouts(dialogLayout, layouts, instant_pay_back_icon)
             }
-        })
+        }
         val description = sp!!.getStringValue("merchant_id")
         val label = "instant_register" + System.currentTimeMillis()
         static_description.setText(description)
@@ -857,22 +854,20 @@ class Registration : BaseActivity() {
                 var fInvoiceResponse = invoiceReponse.replace("[", "")
                 fInvoiceResponse = fInvoiceResponse.replace("]", "")
                 val temInvoice = parseJSONForCreatInvocie(fInvoiceResponse)
-                if (temInvoice != null) {
-                    if (temInvoice.bolt11 != null) {
+                if (temInvoice.bolt11 != null) {
 //                        transactionID++;
-                        val temHax = temInvoice.bolt11
-                        val multiFormatWriter = MultiFormatWriter()
-                        try {
-                            val bitMatrix =
-                                multiFormatWriter.encode(temHax, BarcodeFormat.QR_CODE, 600, 600)
-                            val barcodeEncoder = BarcodeEncoder()
-                            val bitmap = barcodeEncoder.createBitmap(bitMatrix)
-                            progressDialog!!.dismiss()
-                            qr_scan_code_image!!.setImageBitmap(bitmap)
-                            controlDialogLayouts(3, layouts, instant_pay_back_icon)
-                        } catch (e: WriterException) {
-                            e.printStackTrace()
-                        }
+                    val temHax = temInvoice.bolt11
+                    val multiFormatWriter = MultiFormatWriter()
+                    try {
+                        val bitMatrix =
+                            multiFormatWriter.encode(temHax, BarcodeFormat.QR_CODE, 600, 600)
+                        val barcodeEncoder = BarcodeEncoder()
+                        val bitmap = barcodeEncoder.createBitmap(bitMatrix)
+                        progressDialog!!.dismiss()
+                        qr_scan_code_image!!.setImageBitmap(bitmap)
+                        controlDialogLayouts(3, layouts, instant_pay_back_icon)
+                    } catch (e: WriterException) {
+                        e.printStackTrace()
                     }
                 }
             } else {
@@ -1134,6 +1129,7 @@ class Registration : BaseActivity() {
     }
 
     private fun instant_registration(isActive: Boolean) {
+        progressDialog!!.show()
         val clientImage = client_image_bitmap
         val nicImage = card_image_bitmap
         val clName = name
@@ -1466,8 +1462,7 @@ class Registration : BaseActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             try {
                 var fos: FileOutputStream? = null
-                val valuesvideos: ContentValues
-                valuesvideos = ContentValues()
+                val valuesvideos: ContentValues = ContentValues()
                 valuesvideos.put(MediaStore.MediaColumns.DISPLAY_NAME, "/myscreen_$fileName.jpg")
                 valuesvideos.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
                 valuesvideos.put(
@@ -1775,8 +1770,7 @@ class Registration : BaseActivity() {
         pass: String,
         commad: String
     ) {
-        val dialog2: ProgressDialog
-        dialog2 = ProgressDialog(this)
+        val dialog2: ProgressDialog = ProgressDialog(this)
         dialog2.setMessage("Confirming...")
         dialog2.show()
         dialog2.setCancelable(false)

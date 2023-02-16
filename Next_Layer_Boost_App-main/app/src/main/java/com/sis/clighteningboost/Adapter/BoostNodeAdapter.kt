@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -68,10 +69,15 @@ class BoostNodeAdapter(
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
+            Log.d("Socket", "sending msg")
+            Log.d("Socket", "isActive:${mSocket.isActive} connected:${mSocket.connected()}")
+
+
+
             mSocket.emit("msg", jsonObject, object : Acknowledgement() {
                 override fun call(vararg args: Any) {
                     super.call(*args)
-                    mActivity.runOnUiThread(Runnable {
+                    mActivity.runOnUiThread {
                         //                           if(args.length!=0){
                         Log.d("Socket", "Acknowledgement of zero element")
                         if (onStartReceive()) {
@@ -87,9 +93,15 @@ class BoostNodeAdapter(
                         //                           }else {
 //                               Toast.makeText(mActivity, "Message is not sent", Toast.LENGTH_SHORT).show();
 //                           }
-                    })
+                    }
                 }
             })
+
+            android.os.Handler(Looper.getMainLooper()).postDelayed({
+                Log.d("Socket", "isActive:${mSocket.isActive} connected:${mSocket.connected()}")
+                Log.d("Socket", "finished")
+            }, 5000)
+
         }
     }
 
@@ -133,19 +145,18 @@ class BoostNodeAdapter(
     fun onStartReceive(): Boolean {
         mOnMsgReceived = false
         mSocket.on("msg") { args: Array<Any> ->
-            mActivity.runOnUiThread(
-                {
-                    val data: JSONObject = args.get(0) as JSONObject
-                    Log.d("Socket", data.toString())
-                    try {
-                        mReceivingNodeId = data.getString("payload")
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                    if (mReceivingNodeId != null && !mReceivingNodeId!!.isEmpty()) {
-                        mOnMsgReceived = true
-                    }
-                })
+            mActivity.runOnUiThread {
+                val data: JSONObject = args.get(0) as JSONObject
+                Log.d("Socket", data.toString())
+                try {
+                    mReceivingNodeId = data.getString("payload")
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+                if (mReceivingNodeId != null && !mReceivingNodeId!!.isEmpty()) {
+                    mOnMsgReceived = true
+                }
+            }
         }
         return mOnMsgReceived
     }

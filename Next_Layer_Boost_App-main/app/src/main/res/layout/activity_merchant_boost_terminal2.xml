@@ -23,7 +23,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/headerlay"
         android:layout_above="@+id/logoutbtnLay"
-        android:padding="@dimen/_5sdp"
         >
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -38,7 +37,7 @@
 <!--                profile Info-->
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_70sdp">
+                    android:layout_height="@dimen/_65sdp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/iv_client"
@@ -134,7 +133,7 @@
 
                     android:id="@+id/rl_lineNodeInfo"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_130sdp">
+                    android:layout_height="@dimen/_125sdp">
                     <LinearLayout
                         android:id="@+id/ll_first"
                         android:layout_width="match_parent"
@@ -397,7 +396,7 @@
                     android:id="@+id/rl_enterNodeIdLayer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp">
+                    android:layout_marginTop="@dimen/_15sdp">
                     <!--        Enter Node ID Lay-->
                     <RelativeLayout
                         android:id="@+id/nodeidCardLay"
