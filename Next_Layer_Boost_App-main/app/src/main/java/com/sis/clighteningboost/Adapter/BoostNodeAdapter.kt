@@ -72,6 +72,8 @@ class BoostNodeAdapter(
             Log.d("Socket", "sending msg")
             Log.d("Socket", "isActive:${mSocket.isActive} connected:${mSocket.connected()}")
 
+
+
             mSocket.emit("msg", jsonObject, object : Acknowledgement() {
                 override fun call(vararg args: Any) {
                     super.call(*args)
@@ -143,19 +145,18 @@ class BoostNodeAdapter(
     fun onStartReceive(): Boolean {
         mOnMsgReceived = false
         mSocket.on("msg") { args: Array<Any> ->
-            mActivity.runOnUiThread(
-                {
-                    val data: JSONObject = args.get(0) as JSONObject
-                    Log.d("Socket", data.toString())
-                    try {
-                        mReceivingNodeId = data.getString("payload")
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                    if (mReceivingNodeId != null && !mReceivingNodeId!!.isEmpty()) {
-                        mOnMsgReceived = true
-                    }
-                })
+            mActivity.runOnUiThread {
+                val data: JSONObject = args.get(0) as JSONObject
+                Log.d("Socket", data.toString())
+                try {
+                    mReceivingNodeId = data.getString("payload")
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+                if (mReceivingNodeId != null && !mReceivingNodeId!!.isEmpty()) {
+                    mOnMsgReceived = true
+                }
+            }
         }
         return mOnMsgReceived
     }

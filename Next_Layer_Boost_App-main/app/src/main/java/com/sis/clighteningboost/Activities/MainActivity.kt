@@ -188,7 +188,8 @@ class MainActivity : BaseActivity() {
                             TradeSocketResponse::class.java
                         )
                         if (tradeSocketResponse != null && tradeSocketResponse.tradeData != null && tradeSocketResponse.tradeData!!.price > 0) {
-                            btcprice!!.text = "$ " + tradeSocketResponse.tradeData!!.price.toString()
+                            btcprice!!.text =
+                                "$ " + tradeSocketResponse.tradeData!!.price.toString()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -399,13 +400,20 @@ class MainActivity : BaseActivity() {
         val options = IO.Options()
         val headers: MutableMap<String, List<String>> = HashMap()
         val bearer = "Bearer $accessToken"
-        headers["Authorization"] = Arrays.asList(bearer)
+        headers["Authorization"] = listOf(bearer)
         options.extraHeaders = headers
         try {
             mSocket = IO.socket("https://realtime.nextlayer.live", options)
             mSocket?.connect()
         } catch (e: URISyntaxException) {
             e.printStackTrace()
+        }
+        mSocket?.on("err") { args: Array<Any> ->
+            runOnUiThread {
+                val data: JSONObject = args[0] as JSONObject
+                Log.d("Socket", data.toString())
+                Toast.makeText(this, data["message"].toString(), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
