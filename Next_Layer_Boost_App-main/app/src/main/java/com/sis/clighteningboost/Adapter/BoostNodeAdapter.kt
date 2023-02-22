@@ -80,15 +80,27 @@ class BoostNodeAdapter(
                     mActivity.runOnUiThread {
                         //                           if(args.length!=0){
                         Log.d("Socket", "Acknowledgement of zero element")
-                        if (onStartReceive()) {
-                            mActivity.startActivity(
-                                Intent(
-                                    mActivity,
-                                    MerchantBoostTerminal::class.java
-                                ).putExtra("node_id", mReceivingNodeId)
-                            )
-                        } else {
-                            showAlert()
+                        mAlertDialog!!.show()
+                        mSocket.on("msg") { args: Array<Any> ->
+                            mAlertDialog!!.dismiss()
+                            mActivity.runOnUiThread {
+                                val data: JSONObject = args.get(0) as JSONObject
+                                Log.d("Socket", data.toString())
+                                try {
+                                    mReceivingNodeId = data.getString("payload")
+                                    mActivity.startActivity(
+                                        Intent(
+                                            mActivity,
+                                            MerchantBoostTerminal::class.java
+                                        ).putExtra("node_id", mReceivingNodeId)
+                                    )
+                                } catch (e: JSONException) {
+                                    e.printStackTrace()
+                                }
+                                if (mReceivingNodeId != null && !mReceivingNodeId!!.isEmpty()) {
+                                    mOnMsgReceived = true
+                                }
+                            }
                         }
                         //                           }else {
 //                               Toast.makeText(mActivity, "Message is not sent", Toast.LENGTH_SHORT).show();
@@ -103,10 +115,6 @@ class BoostNodeAdapter(
             }, 5000)
 
         }
-    }
-
-    private fun showAlert() {
-        mAlertDialog!!.show()
     }
 
     private fun createAlertInstance() {
@@ -142,22 +150,5 @@ class BoostNodeAdapter(
         }
     }
 
-    fun onStartReceive(): Boolean {
-        mOnMsgReceived = false
-        mSocket.on("msg") { args: Array<Any> ->
-            mActivity.runOnUiThread {
-                val data: JSONObject = args.get(0) as JSONObject
-                Log.d("Socket", data.toString())
-                try {
-                    mReceivingNodeId = data.getString("payload")
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-                if (mReceivingNodeId != null && !mReceivingNodeId!!.isEmpty()) {
-                    mOnMsgReceived = true
-                }
-            }
-        }
-        return mOnMsgReceived
-    }
+
 }
