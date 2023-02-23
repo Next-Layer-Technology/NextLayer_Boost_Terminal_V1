@@ -221,13 +221,25 @@ class MerchantBoostTerminal : BaseActivity() {
             }
         } else {
         }
-        if (intent.getStringExtra("node_id") != null && !intent.getStringExtra("node_id")!!
-                .isEmpty()
-        ) receivingNodeId = intent.getStringExtra("node_id")
-        val et_clientnodeid = findViewById<EditText>(R.id.et_clientnodeid)
-        et_clientnodeid.setText(receivingNodeId)
         val proceed = findViewById<Button>(R.id.btn_proceed_for_node)
-        proceed.performClick()
+        val et_clientnodeid = findViewById<EditText>(R.id.et_clientnodeid)
+        proceed.setOnClickListener {
+            val et_clientnodeid = findViewById<EditText>(R.id.et_clientnodeid)
+            val et_clientnodeid_val = et_clientnodeid.text.toString()
+            if (!et_clientnodeid_val.isEmpty()) {
+                clientNodeID222 = et_clientnodeid_val
+                routingNodeExecute(et_clientnodeid_val)
+            } else {
+                Toast.makeText(application, "Please enter Node ID", Toast.LENGTH_SHORT).show()
+            }
+        }
+        if (intent.getStringExtra("node_id") != null && intent.getStringExtra("node_id")!!.isNotEmpty()
+        ) {
+            receivingNodeId = intent.getStringExtra("node_id")
+            et_clientnodeid.setText(receivingNodeId)
+            proceed.performClick()
+        }
+
         findViewById<View>(R.id.btn_logout).visibility = View.VISIBLE
         findViewById<View>(R.id.btn_logout).setOnClickListener {
             sp!!.clearAll()
@@ -280,16 +292,7 @@ class MerchantBoostTerminal : BaseActivity() {
             //String bolt11="lnbc66660p1psmehhepp5tphydr3ngwpzkhgdjrfw28pduc0exmypw9r3t8am5kh8wpq3wycqdqvdfkkgen0v34sxqyjw5qcqpjsp5m2fvdd0st23sp749nysze2a32mrt5m4wxkwx4zpwtlyqw4crcyeq9qyyssqcp2kvswqn6auxnuqztzg6e866v2pr57y05dqzkhtutfffun8gxg5u7m275ssfaa42ct3q0y67xqfhmtv5wanpdpr5jkzhurx74dcpsgp0566m9";
             //decodeBolt1122(bolt11);
         }
-        proceed.setOnClickListener {
-            val et_clientnodeid = findViewById<EditText>(R.id.et_clientnodeid)
-            val et_clientnodeid_val = et_clientnodeid.text.toString()
-            if (!et_clientnodeid_val.isEmpty()) {
-                clientNodeID222 = et_clientnodeid_val
-                routingNodeExecute(et_clientnodeid_val)
-            } else {
-                Toast.makeText(application, "Please enter Node ID", Toast.LENGTH_SHORT).show()
-            }
-        }
+
         bitCoinValue
         val ha = Handler()
         ha.postDelayed(object : Runnable {
