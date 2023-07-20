@@ -1461,8 +1461,8 @@ class Registration : BaseActivity() {
         var f: File? = null
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             try {
-                var fos: FileOutputStream? = null
-                val valuesvideos: ContentValues = ContentValues()
+                var fos: FileOutputStream?
+                val valuesvideos = ContentValues()
                 valuesvideos.put(MediaStore.MediaColumns.DISPLAY_NAME, "/myscreen_$fileName.jpg")
                 valuesvideos.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
                 valuesvideos.put(
@@ -1475,7 +1475,7 @@ class Registration : BaseActivity() {
                     resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, valuesvideos)
                 fos =
                     resolver.openOutputStream(uriSavedVideo!!) as FileOutputStream?
-                bmp!!.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+                bmp!!.compress(Bitmap.CompressFormat.JPEG, 100, fos!!)
                 Objects.requireNonNull(fos)
                 f =
                     File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath + "/DemoScreenShots/_myscreen_" + fileName + ".jpg")
