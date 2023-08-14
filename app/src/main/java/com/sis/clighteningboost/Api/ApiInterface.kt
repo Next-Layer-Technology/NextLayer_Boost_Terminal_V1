@@ -116,7 +116,9 @@ interface ApiInterface {
     //TODO: Get  Funding Node List  APi
     @GET("get-funding-nodes")
     fun  //ok
-            get_Funding_Node_List(): Call<FundingNodeListResp?>?
+            get_Funding_Node_List(
+        @Header("Authorization") token: String?,
+    ): Call<FundingNodeListResp?>?
 
     //TODO: Get  Routing Node List  APi
     @GET("get-routing-nodes")

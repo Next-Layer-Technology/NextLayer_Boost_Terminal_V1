@@ -2938,9 +2938,11 @@ class MerchantBoostTerminal : BaseActivity() {
     // fundingNode.setRegistration_fees(10);
     private val fundingNodeInfor: Unit
         private get() {
+            val accessToken = sp!!.getStringValue("accessToken")
+            val token = "Bearer $accessToken"
             val call = ApiClient.getRetrofit(this)!!.create(
                 ApiInterface::class.java
-            ).get_Funding_Node_List()
+            ).get_Funding_Node_List(token)
             call!!.enqueue(object : Callback<FundingNodeListResp?> {
                 override fun onResponse(
                     call: Call<FundingNodeListResp?>,
