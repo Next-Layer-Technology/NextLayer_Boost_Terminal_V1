@@ -49,7 +49,6 @@ import com.sis.clighteningboost.utils.*
 import com.sis.clighteningboost.utils.GlobalState.Companion.globalState
 import com.sis.clighteningboost.utils.GlobalState.Companion.instance
 import de.hdodenhof.circleimageview.CircleImageView
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -992,15 +991,7 @@ class Registration : BaseActivity() {
             if (merchantData == null) "" else merchantData!!.merchant_maxboost!!
         )
         val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
+
         val call = ApiClient.getRetrofit(this)!!.create(
             ApiInterface::class.java
         ).client_Registration(
@@ -1636,18 +1627,10 @@ class Registration : BaseActivity() {
         dialog2.setCancelable(false)
         dialog2.setCanceledOnTouchOutside(false)
         val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
-            .client(httpClient)
+            .client(getUnsafeOkHttpClient(this))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -1778,18 +1761,10 @@ class Registration : BaseActivity() {
         dialog2.setCancelable(false)
         dialog2.setCanceledOnTouchOutside(false)
         val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
-            .client(httpClient)
+            .client(getUnsafeOkHttpClient(this))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -2073,18 +2048,10 @@ class Registration : BaseActivity() {
         dialog2.setCancelable(false)
         dialog2.setCanceledOnTouchOutside(false)
         val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
-            .client(httpClient)
+            .client(getUnsafeOkHttpClient(this))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -2177,18 +2144,10 @@ class Registration : BaseActivity() {
         dialog2.setCancelable(false)
         dialog2.setCanceledOnTouchOutside(false)
         val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
-            .client(httpClient)
+            .client(getUnsafeOkHttpClient(this))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
