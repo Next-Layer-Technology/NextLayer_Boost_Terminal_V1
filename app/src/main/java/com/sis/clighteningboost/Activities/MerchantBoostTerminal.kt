@@ -22,7 +22,6 @@ import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
@@ -48,9 +47,7 @@ import com.sis.clighteningboost.utils.*
 import com.sis.clighteningboost.utils.DateUtils.currentDate
 import com.sis.clighteningboost.utils.Print.PrintPic
 import com.sis.clighteningboost.utils.Print.PrinterCommands
-import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
-import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -993,19 +990,9 @@ class MerchantBoostTerminal : BaseActivity() {
         clientNodeId2: String,
         fa2pass: String
     ) {
-        val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
-            .client(httpClient)
+            .client(okHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -1152,6 +1139,7 @@ class MerchantBoostTerminal : BaseActivity() {
     ) {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
+            .client(okHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -1454,21 +1442,9 @@ class MerchantBoostTerminal : BaseActivity() {
         commad: String,
         fa2pass: String
     ) {
-        val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .readTimeout(180, TimeUnit.SECONDS)
-            .connectTimeout(180, TimeUnit.SECONDS)
-            .build()
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
-            .client(httpClient)
+            .client(okHttpClientTimeout180())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -1592,6 +1568,7 @@ class MerchantBoostTerminal : BaseActivity() {
     ) {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
+            .client(okHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -2573,18 +2550,9 @@ class MerchantBoostTerminal : BaseActivity() {
         progressDialog!!.setCanceledOnTouchOutside(false)
         progressDialog!!.setCancelable(false)
         val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
-            .client(httpClient)
+            .client(okHttpClient())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
         val apiInterface = retrofit.create(

@@ -22,7 +22,6 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
@@ -31,7 +30,6 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import com.sis.clighteningboost.Activities.MerchantBoostTerminal
 import com.sis.clighteningboost.Api.ApiClient
 import com.sis.clighteningboost.Api.ApiInterface
 import com.sis.clighteningboost.Api.ApiInterfaceForNodes
@@ -51,11 +49,9 @@ import com.sis.clighteningboost.utils.GlobalState.Companion.instance
 import de.hdodenhof.circleimageview.CircleImageView
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -1626,11 +1622,10 @@ class Registration : BaseActivity() {
         dialog2.show()
         dialog2.setCancelable(false)
         dialog2.setCanceledOnTouchOutside(false)
-        val gson = GsonBuilder().setLenient().create()
 
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
-            .client(getUnsafeOkHttpClient(this))
+            .client(okHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -1760,11 +1755,10 @@ class Registration : BaseActivity() {
         dialog2.show()
         dialog2.setCancelable(false)
         dialog2.setCanceledOnTouchOutside(false)
-        val gson = GsonBuilder().setLenient().create()
 
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
-            .client(getUnsafeOkHttpClient(this))
+            .client(okHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -2047,11 +2041,10 @@ class Registration : BaseActivity() {
         dialog2.show()
         dialog2.setCancelable(false)
         dialog2.setCanceledOnTouchOutside(false)
-        val gson = GsonBuilder().setLenient().create()
 
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
-            .client(getUnsafeOkHttpClient(this))
+            .client(okHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -2143,11 +2136,10 @@ class Registration : BaseActivity() {
         dialog2.show()
         dialog2.setCancelable(false)
         dialog2.setCanceledOnTouchOutside(false)
-        val gson = GsonBuilder().setLenient().create()
 
         val retrofit = Retrofit.Builder()
             .baseUrl("https://$url/")
-            .client(getUnsafeOkHttpClient(this))
+            .client(okHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
