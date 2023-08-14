@@ -393,7 +393,7 @@ class MerchantBoostTerminal : BaseActivity() {
 //            .addNetworkInterceptor(httpLoggingInterceptor)
 //            .build()
 //        val retrofit = Retrofit.Builder()
-//            .baseUrl("http://$url/")
+//            .baseUrl("https://$url/")
 //            .client(httpClient)
 //            .addConverterFactory(GsonConverterFactory.create(gson))
 //            .build()
@@ -1004,7 +1004,7 @@ class MerchantBoostTerminal : BaseActivity() {
             .addNetworkInterceptor(httpLoggingInterceptor)
             .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://$url/")
+            .baseUrl("https://$url/")
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -1151,7 +1151,7 @@ class MerchantBoostTerminal : BaseActivity() {
         fa2pass: String
     ) {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://$url/")
+            .baseUrl("https://$url/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -1467,7 +1467,7 @@ class MerchantBoostTerminal : BaseActivity() {
             .connectTimeout(180, TimeUnit.SECONDS)
             .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://$url/")
+            .baseUrl("https://$url/")
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -1591,7 +1591,7 @@ class MerchantBoostTerminal : BaseActivity() {
         fa2pass: String
     ) {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://$url/")
+            .baseUrl("https://$url/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -2583,7 +2583,7 @@ class MerchantBoostTerminal : BaseActivity() {
             .addNetworkInterceptor(httpLoggingInterceptor)
             .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://$url/")
+            .baseUrl("https://$url/")
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

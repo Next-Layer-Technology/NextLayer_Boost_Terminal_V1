@@ -6,7 +6,7 @@ object AppConstants {
     const val satoshiToMSathosi = 1000f
     const val getLatestRateDelayTime: Long = 180000
     const val PICTURE_BASE_URL =
-        "http://boostterminal.stepinnsolution.com/public/black/img/clients/"
+        "https://boostterminal.stepinnsolution.com/public/black/img/clients/"
     const val CLIENT_IMAGE_BASE_URL = "https://mainframe.nextlayer.live/uploads/client_images/"
     const val ADMIN = 0
     const val MERCHANT = 1000

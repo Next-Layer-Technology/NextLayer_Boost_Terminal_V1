@@ -10,9 +10,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
-    //http://104.128.189.40/api/
-    // public static final String NEW_BASE_URL = "http://boostterminal.stepinnsolution.com/api/";
-    // public static final String NEW_BASE_URL = "http://104.128.189.40/boostterminal/api/";
+    //https://104.128.189.40/api/
+    // public static final String NEW_BASE_URL = "https://boostterminal.stepinnsolution.com/api/";
+    // public static final String NEW_BASE_URL = "https://104.128.189.40/boostterminal/api/";
     const val NEW_BASE_URL = "https://mainframe.nextlayer.live/api/"
 
     //public static final String NEW_BASE_URL = "https://boostterminal.nextlayer.live/api/";
