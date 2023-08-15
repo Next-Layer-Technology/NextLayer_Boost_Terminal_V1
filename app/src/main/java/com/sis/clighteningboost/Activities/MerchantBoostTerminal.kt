@@ -2504,9 +2504,11 @@ class MerchantBoostTerminal : BaseActivity() {
             progressDialog!!.show()
             progressDialog!!.setCanceledOnTouchOutside(false)
             progressDialog!!.setCancelable(false)
+            val accessToken = sp!!.getStringValue("accessToken")
+            val token = "Bearer $accessToken"
             val call = ApiClient.getRetrofit(this)!!.create(
                 ApiInterface::class.java
-            ).get_Routing_Node_List()
+            ).get_Routing_Node_List(token)
             call!!.enqueue(object : Callback<RoutingNodeListResp?> {
                 override fun onResponse(
                     call: Call<RoutingNodeListResp?>,
@@ -2845,9 +2847,11 @@ class MerchantBoostTerminal : BaseActivity() {
             progressDialog!!.show()
             progressDialog!!.setCanceledOnTouchOutside(false)
             progressDialog!!.setCancelable(false)
+            val accessToken = sp!!.getStringValue("accessToken")
+            val token = "Bearer $accessToken"
             val call = ApiClient.getRetrofit(this)!!.create(
                 ApiInterface::class.java
-            ).get_Merchant_List()
+            ).get_Merchant_List(token)
             call!!.enqueue(object : Callback<MerchantListResp?> {
                 override fun onResponse(
                     call: Call<MerchantListResp?>,
