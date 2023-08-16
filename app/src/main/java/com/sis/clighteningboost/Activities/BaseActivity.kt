@@ -11,6 +11,7 @@ import android.text.format.DateFormat
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -167,7 +168,15 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun hideSoftKeyBoard() {
-        ViewCompat.getWindowInsetsController(window.decorView)!!.hide(WindowInsetsCompat.Type.ime())
+        val windowInsetsController = ViewCompat.getWindowInsetsController(window.decorView)
+        if (windowInsetsController != null) {
+            windowInsetsController.hide(WindowInsetsCompat.Type.ime())
+        } else {
+            currentFocus?.windowToken?.let {
+                val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManager.hideSoftInputFromWindow(it, 0)
+            }
+        }
     }
 
     companion object {
