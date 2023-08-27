@@ -9,6 +9,7 @@ import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.*
 import android.provider.MediaStore
@@ -287,17 +288,21 @@ class Registration : BaseActivity() {
             imageOptions(1)
         })
         ib_rotate_id_picture = findViewById(R.id.ib_rotate_id_picture)
-        ib_rotate_id_picture?.setOnClickListener(View.OnClickListener { v: View? ->
-            show_id_picture?.setRotation(
-                show_id_picture!!.getRotation() + 90
-            )
-        })
+        ib_rotate_id_picture?.setOnClickListener {
+
+            val originalBitmap = (show_id_picture?.drawable as? BitmapDrawable)?.bitmap
+            originalBitmap?.rotateBitmap()?.let {
+                show_id_picture?.loadImage(it)
+            }
+        }
         ib_rotate_client_picture = findViewById(R.id.ib_rotate_client_picture)
-        ib_rotate_client_picture?.setOnClickListener(View.OnClickListener { v: View? ->
-            show_client_picture?.setRotation(
-                show_client_picture!!.getRotation() + 90
-            )
-        })
+        ib_rotate_client_picture?.setOnClickListener {
+
+            val originalBitmap = (show_client_picture?.drawable as? BitmapDrawable)?.bitmap
+            originalBitmap?.rotateBitmap()?.let {
+                show_client_picture?.loadImage(it)
+            }
+        }
         checkPermissions()
         fundingNodeInfor
         bitCoinValue
@@ -343,7 +348,9 @@ class Registration : BaseActivity() {
             if (requestCode == ID_CAMERA_REQ) {
                 val bundle = data!!.extras
                 val bitmap = bundle!!["data"] as Bitmap?
-                show_id_picture!!.setImageBitmap(bitmap)
+                bitmap?.let {
+                    show_id_picture?.loadImage(it)
+                }
                 show_id_picture!!.visibility = View.VISIBLE
                 show_id_picture_text!!.visibility = View.GONE
                 card_image_bitmap = bitmap
