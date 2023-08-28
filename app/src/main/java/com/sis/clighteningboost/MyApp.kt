@@ -10,8 +10,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.sis.clighteningboost.Activities.BaseActivity
 import com.sis.clighteningboost.Activities.MerchantLink
+import dagger.hilt.android.HiltAndroidApp
 import java.util.*
 
+@HiltAndroidApp
 class MyApp : Application(), ActivityLifecycleCallbacks {
     private var currentBaseActivity: BaseActivity? = null
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
