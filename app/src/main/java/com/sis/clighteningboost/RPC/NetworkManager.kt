@@ -1,10 +1,14 @@
 package com.sis.clighteningboost.RPC
 
+import android.content.Context
 import com.sis.clighteningboost.RPC.NetworkManager
 import kotlin.Throws
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode
 import android.util.Log
+import com.sis.clighteningboost.R
+import com.sis.clighteningboost.utils.CustomTrustManager
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.*
 import java.lang.Exception
 import java.lang.StringBuilder
@@ -15,31 +19,18 @@ import java.util.*
 import javax.net.ssl.*
 
 class NetworkManager private constructor() {
-    private var sslCtx: SSLContext? = null
+
+    @ApplicationContext lateinit var context: Context
+    private lateinit var sslCtx: SSLContext
     private var factory: SSLSocketFactory? = null
     private var socket: SSLSocket? = null
-    var trustAllCerts = arrayOf<TrustManager>(
-        object : X509TrustManager {
-            override fun getAcceptedIssuers(): Array<X509Certificate> {
-                return arrayOf()
-            }
-
-            override fun checkClientTrusted(
-                certs: Array<X509Certificate>, authType: String
-            ) {
-            }
-
-            override fun checkServerTrusted(
-                certs: Array<X509Certificate>, authType: String
-            ) {
-            }
-        }
-    )
 
     init {
         try {
             sslCtx = SSLContext.getInstance("SSL")
-            sslCtx!!.init(null, trustAllCerts, SecureRandom())
+            val caCertificateInputStream: InputStream = context.resources.openRawResource(R.raw.certificate)
+            sslCtx.init(null, arrayOf(CustomTrustManager(caCertificateInputStream)), SecureRandom())
+
         } catch (e: GeneralSecurityException) {
             Log.e("CLightningApp", Objects.requireNonNull(e.localizedMessage))
         }
@@ -48,7 +39,7 @@ class NetworkManager private constructor() {
     fun connectClient(url: String?, port: Int): Boolean {
         val userMode = -1
         try {
-            factory = sslCtx!!.socketFactory
+            factory = sslCtx.socketFactory
             socket = factory!!.createSocket(url, port) as SSLSocket
             socket!!.startHandshake()
             out = PrintWriter(
