@@ -9,10 +9,6 @@ import android.net.NetworkInfo
 import com.sis.clighteningboost.R
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import java.util.*
 
 class StaticClass(var context: Context) {
@@ -100,15 +96,4 @@ fun Bitmap.rotateBitmap(degrees: Float = 90f): Bitmap {
     val matrix = Matrix()
     matrix.postRotate(degrees)
     return Bitmap.createBitmap(this, 0, 0, this.width, this.height, matrix, true)
-}
-
-fun ImageView.loadImage(bitmap: Bitmap) {
-    val requestOptions = RequestOptions()
-        .override(bitmap.width, bitmap.height)
-        .diskCacheStrategy(DiskCacheStrategy.NONE)
-
-    Glide.with(this)
-        .load(bitmap)
-        .apply(requestOptions)
-        .into(this)
 }

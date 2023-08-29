@@ -23,6 +23,9 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
@@ -286,16 +289,16 @@ class Registration : BaseActivity() {
         ib_rotate_id_picture?.setOnClickListener {
 
             val originalBitmap = (show_id_picture?.drawable as? BitmapDrawable)?.bitmap
-            originalBitmap?.rotateBitmap()?.let {
-                show_id_picture?.loadImage(it)
+            originalBitmap?.rotateBitmap()?.let { bitmap ->
+                showIdImage(bitmap)
             }
         }
         ib_rotate_client_picture = findViewById(R.id.ib_rotate_client_picture)
         ib_rotate_client_picture?.setOnClickListener {
 
             val originalBitmap = (show_client_picture?.drawable as? BitmapDrawable)?.bitmap
-            originalBitmap?.rotateBitmap()?.let {
-                show_client_picture?.loadImage(it)
+            originalBitmap?.rotateBitmap()?.let { bitmap ->
+                showClientImage(bitmap)
             }
         }
         checkPermissions()
@@ -311,6 +314,31 @@ class Registration : BaseActivity() {
         }, AppConstants.getLatestRateDelayTime)
         initRPCResponse()
         //addInTransactionLog(90,0.00034,"klsjkljsd","Blackvirus1010111211gfg");
+    }
+
+    private fun showIdImage(bitmap: Bitmap?) {
+        if (bitmap == null) return
+
+        card_image_bitmap = bitmap
+        show_id_picture?.loadImage(bitmap)
+    }
+
+    private fun showClientImage(bitmap: Bitmap?) {
+        if (bitmap == null) return
+
+        client_image_bitmap = bitmap
+        show_client_picture?.loadImage(bitmap)
+    }
+
+    private fun ImageView.loadImage(bitmap: Bitmap) {
+        val requestOptions = RequestOptions()
+            .override(bitmap.width, bitmap.height)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+
+        Glide.with(this)
+            .load(bitmap)
+            .apply(requestOptions)
+            .into(this)
     }
 
     private fun imageOptions(index: Int) {
@@ -343,38 +371,32 @@ class Registration : BaseActivity() {
             if (requestCode == ID_CAMERA_REQ) {
                 val bundle = data!!.extras
                 val bitmap = bundle!!["data"] as Bitmap?
-                bitmap?.let {
-                    show_id_picture?.loadImage(it)
-                }
+                showIdImage(bitmap)
                 show_id_picture!!.visibility = View.VISIBLE
                 show_id_picture_text!!.visibility = View.GONE
-                card_image_bitmap = bitmap
             } else if (requestCode == ID_GALLERY_REQ) {
                 val uri = data!!.data
                 try {
                     val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-                    card_image_bitmap = bitmap
+                    showIdImage(bitmap)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
-                show_id_picture!!.setImageURI(uri)
                 show_id_picture!!.visibility = View.VISIBLE
                 show_id_picture_text!!.visibility = View.GONE
             } else if (requestCode == CLIENT_CAMERA_REQ) {
                 val bundle = data!!.extras
                 val bitmap = bundle!!["data"] as Bitmap?
-                show_client_picture!!.setImageBitmap(bitmap)
+                showClientImage(bitmap)
                 show_client_picture!!.visibility = View.VISIBLE
                 show_client_picture_text!!.visibility = View.GONE
-                client_image_bitmap = bitmap
             } else if (requestCode == CLIENT_GALLERY_REQ) {
                 val uri = data!!.data
-                show_client_picture!!.setImageURI(uri)
                 show_client_picture!!.visibility = View.VISIBLE
                 show_client_picture_text!!.visibility = View.GONE
                 try {
                     val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-                    client_image_bitmap = bitmap
+                    showClientImage(bitmap)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
