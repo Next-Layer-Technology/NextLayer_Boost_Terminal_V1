@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClientForNode {
-    const val NEW_BASE_URL = "http://73.36.65.41:8000/"
+    const val NEW_BASE_URL = "https://73.36.65.41:8000/"
     const val LOCAL_BASE_URL = ""
     var retrofit: Retrofit? = null
     fun getRetrofit(context: Context): Retrofit? {

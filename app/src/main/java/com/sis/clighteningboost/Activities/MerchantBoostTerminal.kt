@@ -22,7 +22,6 @@ import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
@@ -48,9 +47,7 @@ import com.sis.clighteningboost.utils.*
 import com.sis.clighteningboost.utils.DateUtils.currentDate
 import com.sis.clighteningboost.utils.Print.PrintPic
 import com.sis.clighteningboost.utils.Print.PrinterCommands
-import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
-import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -393,7 +390,7 @@ class MerchantBoostTerminal : BaseActivity() {
 //            .addNetworkInterceptor(httpLoggingInterceptor)
 //            .build()
 //        val retrofit = Retrofit.Builder()
-//            .baseUrl("http://$url/")
+//            .baseUrl("https://$url/")
 //            .client(httpClient)
 //            .addConverterFactory(GsonConverterFactory.create(gson))
 //            .build()
@@ -993,19 +990,9 @@ class MerchantBoostTerminal : BaseActivity() {
         clientNodeId2: String,
         fa2pass: String
     ) {
-        val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://$url/")
-            .client(httpClient)
+            .baseUrl("https://$url/")
+            .client(okHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -1151,7 +1138,8 @@ class MerchantBoostTerminal : BaseActivity() {
         fa2pass: String
     ) {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://$url/")
+            .baseUrl("https://$url/")
+            .client(okHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -1454,21 +1442,9 @@ class MerchantBoostTerminal : BaseActivity() {
         commad: String,
         fa2pass: String
     ) {
-        val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .readTimeout(180, TimeUnit.SECONDS)
-            .connectTimeout(180, TimeUnit.SECONDS)
-            .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://$url/")
-            .client(httpClient)
+            .baseUrl("https://$url/")
+            .client(okHttpClientTimeout180())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -1591,7 +1567,8 @@ class MerchantBoostTerminal : BaseActivity() {
         fa2pass: String
     ) {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://$url/")
+            .baseUrl("https://$url/")
+            .client(okHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiInterface = retrofit.create(
@@ -2527,9 +2504,11 @@ class MerchantBoostTerminal : BaseActivity() {
             progressDialog!!.show()
             progressDialog!!.setCanceledOnTouchOutside(false)
             progressDialog!!.setCancelable(false)
+            val accessToken = sp!!.getStringValue("accessToken")
+            val token = "Bearer $accessToken"
             val call = ApiClient.getRetrofit(this)!!.create(
                 ApiInterface::class.java
-            ).get_Routing_Node_List()
+            ).get_Routing_Node_List(token)
             call!!.enqueue(object : Callback<RoutingNodeListResp?> {
                 override fun onResponse(
                     call: Call<RoutingNodeListResp?>,
@@ -2573,18 +2552,9 @@ class MerchantBoostTerminal : BaseActivity() {
         progressDialog!!.setCanceledOnTouchOutside(false)
         progressDialog!!.setCancelable(false)
         val gson = GsonBuilder().setLenient().create()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val httpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                ChuckerInterceptor.Builder(this)
-                    .build()
-            )
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://$url/")
-            .client(httpClient)
+            .baseUrl("https://$url/")
+            .client(okHttpClient())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
         val apiInterface = retrofit.create(
@@ -2877,9 +2847,11 @@ class MerchantBoostTerminal : BaseActivity() {
             progressDialog!!.show()
             progressDialog!!.setCanceledOnTouchOutside(false)
             progressDialog!!.setCancelable(false)
+            val accessToken = sp!!.getStringValue("accessToken")
+            val token = "Bearer $accessToken"
             val call = ApiClient.getRetrofit(this)!!.create(
                 ApiInterface::class.java
-            ).get_Merchant_List()
+            ).get_Merchant_List(token)
             call!!.enqueue(object : Callback<MerchantListResp?> {
                 override fun onResponse(
                     call: Call<MerchantListResp?>,
@@ -2938,9 +2910,11 @@ class MerchantBoostTerminal : BaseActivity() {
     // fundingNode.setRegistration_fees(10);
     private val fundingNodeInfor: Unit
         private get() {
+            val accessToken = sp!!.getStringValue("accessToken")
+            val token = "Bearer $accessToken"
             val call = ApiClient.getRetrofit(this)!!.create(
                 ApiInterface::class.java
-            ).get_Funding_Node_List()
+            ).get_Funding_Node_List(token)
             call!!.enqueue(object : Callback<FundingNodeListResp?> {
                 override fun onResponse(
                     call: Call<FundingNodeListResp?>,

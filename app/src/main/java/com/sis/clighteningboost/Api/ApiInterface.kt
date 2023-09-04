@@ -106,7 +106,9 @@ interface ApiInterface {
     //TODO: Get  Merchant List  APi
     @GET("get-merchants")
     fun  //ok
-            get_Merchant_List(): Call<MerchantListResp?>?
+            get_Merchant_List(
+        @Header("Authorization") token: String?,
+    ): Call<MerchantListResp?>?
 
     //TODO: Get  Client List  APi
     @GET("get-clients")
@@ -116,12 +118,16 @@ interface ApiInterface {
     //TODO: Get  Funding Node List  APi
     @GET("get-funding-nodes")
     fun  //ok
-            get_Funding_Node_List(): Call<FundingNodeListResp?>?
+            get_Funding_Node_List(
+        @Header("Authorization") token: String?,
+    ): Call<FundingNodeListResp?>?
 
     //TODO: Get  Routing Node List  APi
     @GET("get-routing-nodes")
     fun  //ok
-            get_Routing_Node_List(): Call<RoutingNodeListResp?>?
+            get_Routing_Node_List(
+        @Header("Authorization") token: String?,
+    ): Call<RoutingNodeListResp?>?
 
     //TODO: Trasacntion Add APi
     @FormUrlEncoded

@@ -6,12 +6,14 @@ apply plugin:'com.google.gms.google-services'
 // Add the Crashlytics Gradle plugin
 apply plugin:'com.google.firebase.crashlytics'
 apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 android {
-    compileSdkVersion 34
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.sis.clighteningboost"
-        minSdkVersion 22
+        minSdkVersion 24
         targetSdkVersion 34
         versionCode 1
         versionName "1.0"
@@ -102,4 +104,8 @@ dependencies {
     def lifecycle_version = "2.5.1"
     implementation "androidx.lifecycle:lifecycle-process:2.6.1"
     implementation "androidx.lifecycle:lifecycle-common:2.6.1"
+
+    // Hilt
+    implementation 'com.google.dagger:hilt-android:2.47'
+    kapt 'com.google.dagger:hilt-android-compiler:2.47'
 }
