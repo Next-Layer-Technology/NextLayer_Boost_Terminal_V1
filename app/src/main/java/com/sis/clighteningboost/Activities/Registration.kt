@@ -285,13 +285,13 @@ class Registration : BaseActivity() {
         select_picture_of_id?.setOnClickListener(View.OnClickListener { view: View? ->
             hoverEffect(is_gamma_user_check)
 
-            ImagePicker.with(this).provider(ImageProvider.BOTH).crop()
+            ImagePicker.with(this).provider(ImageProvider.BOTH)
                 .createIntentFromDialog { launcherId.launch(it) }
         })
         select_client_picture?.setOnClickListener(View.OnClickListener { view: View? ->
             hoverEffect(is_gamma_user_check)
 
-            ImagePicker.with(this).provider(ImageProvider.BOTH).crop()
+            ImagePicker.with(this).provider(ImageProvider.BOTH)
                 .createIntentFromDialog { launcherClient.launch(it) }
         })
         ib_rotate_id_picture = findViewById(R.id.ib_rotate_id_picture)
