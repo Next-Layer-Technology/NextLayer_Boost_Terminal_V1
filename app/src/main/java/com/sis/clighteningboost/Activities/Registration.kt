@@ -11,6 +11,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.text.InputType
@@ -20,12 +21,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.widget.*
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.github.drjacky.imagepicker.ImagePicker
+import com.github.drjacky.imagepicker.constant.ImageProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
@@ -279,11 +284,15 @@ class Registration : BaseActivity() {
         })
         select_picture_of_id?.setOnClickListener(View.OnClickListener { view: View? ->
             hoverEffect(is_gamma_user_check)
-            imageOptions(0)
+
+            ImagePicker.with(this).provider(ImageProvider.BOTH).crop()
+                .createIntentFromDialog { launcherId.launch(it) }
         })
         select_client_picture?.setOnClickListener(View.OnClickListener { view: View? ->
             hoverEffect(is_gamma_user_check)
-            imageOptions(1)
+
+            ImagePicker.with(this).provider(ImageProvider.BOTH).crop()
+                .createIntentFromDialog { launcherClient.launch(it) }
         })
         ib_rotate_id_picture = findViewById(R.id.ib_rotate_id_picture)
         ib_rotate_id_picture?.setOnClickListener {
@@ -364,6 +373,50 @@ class Registration : BaseActivity() {
         builder.setCancelable(false)
         builder.show()
     }
+
+    private val launcherId =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val uri: Uri? = result.data?.data
+                // Use the uri to load the image
+                try {
+                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                    showIdImage(bitmap)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+                show_id_picture!!.visibility = View.VISIBLE
+                show_id_picture_text!!.visibility = View.GONE
+
+            } else if (result.resultCode == ImagePicker.RESULT_ERROR) {
+                // Use to show an error
+                show_id_picture!!.visibility = View.GONE
+                show_id_picture_text!!.visibility = View.VISIBLE
+                val error = ImagePicker.Companion.getError(result.data)
+            }
+        }
+
+    private val launcherClient =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val uri: Uri? = result.data?.data
+                // Use the uri to load the image
+                try {
+                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                    showClientImage(bitmap)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+                show_client_picture!!.visibility = View.VISIBLE
+                show_client_picture_text!!.visibility = View.GONE
+
+            } else if (result.resultCode == ImagePicker.RESULT_ERROR) {
+                // Use to show an error
+                show_id_picture!!.visibility = View.GONE
+                show_id_picture_text!!.visibility = View.VISIBLE
+                val error = ImagePicker.Companion.getError(result.data)
+            }
+        }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -108,4 +108,7 @@ dependencies {
     // Hilt
     implementation 'com.google.dagger:hilt-android:2.47'
     kapt 'com.google.dagger:hilt-android-compiler:2.47'
+
+    def libVersion = "2.3.22"
+    implementation "com.github.Drjacky:ImagePicker:$libVersion"
 }
