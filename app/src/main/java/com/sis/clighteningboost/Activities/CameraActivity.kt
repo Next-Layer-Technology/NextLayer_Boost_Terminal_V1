@@ -2,10 +2,13 @@ package com.sis.clighteningboost.Activities
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -61,7 +64,7 @@ class CameraActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-//        deleteAllPrivateFiles(this) fixme: Need to complete
+        deleteAllPrivateFiles(this)
     }
 
     @Deprecated("Deprecated in Java")
@@ -108,11 +111,7 @@ class CameraActivity : BaseActivity() {
             previewCapturedImage()
         }
         binding.buttonYes.setOnClickListener {
-            val capturedImagePath = if (is1x1) cropImage1x1() else capturedImageUri.toString()
-            val bundle = Bundle()
-//            bundle.putString(capturedImageUriKey, capturedImagePath)
-//            bundle.putBoolean(isToolsHiddenKey, true)
-//            findNavController().navigate(R.id.action_global_adjustFragment, bundle) fixme: Need to complete
+            capturedImageUri?.toUri()?.let(::setResult)
         }
         binding.buttonNo.setOnClickListener {
             setVisibilityAfterCancelShot()
@@ -339,6 +338,31 @@ class CameraActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
+    }
+
+    private fun setResult(uri: Uri) {
+        val intent = Intent()
+        intent.data = uri
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
+    /**
+     * User has cancelled the task
+     */
+    fun setResultCancel() {
+        setResult(Activity.RESULT_CANCELED, intent)
+        finish()
+    }
+
+
+    private fun deleteAllPrivateFiles(context: Context) {
+        val list = context.filesDir.listFiles()
+        if (list != null) {
+            for (i in list.indices) {
+                list[i].delete()
+            }
+        }
     }
 
 

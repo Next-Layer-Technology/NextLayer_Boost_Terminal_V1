@@ -285,14 +285,11 @@ class Registration : BaseActivity() {
         select_picture_of_id?.setOnClickListener(View.OnClickListener { view: View? ->
             hoverEffect(is_gamma_user_check)
 
-            ImagePicker.with(this).provider(ImageProvider.BOTH)
-                .createIntentFromDialog { launcherId.launch(it) }
+            launcherId.launch(Intent(this, CameraActivity::class.java))
         })
         select_client_picture?.setOnClickListener(View.OnClickListener { view: View? ->
             hoverEffect(is_gamma_user_check)
-
-            ImagePicker.with(this).provider(ImageProvider.BOTH)
-                .createIntentFromDialog { launcherClient.launch(it) }
+            launcherClient.launch(Intent(this, CameraActivity::class.java))
         })
         ib_rotate_id_picture = findViewById(R.id.ib_rotate_id_picture)
         ib_rotate_id_picture?.setOnClickListener {
@@ -388,7 +385,7 @@ class Registration : BaseActivity() {
                 show_id_picture!!.visibility = View.VISIBLE
                 show_id_picture_text!!.visibility = View.GONE
 
-            } else if (result.resultCode == ImagePicker.RESULT_ERROR) {
+            } else {
                 // Use to show an error
                 show_id_picture!!.visibility = View.GONE
                 show_id_picture_text!!.visibility = View.VISIBLE
@@ -410,7 +407,7 @@ class Registration : BaseActivity() {
                 show_client_picture!!.visibility = View.VISIBLE
                 show_client_picture_text!!.visibility = View.GONE
 
-            } else if (result.resultCode == ImagePicker.RESULT_ERROR) {
+            } else {
                 // Use to show an error
                 show_id_picture!!.visibility = View.GONE
                 show_id_picture_text!!.visibility = View.VISIBLE

@@ -45,6 +45,7 @@ tools:context=".Activities.CameraActivity">
     app:layout_constraintStart_toStartOf="parent" />
 
 <ImageView
+    android:visibility="invisible"
     android:id="@+id/bottomBackground"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_71sdp"
@@ -117,6 +118,7 @@ tools:context=".Activities.CameraActivity">
         app:layout_constraintTop_toTopOf="parent" />
 
 <ImageView
+    android:visibility="gone"
     android:id="@+id/buttonCamera"
     android:layout_width="@dimen/_42sdp"
     android:layout_height="@dimen/_42sdp"
@@ -128,6 +130,7 @@ tools:context=".Activities.CameraActivity">
     app:layout_constraintEnd_toEndOf="parent" />
 
 <ImageView
+    android:visibility="gone"
     android:id="@+id/buttonGallery"
     android:layout_width="@dimen/_42sdp"
     android:layout_height="@dimen/_42sdp"
