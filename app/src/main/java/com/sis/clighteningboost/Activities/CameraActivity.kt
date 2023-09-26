@@ -181,12 +181,12 @@ class CameraActivity : BaseActivity() {
 
             CameraAR.AR16x9 -> {
                 (binding.cameraView.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio =
-                    null
+                    "4:3"
                 (binding.imageViewShot.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio =
-                    null
+                    "4:3"
                 binding.buttonToggleAR.setImageDrawable(
                     ContextCompat.getDrawable(
-                        this, R.drawable.icon_size
+                        this, R.drawable.icon_4x3
                     )
                 )
             }
