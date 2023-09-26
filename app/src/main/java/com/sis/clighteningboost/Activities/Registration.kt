@@ -284,7 +284,6 @@ class Registration : BaseActivity() {
         })
         select_picture_of_id?.setOnClickListener(View.OnClickListener { view: View? ->
             hoverEffect(is_gamma_user_check)
-
             launcherId.launch(Intent(this, CameraActivity::class.java))
         })
         select_client_picture?.setOnClickListener(View.OnClickListener { view: View? ->
@@ -387,8 +386,10 @@ class Registration : BaseActivity() {
 
             } else {
                 // Use to show an error
-                show_id_picture!!.visibility = View.GONE
-                show_id_picture_text!!.visibility = View.VISIBLE
+                if (show_id_picture?.drawable == null) {
+                    show_id_picture!!.visibility = View.GONE
+                    show_id_picture_text!!.visibility = View.VISIBLE
+                }
                 val error = ImagePicker.Companion.getError(result.data)
             }
         }
@@ -409,53 +410,55 @@ class Registration : BaseActivity() {
 
             } else {
                 // Use to show an error
-                show_id_picture!!.visibility = View.GONE
-                show_id_picture_text!!.visibility = View.VISIBLE
+                if (show_client_picture?.drawable == null) {
+                    show_client_picture!!.visibility = View.GONE
+                    show_client_picture_text!!.visibility = View.VISIBLE
+                }
                 val error = ImagePicker.Companion.getError(result.data)
             }
         }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            if (requestCode == ID_CAMERA_REQ) {
-                val bundle = data!!.extras
-                val bitmap = bundle!!["data"] as Bitmap?
-                showIdImage(bitmap)
-                show_id_picture!!.visibility = View.VISIBLE
-                show_id_picture_text!!.visibility = View.GONE
-            } else if (requestCode == ID_GALLERY_REQ) {
-                val uri = data!!.data
-                try {
-                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-                    showIdImage(bitmap)
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-                show_id_picture!!.visibility = View.VISIBLE
-                show_id_picture_text!!.visibility = View.GONE
-            } else if (requestCode == CLIENT_CAMERA_REQ) {
-                val bundle = data!!.extras
-                val bitmap = bundle!!["data"] as Bitmap?
-                showClientImage(bitmap)
-                show_client_picture!!.visibility = View.VISIBLE
-                show_client_picture_text!!.visibility = View.GONE
-            } else if (requestCode == CLIENT_GALLERY_REQ) {
-                val uri = data!!.data
-                show_client_picture!!.visibility = View.VISIBLE
-                show_client_picture_text!!.visibility = View.GONE
-                try {
-                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-                    showClientImage(bitmap)
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            }
-        } else {
-            show_id_picture!!.visibility = View.GONE
-            show_id_picture_text!!.visibility = View.VISIBLE
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode == RESULT_OK) {
+//            if (requestCode == ID_CAMERA_REQ) {
+//                val bundle = data!!.extras
+//                val bitmap = bundle!!["data"] as Bitmap?
+//                showIdImage(bitmap)
+//                show_id_picture!!.visibility = View.VISIBLE
+//                show_id_picture_text!!.visibility = View.GONE
+//            } else if (requestCode == ID_GALLERY_REQ) {
+//                val uri = data!!.data
+//                try {
+//                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+//                    showIdImage(bitmap)
+//                } catch (e: IOException) {
+//                    e.printStackTrace()
+//                }
+//                show_id_picture!!.visibility = View.VISIBLE
+//                show_id_picture_text!!.visibility = View.GONE
+//            } else if (requestCode == CLIENT_CAMERA_REQ) {
+//                val bundle = data!!.extras
+//                val bitmap = bundle!!["data"] as Bitmap?
+//                showClientImage(bitmap)
+//                show_client_picture!!.visibility = View.VISIBLE
+//                show_client_picture_text!!.visibility = View.GONE
+//            } else if (requestCode == CLIENT_GALLERY_REQ) {
+//                val uri = data!!.data
+//                show_client_picture!!.visibility = View.VISIBLE
+//                show_client_picture_text!!.visibility = View.GONE
+//                try {
+//                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+//                    showClientImage(bitmap)
+//                } catch (e: IOException) {
+//                    e.printStackTrace()
+//                }
+//            }
+//        } else {
+//            show_id_picture!!.visibility = View.GONE
+//            show_id_picture_text!!.visibility = View.VISIBLE
+//        }
+//    }
 
     private fun nextLay() {
         if (verifySteps(selectedLay) == 0) {
