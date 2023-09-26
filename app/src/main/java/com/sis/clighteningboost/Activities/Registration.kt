@@ -284,11 +284,11 @@ class Registration : BaseActivity() {
         })
         select_picture_of_id?.setOnClickListener(View.OnClickListener { view: View? ->
             hoverEffect(is_gamma_user_check)
-            launcherId.launch(Intent(this, CameraActivity::class.java))
+            imageOptions(0)
         })
         select_client_picture?.setOnClickListener(View.OnClickListener { view: View? ->
             hoverEffect(is_gamma_user_check)
-            launcherClient.launch(Intent(this, CameraActivity::class.java))
+            imageOptions(1)
         })
         ib_rotate_id_picture = findViewById(R.id.ib_rotate_id_picture)
         ib_rotate_id_picture?.setOnClickListener {
@@ -352,17 +352,22 @@ class Registration : BaseActivity() {
         builder.setTitle("Add Image From")
         builder.setItems(items) { dialogInterface, i ->
             if (items[i] == "Camera") {
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(intent, if (index == 0) ID_CAMERA_REQ else CLIENT_CAMERA_REQ)
+                if (index == 0) {
+                    launcherId.launch(Intent(this, CameraActivity::class.java))
+                } else {
+                    launcherClient.launch(Intent(this, CameraActivity::class.java))
+                }
             }
             if (items[i] == "Gallery") {
-                val intent =
-                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                intent.type = "image/*"
-                startActivityForResult(
-                    Intent.createChooser(intent, "Select Image"),
-                    if (index == 0) ID_GALLERY_REQ else CLIENT_GALLERY_REQ
-                )
+                if (index == 0) {
+                    launcherId.launch(
+                        ImagePicker.with(this).galleryOnly().createIntent()
+                    )
+                } else {
+                    launcherClient.launch(
+                        ImagePicker.with(this).galleryOnly().createIntent()
+                    )
+                }
             }
             dialogInterface.dismiss()
         }
