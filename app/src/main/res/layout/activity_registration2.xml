@@ -414,7 +414,7 @@
                                                     android:id="@+id/show_id_picture"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="@dimen/_200sdp"
-                                                    android:scaleType="fitXY"
+                                                    android:scaleType="centerInside"
                                                     android:visibility="gone" />
 
                                             </LinearLayout>
@@ -464,7 +464,7 @@
                                                     android:id="@+id/show_client_picture"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="@dimen/_200sdp"
-                                                    android:scaleType="fitXY"
+                                                    android:scaleType="centerInside"
                                                     android:visibility="gone" />
 
                                             </LinearLayout>
