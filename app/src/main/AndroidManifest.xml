@@ -80,6 +80,9 @@
             android:screenOrientation="fullSensor"
             android:exported="false"
             tools:replace="screenOrientation" />
+        <activity
+            android:name=".Activities.CameraActivity"
+            android:exported="false" />
 
         <service
             android:name=".Services.MyService"

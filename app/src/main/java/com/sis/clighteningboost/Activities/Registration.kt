@@ -11,6 +11,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.text.InputType
@@ -20,12 +21,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.widget.*
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.github.drjacky.imagepicker.ImagePicker
+import com.github.drjacky.imagepicker.constant.ImageProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
@@ -347,17 +352,22 @@ class Registration : BaseActivity() {
         builder.setTitle("Add Image From")
         builder.setItems(items) { dialogInterface, i ->
             if (items[i] == "Camera") {
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(intent, if (index == 0) ID_CAMERA_REQ else CLIENT_CAMERA_REQ)
+                if (index == 0) {
+                    launcherId.launch(Intent(this, CameraActivity::class.java))
+                } else {
+                    launcherClient.launch(Intent(this, CameraActivity::class.java))
+                }
             }
             if (items[i] == "Gallery") {
-                val intent =
-                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                intent.type = "image/*"
-                startActivityForResult(
-                    Intent.createChooser(intent, "Select Image"),
-                    if (index == 0) ID_GALLERY_REQ else CLIENT_GALLERY_REQ
-                )
+                if (index == 0) {
+                    launcherId.launch(
+                        ImagePicker.with(this).galleryOnly().createIntent()
+                    )
+                } else {
+                    launcherClient.launch(
+                        ImagePicker.with(this).galleryOnly().createIntent()
+                    )
+                }
             }
             dialogInterface.dismiss()
         }
@@ -365,17 +375,11 @@ class Registration : BaseActivity() {
         builder.show()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            if (requestCode == ID_CAMERA_REQ) {
-                val bundle = data!!.extras
-                val bitmap = bundle!!["data"] as Bitmap?
-                showIdImage(bitmap)
-                show_id_picture!!.visibility = View.VISIBLE
-                show_id_picture_text!!.visibility = View.GONE
-            } else if (requestCode == ID_GALLERY_REQ) {
-                val uri = data!!.data
+    private val launcherId =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val uri: Uri? = result.data?.data
+                // Use the uri to load the image
                 try {
                     val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
                     showIdImage(bitmap)
@@ -384,28 +388,82 @@ class Registration : BaseActivity() {
                 }
                 show_id_picture!!.visibility = View.VISIBLE
                 show_id_picture_text!!.visibility = View.GONE
-            } else if (requestCode == CLIENT_CAMERA_REQ) {
-                val bundle = data!!.extras
-                val bitmap = bundle!!["data"] as Bitmap?
-                showClientImage(bitmap)
-                show_client_picture!!.visibility = View.VISIBLE
-                show_client_picture_text!!.visibility = View.GONE
-            } else if (requestCode == CLIENT_GALLERY_REQ) {
-                val uri = data!!.data
-                show_client_picture!!.visibility = View.VISIBLE
-                show_client_picture_text!!.visibility = View.GONE
+
+            } else {
+                // Use to show an error
+                if (show_id_picture?.drawable == null) {
+                    show_id_picture!!.visibility = View.GONE
+                    show_id_picture_text!!.visibility = View.VISIBLE
+                }
+                val error = ImagePicker.Companion.getError(result.data)
+            }
+        }
+
+    private val launcherClient =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val uri: Uri? = result.data?.data
+                // Use the uri to load the image
                 try {
                     val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
                     showClientImage(bitmap)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
+                show_client_picture!!.visibility = View.VISIBLE
+                show_client_picture_text!!.visibility = View.GONE
+
+            } else {
+                // Use to show an error
+                if (show_client_picture?.drawable == null) {
+                    show_client_picture!!.visibility = View.GONE
+                    show_client_picture_text!!.visibility = View.VISIBLE
+                }
+                val error = ImagePicker.Companion.getError(result.data)
             }
-        } else {
-            show_id_picture!!.visibility = View.GONE
-            show_id_picture_text!!.visibility = View.VISIBLE
         }
-    }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode == RESULT_OK) {
+//            if (requestCode == ID_CAMERA_REQ) {
+//                val bundle = data!!.extras
+//                val bitmap = bundle!!["data"] as Bitmap?
+//                showIdImage(bitmap)
+//                show_id_picture!!.visibility = View.VISIBLE
+//                show_id_picture_text!!.visibility = View.GONE
+//            } else if (requestCode == ID_GALLERY_REQ) {
+//                val uri = data!!.data
+//                try {
+//                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+//                    showIdImage(bitmap)
+//                } catch (e: IOException) {
+//                    e.printStackTrace()
+//                }
+//                show_id_picture!!.visibility = View.VISIBLE
+//                show_id_picture_text!!.visibility = View.GONE
+//            } else if (requestCode == CLIENT_CAMERA_REQ) {
+//                val bundle = data!!.extras
+//                val bitmap = bundle!!["data"] as Bitmap?
+//                showClientImage(bitmap)
+//                show_client_picture!!.visibility = View.VISIBLE
+//                show_client_picture_text!!.visibility = View.GONE
+//            } else if (requestCode == CLIENT_GALLERY_REQ) {
+//                val uri = data!!.data
+//                show_client_picture!!.visibility = View.VISIBLE
+//                show_client_picture_text!!.visibility = View.GONE
+//                try {
+//                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+//                    showClientImage(bitmap)
+//                } catch (e: IOException) {
+//                    e.printStackTrace()
+//                }
+//            }
+//        } else {
+//            show_id_picture!!.visibility = View.GONE
+//            show_id_picture_text!!.visibility = View.VISIBLE
+//        }
+//    }
 
     private fun nextLay() {
         if (verifySteps(selectedLay) == 0) {

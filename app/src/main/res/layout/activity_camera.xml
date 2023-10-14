@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/black"
+tools:context=".Activities.CameraActivity">
+
+<androidx.camera.view.PreviewView
+    android:id="@+id/cameraView"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toTopOf="@+id/bottomBackground"
+    app:layout_constraintTop_toTopOf="parent" />
+
+
+<ImageView
+    android:id="@+id/imageViewShot"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:scaleType="fitXY"
+    app:layout_constraintBottom_toTopOf="@id/bottomBackground"
+    app:layout_constraintTop_toTopOf="parent"
+    android:visibility="gone"
+    tools:visibility="visible" />
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_80sdp"
+    android:layout_marginBottom="@dimen/_24sdp"
+    android:background="@drawable/background_gradient"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+<ImageView
+    android:id="@+id/actionTakePhoto"
+    android:layout_width="@dimen/_43sdp"
+    android:layout_height="@dimen/_43sdp"
+    android:layout_marginBottom="@dimen/_38sdp"
+    android:background="@drawable/button_shutter"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+<ImageView
+    android:visibility="invisible"
+    android:id="@+id/bottomBackground"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_71sdp"
+    android:background="@drawable/bottom_background"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+<LinearLayout
+    android:id="@+id/linearLayout2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_31sdp"
+    android:gravity="center"
+    app:layout_constraintBottom_toTopOf="@+id/bottomBackground"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
+
+
+    <ImageButton
+        android:id="@+id/buttonNo"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginHorizontal="@dimen/_17sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="@dimen/_8sdp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icon_no"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/buttonYes"
+        android:layout_width="@dimen/_42sdp"
+        android:layout_height="@dimen/_42sdp"
+        android:layout_marginHorizontal="@dimen/_17sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="@dimen/_8sdp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icon_yes"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</LinearLayout>
+
+    <ImageButton
+        android:id="@+id/buttonToggleCamera"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_48sdp"
+        android:layout_marginTop="@dimen/_46sdp"
+        android:layout_marginEnd="@dimen/_13sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="@dimen/_8sdp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icon_refresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/buttonToggleAR"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_48sdp"
+        android:layout_marginTop="@dimen/_98sdp"
+        android:padding="@dimen/_8sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_size"
+        app:layout_constraintEnd_toEndOf="@+id/buttonToggleCamera"
+        app:layout_constraintStart_toStartOf="@+id/buttonToggleCamera"
+        app:layout_constraintTop_toTopOf="parent" />
+
+<ImageView
+    android:visibility="gone"
+    android:id="@+id/buttonCamera"
+    android:layout_width="@dimen/_42sdp"
+    android:layout_height="@dimen/_42sdp"
+    android:layout_marginEnd="@dimen/_22sdp"
+    android:layout_marginBottom="@dimen/_15sdp"
+    android:background="?android:attr/selectableItemBackground"
+    android:src="@drawable/icon_camera"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+<ImageView
+    android:visibility="gone"
+    android:id="@+id/buttonGallery"
+    android:layout_width="@dimen/_42sdp"
+    android:layout_height="@dimen/_42sdp"
+    android:layout_marginStart="@dimen/_23sdp"
+    android:layout_marginBottom="@dimen/_17sdp"
+    android:background="?android:attr/selectableItemBackground"
+    android:src="@drawable/icon_photos"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
